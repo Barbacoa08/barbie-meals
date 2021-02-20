@@ -9,7 +9,7 @@ export const App = () => {
     <main className="app" data-testid="App-root">
       <LeftNav />
       <Container>
-        <p>Header Text</p>
+        <h1>Barbie Meals</h1>
 
         <Homepage />
       </Container>
