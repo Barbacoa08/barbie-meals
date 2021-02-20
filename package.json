@@ -7,12 +7,12 @@
   "repository": "https://github.com/Barbacoa08/barbie-meals",
   "private": false,
   "scripts": {
+    "lint": "eslint .",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --watchAll=false",
     "test:coverage": "react-scripts test --coverage=true --watchAll=false",
     "test:watch": "react-scripts test",
-    "eject": "react-scripts eject",
     "storybook": "start-storybook -p 6006 -s public",
     "prepublish": "yarn lint && yarn build && yarn test"
   },
@@ -37,6 +37,19 @@
     "@storybook/node-logger": "^6.1.18",
     "@storybook/preset-create-react-app": "^3.1.6",
     "@storybook/react": "^6.1.18",
+    "@typescript-eslint/eslint-plugin": "^4.15.1",
+    "@typescript-eslint/parser": "^4.15.1",
+    "eslint": "^7.20.0",
+    "eslint-config-prettier": "^7.2.0",
+    "eslint-config-standard": "^16.0.2",
+    "eslint-config-standard-react": "^11.0.1",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-prettier": "^3.3.1",
+    "eslint-plugin-promise": "^4.3.1",
+    "eslint-plugin-react": "^7.22.0",
+    "eslint-plugin-react-hooks": "^4.2.0",
+    "eslint-plugin-standard": "^5.0.0",
     "prettier": "2.2.1"
   },
   "browserslist": {
