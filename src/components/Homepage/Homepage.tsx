@@ -1,6 +1,7 @@
 import { Container, Text } from "@chakra-ui/layout";
+import { RouteComponentProps } from "@reach/router";
 
-export const Homepage = () => {
+export const Homepage = (_: RouteComponentProps) => {
   return (
     <Container data-testid="Homepage-root">
       <Text>

@@ -1,17 +1,21 @@
 import { Container } from "@chakra-ui/layout";
 
-import { Homepage, LeftNav } from "components";
+import { LeftNav } from "components";
+import { RouterContainer } from "RouterContainer";
 
 import "./App.css";
 
 export const App = () => {
   return (
     <main className="app" data-testid="App-root">
-      <LeftNav />
+      <nav>
+        <LeftNav />
+      </nav>
+
       <Container>
         <h1>Barbie Meals</h1>
 
-        <Homepage />
+        <RouterContainer />
       </Container>
     </main>
   );

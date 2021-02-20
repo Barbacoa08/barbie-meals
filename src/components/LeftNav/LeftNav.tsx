@@ -1,6 +1,9 @@
 import { Button } from "@chakra-ui/button";
 import { useColorMode } from "@chakra-ui/color-mode";
-import { Box, Link, List, ListItem } from "@chakra-ui/layout";
+import { Box, List, ListItem } from "@chakra-ui/layout";
+import { Link } from "@reach/router";
+
+import { routes } from "RouterContainer";
 
 export const LeftNav = () => {
   const { colorMode, toggleColorMode } = useColorMode();
@@ -18,10 +21,10 @@ export const LeftNav = () => {
           </Button>
         </ListItem>
         <ListItem>
-          <Link>Home</Link>
+          <Link to={routes.homepage}>Home</Link>
         </ListItem>
         <ListItem>
-          <Link>Sloppy Joes</Link>
+          <Link to={routes.sloppyJoes}>Sloppy Joes</Link>
         </ListItem>
       </List>
     </Box>
