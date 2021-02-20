@@ -2,7 +2,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 # Barbie Meals
 
-A place for Barbie to store his favorite meals
+A place for Barbie to store his favorite meals, [view it in action here](https://barbie-meals.netlify.app/)
 
 ### `yarn lint`
 
