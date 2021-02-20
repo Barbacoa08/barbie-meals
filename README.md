@@ -1,11 +1,21 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+# Barbie Meals
 
-In the project directory, you can run:
+A place for Barbie to store his favorite meals
+
+### `yarn lint`
 
 ### `yarn start`
 
+### `yarn build`
+
 ### `yarn test`
 
-### `yarn build`
+### `yarn test:coverage`
+
+### `yarn test:watch`
+
+### `yarn storybook`
+
+### `yarn` lint, build, test
