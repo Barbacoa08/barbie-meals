@@ -1,0 +1,35 @@
+{
+  "parser": "@typescript-eslint/parser",
+  "extends": [
+    "standard",
+    "standard-react",
+    "plugin:prettier/recommended",
+    "plugin:jsx-a11y/recommended",
+    "prettier/standard",
+    "prettier/react",
+    "plugin:react-hooks/recommended",
+    "plugin:@typescript-eslint/eslint-recommended"
+  ],
+  "env": {
+    "node": true
+  },
+  "parserOptions": {
+    "ecmaVersion": 2020,
+    "ecmaFeatures": {
+      "legacyDecorators": true,
+      "jsx": true
+    }
+  },
+  "plugins": ["jsx-a11y"],
+  "settings": {
+    "react": {
+      "version": "17"
+    }
+  },
+  "rules": {
+    "react-hooks/exhaustive-deps": 0,
+    "react/prop-types": 0,
+    "react/react-in-jsx-scope": 0,
+    "space-before-function-paren": 0
+  }
+}
