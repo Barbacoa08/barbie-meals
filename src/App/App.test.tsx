@@ -1,11 +1,11 @@
 import { render } from "@testing-library/react";
-import ShallowRenderer from "react-test-renderer/shallow";
+import * as ShallowRenderer from "react-test-renderer/shallow";
 
 import { App } from ".";
 
-describe("DisplayLocation Component", () => {
+describe("App Component", () => {
   it("shallow renders without exploding", () => {
-    const renderer = new ShallowRenderer();
+    const renderer = ShallowRenderer.createRenderer();
     renderer.render(<App />);
     const { type, props } = renderer.getRenderOutput();
 
