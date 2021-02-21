@@ -1,4 +1,5 @@
 import { FormControl, FormLabel } from "@chakra-ui/form-control";
+import { Spacer } from "@chakra-ui/layout";
 import { Switch } from "@chakra-ui/switch";
 import { useState } from "react";
 
@@ -21,6 +22,8 @@ export const ToggleButton = ({ isChecked, label, onChange }: IToggleButton) => {
       <FormLabel htmlFor={switchId} my="0" mx="1">
         {label}
       </FormLabel>
+
+      <Spacer />
 
       <Switch
         onChange={(e) => onChange(e.target.checked)}
