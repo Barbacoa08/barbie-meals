@@ -4,7 +4,6 @@ import { useGlobal } from "reactn";
 
 export const SloppyJoes = (_: RouteComponentProps) => {
   const [showImages] = useGlobal("showImages");
-  console.log(showImages);
   const [showFancy] = useGlobal("showFancy");
 
   return (

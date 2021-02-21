@@ -51,10 +51,10 @@ export const LeftNav = () => {
         </ListItem> */}
       </List>
 
-      <Heading size="sm" mt="10" mb="2">
+      <Heading size="sm" mt="10">
         View Options
       </Heading>
-      <Stack>
+      <Stack my="2">
         <ToggleButton
           isChecked={showImages}
           label="Images"
