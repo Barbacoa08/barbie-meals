@@ -8,9 +8,7 @@ import "./App.css";
 export const App = () => {
   return (
     <main className="app" data-testid="App-root">
-      <nav>
-        <LeftNav />
-      </nav>
+      <LeftNav />
 
       <Container>
         <h1>Barbie Meals</h1>
