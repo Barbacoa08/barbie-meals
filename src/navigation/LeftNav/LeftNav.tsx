@@ -11,6 +11,9 @@ export const LeftNav = () => {
 
   const [showImages, setShowImages] = useGlobal("showImages");
   const [showFancy, setShowFancy] = useGlobal("showFancy");
+  const [showOnlyTheBasics, setShowOnlyTheBasics] = useGlobal(
+    "showOnlyTheBasics"
+  );
 
   return (
     <Box
@@ -64,6 +67,11 @@ export const LeftNav = () => {
           isChecked={showFancy}
           label="Fancy"
           onChange={(checked) => setShowFancy(checked)}
+        />
+        <ToggleButton
+          isChecked={showOnlyTheBasics}
+          label="Only the Basics"
+          onChange={(checked) => setShowOnlyTheBasics(checked)}
         />
         <ToggleButton
           isChecked={colorMode === "dark"}

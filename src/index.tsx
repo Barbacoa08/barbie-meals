@@ -1,11 +1,19 @@
 import { ChakraProvider } from "@chakra-ui/react";
-import { StrictMode } from "react";
+import { setGlobal, StrictMode } from "reactn";
 import ReactDOM from "react-dom";
 
 import { App } from "./App";
 import reportWebVitals from "./reportWebVitals";
 
 import "./index.css";
+import { IGlobalState } from "types";
+
+const globalDefaults: IGlobalState = {
+  showFancy: true,
+  showImages: true,
+  showOnlyTheBasics: true,
+};
+setGlobal<IGlobalState>(globalDefaults);
 
 ReactDOM.render(
   <StrictMode>
