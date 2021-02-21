@@ -1,20 +1,23 @@
-import { Container } from "@chakra-ui/layout";
+import { Center, Container, Flex, Heading } from "@chakra-ui/layout";
 
-import { LeftNav } from "components";
-import { RouterContainer } from "RouterContainer";
+import { LeftNav, RouterContainer } from "navigation";
 
 import "./App.css";
 
 export const App = () => {
   return (
     <main className="app" data-testid="App-root">
-      <LeftNav />
+      <Flex>
+        <LeftNav />
 
-      <Container>
-        <h1>Barbie Meals</h1>
+        <Container>
+          <Center>
+            <Heading as="h1">Barbie Meals</Heading>
+          </Center>
 
-        <RouterContainer />
-      </Container>
+          <RouterContainer />
+        </Container>
+      </Flex>
     </main>
   );
 };
