@@ -23,7 +23,7 @@ export const App = () => {
   // update localStorage on every reactn update
   useEffect(() => {
     window.localStorage.setItem(localStorageKey, JSON.stringify(globals));
-  }, [hashValue({ ...globals })]);
+  }, [hashValue({ ...globals })]); // gotta spread because the attributes are getters
 
   return (
     <main className="app" data-testid="App-root">
