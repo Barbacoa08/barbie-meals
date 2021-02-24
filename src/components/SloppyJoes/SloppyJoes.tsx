@@ -20,7 +20,6 @@ export const SloppyJoes = (_: RouteComponentProps) => {
   const [showImages] = useGlobal("showImages");
   const [showFancy] = useGlobal("showFancy");
   const [showOpinions] = useGlobal("showOpinions");
-  // const [onlyTheBasics] = useGlobal("showOnlyTheBasics");
 
   return (
     <Stack data-testid="SloppyJoes-root">
@@ -101,7 +100,7 @@ export const SloppyJoes = (_: RouteComponentProps) => {
         </Flex>
       </Stack>
 
-      <Stack>
+      <Stack textAlign="right">
         <Heading size="sm">instructions</Heading>
 
         <List>
@@ -110,14 +109,14 @@ export const SloppyJoes = (_: RouteComponentProps) => {
           </ListItem>
 
           <ListItem>
-            <Text>
-              add 1/2 cup ketchup,{" "}
-              <Text as="span" hidden={!showFancy}>
-                ~1/2 tablespoon of garlic powder, ~1/2 tablespoon worcestershire
-                sauce,
-              </Text>{" "}
-              and 1/2 cup sweet baby rays
-            </Text>
+            {showFancy ? (
+              <Text>
+                add 1/2 cup ketchup, ~1/2 tablespoon of garlic powder, ~1/2
+                tablespoon worcestershire sauce, and 1/2 cup sweet baby rays
+              </Text>
+            ) : (
+              <Text>add 1/2 cup ketchup, and 1/2 cup sweet baby rays</Text>
+            )}
           </ListItem>
 
           <ListItem>
