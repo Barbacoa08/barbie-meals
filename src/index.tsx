@@ -11,7 +11,8 @@ import { IGlobalState } from "types";
 const globalDefaults: IGlobalState = {
   showFancy: true,
   showImages: true,
-  showOnlyTheBasics: true,
+  showOnlyTheBasics: false,
+  showOpinions: true,
 };
 setGlobal<IGlobalState>(globalDefaults);
 
