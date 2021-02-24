@@ -11,6 +11,7 @@ export const LeftNav = () => {
 
   const [showImages, setShowImages] = useGlobal("showImages");
   const [showFancy, setShowFancy] = useGlobal("showFancy");
+  const [showOpinions, setShowOpinions] = useGlobal("showOpinions");
   const [showOnlyTheBasics, setShowOnlyTheBasics] = useGlobal(
     "showOnlyTheBasics"
   );
@@ -68,6 +69,13 @@ export const LeftNav = () => {
           label="Fancy"
           onChange={(checked) => setShowFancy(checked)}
         />
+        <ToggleButton
+          isChecked={showOpinions}
+          label="Opinionated"
+          onChange={(checked) => setShowOpinions(checked)}
+        />
+
+        {/* TODO: if `showOnlyTheBasics` is selected, the other two are disabled and forced `false` */}
         <ToggleButton
           isChecked={showOnlyTheBasics}
           label="Only the Basics"
