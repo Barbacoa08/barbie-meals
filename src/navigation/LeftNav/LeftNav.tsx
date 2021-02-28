@@ -67,24 +67,40 @@ export const LeftNav = () => {
         <ToggleButton
           isChecked={showImages}
           label="Images"
-          onChange={(checked) => setShowImages(checked)}
+          onChange={(checked) => {
+            setShowOnlyTheBasics(false);
+            setShowImages(checked);
+          }}
         />
         <ToggleButton
           isChecked={showFancy}
           label="Fancy"
-          onChange={(checked) => setShowFancy(checked)}
+          onChange={(checked) => {
+            setShowOnlyTheBasics(false);
+            setShowFancy(checked);
+          }}
         />
         <ToggleButton
           isChecked={showOpinions}
           label="Opinionated"
-          onChange={(checked) => setShowOpinions(checked)}
+          onChange={(checked) => {
+            setShowOnlyTheBasics(false);
+            setShowOpinions(checked);
+          }}
         />
 
-        {/* TODO: if `showOnlyTheBasics` is selected, the others are disabled and forced `false` */}
         <ToggleButton
           isChecked={showOnlyTheBasics}
           label="Only the Basics"
-          onChange={(checked) => setShowOnlyTheBasics(checked)}
+          onChange={(checked) => {
+            if (checked) {
+              setShowFancy(false);
+              setShowImages(false);
+              setShowOpinions(false);
+            }
+
+            setShowOnlyTheBasics(checked);
+          }}
         />
         <ToggleButton
           isChecked={colorMode === "dark"}
