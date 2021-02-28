@@ -1,6 +1,4 @@
-import { Image } from "@chakra-ui/image";
 import {
-  Box,
   Flex,
   Heading,
   List,
@@ -16,11 +14,12 @@ import buns from "images/buns.webp";
 import meat from "images/impossible-meat.webp";
 import ketchup from "images/ketchup.webp";
 import sweetBabyRays from "images/sweet-baby-rays.webp";
+import { Ingredient } from "components";
 
 export const SloppyJoes = (_: RouteComponentProps) => {
-  const [showImages] = useGlobal("showImages");
   const [showFancy] = useGlobal("showFancy");
-  const [showOpinions] = useGlobal("showOpinions");
+
+  // TODO: useEffect, if any of these change, fade(transition) change. Probably need a new component.
 
   return (
     <Stack data-testid="SloppyJoes-root">
@@ -29,75 +28,34 @@ export const SloppyJoes = (_: RouteComponentProps) => {
       <Stack justifyContent="space-between">
         <Heading size="sm">ingredients</Heading>
 
-        <Flex>
-          <Box>
-            <Text textAlign="center">
-              <Text as="span" hidden={!showOpinions}>
-                brioche{" "}
-              </Text>
-              buns 2-4
-            </Text>
-            <Image
-              alt="brioche buns"
-              boxSize="150px"
-              fallbackSrc="https://via.placeholder.com/150"
-              hidden={!showImages}
-              objectFit="contain"
-              src={buns}
-            />
-          </Box>
+        <Flex justifyContent="space-between">
+          <Ingredient
+            img={meat}
+            ingredient="meat"
+            ingredientOpinionated="impossilbe/bison meat"
+            portion="1lb"
+          />
 
-          <Box>
-            <Text textAlign="center">
-              <Text as="span" hidden={!showOpinions}>
-                heinz{" "}
-              </Text>
-              ketchup 1/2 cup
-            </Text>
-            <Image
-              alt="ketchup"
-              boxSize="150px"
-              fallbackSrc="https://via.placeholder.com/150"
-              hidden={!showImages}
-              objectFit="contain"
-              src={ketchup}
-            />
-          </Box>
+          <Ingredient
+            img={ketchup}
+            ingredient="ketchup"
+            ingredientOpinionated="heinz ketchup"
+            portion="1/2 cup"
+          />
 
-          <Box>
-            <Text textAlign="center">
-              <Text as="span" hidden={!showOpinions}>
-                impossible/bison{" "}
-              </Text>
-              meat 1lb
-            </Text>
-            <Image
-              alt="meat"
-              boxSize="150px"
-              fallbackSrc="https://via.placeholder.com/150"
-              hidden={!showImages}
-              objectFit="contain"
-              src={meat}
-            />
-          </Box>
+          <Ingredient
+            img={sweetBabyRays}
+            ingredient="sweet baby rays"
+            ingredientOpinionated="original sweet baby rays"
+            portion="1/2 cup"
+          />
 
-          <Box>
-            <Text textAlign="center">
-              sweet baby rays{" "}
-              <Text as="span" hidden={!showOpinions}>
-                original{" "}
-              </Text>
-              1/2 cup
-            </Text>
-            <Image
-              alt="sweet baby rays"
-              boxSize="150px"
-              fallbackSrc="https://via.placeholder.com/150"
-              hidden={!showImages}
-              objectFit="contain"
-              src={sweetBabyRays}
-            />
-          </Box>
+          <Ingredient
+            img={buns}
+            ingredient="buns"
+            ingredientOpinionated="brioche buns"
+            portion="2-4"
+          />
         </Flex>
       </Stack>
 
