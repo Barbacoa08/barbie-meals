@@ -8,6 +8,7 @@ import {
   Stack,
   Text,
 } from "@chakra-ui/layout";
+import { Tag } from "@chakra-ui/tag";
 import { RouteComponentProps } from "@reach/router";
 import { useGlobal } from "reactn";
 
@@ -128,6 +129,18 @@ export const SloppyJoes = (_: RouteComponentProps) => {
           </ListItem>
         </List>
       </Stack>
+
+      {/*
+        TODO: https://fusejs.io/
+        vertically flex-end
+        _eventually_ tags should be link to a proper search page
+      */}
+      <Flex>
+        <Tag>#sloppy-joes</Tag>
+        <Tag>#vegan</Tag>
+        <Tag>#fast</Tag>
+        <Tag>#easy</Tag>
+      </Flex>
     </Stack>
   );
 };

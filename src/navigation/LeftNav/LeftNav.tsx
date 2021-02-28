@@ -40,7 +40,7 @@ export const LeftNav = () => {
         </ListItem>
         {/* <ListItem>
           <Link as={ReachLink} to={routes.todo}>
-            Mexi-Burger
+            Burger
           </Link>
         </ListItem>
         <ListItem>
@@ -51,6 +51,11 @@ export const LeftNav = () => {
         <ListItem>
           <Link as={ReachLink} to={routes.todo}>
             PB & J
+          </Link>
+        </ListItem>
+        <ListItem>
+          <Link as={ReachLink} to={routes.todo}>
+            Nachos
           </Link>
         </ListItem> */}
       </List>
@@ -75,7 +80,7 @@ export const LeftNav = () => {
           onChange={(checked) => setShowOpinions(checked)}
         />
 
-        {/* TODO: if `showOnlyTheBasics` is selected, the other two are disabled and forced `false` */}
+        {/* TODO: if `showOnlyTheBasics` is selected, the others are disabled and forced `false` */}
         <ToggleButton
           isChecked={showOnlyTheBasics}
           label="Only the Basics"
