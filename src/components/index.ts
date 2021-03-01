@@ -1,3 +1,3 @@
 export * from "./Homepage";
-export * from "./SloppyJoes";
+export * from "./Ingredient";
 export * from "./ToggleButton";

@@ -25,9 +25,9 @@ export const LeftNav = () => {
       overflow="auto"
     >
       <Heading size="sm" mt="10" mb="2">
-        Recipies
+        Recipes
       </Heading>
-      <List>
+      <List textAlign="right">
         <ListItem>
           <Link as={ReachLink} to={routes.homepage}>
             Home
@@ -38,11 +38,12 @@ export const LeftNav = () => {
             Sloppy Joes
           </Link>
         </ListItem>
-        {/* <ListItem>
-          <Link as={ReachLink} to={routes.todo}>
-            Mexi-Burger
+        <ListItem>
+          <Link as={ReachLink} to={routes.pbj}>
+            Toasted PBJ
           </Link>
         </ListItem>
+        {/*
         <ListItem>
           <Link as={ReachLink} to={routes.todo}>
             Pasta
@@ -50,7 +51,17 @@ export const LeftNav = () => {
         </ListItem>
         <ListItem>
           <Link as={ReachLink} to={routes.todo}>
-            PB & J
+            Burger
+          </Link>
+        </ListItem>
+        <ListItem>
+          <Link as={ReachLink} to={routes.todo}>
+            Nachos
+          </Link>
+        </ListItem>
+        <ListItem>
+          <Link as={ReachLink} to={routes.todo}>
+            Tacos
           </Link>
         </ListItem> */}
       </List>
@@ -62,24 +73,40 @@ export const LeftNav = () => {
         <ToggleButton
           isChecked={showImages}
           label="Images"
-          onChange={(checked) => setShowImages(checked)}
+          onChange={(checked) => {
+            setShowOnlyTheBasics(false);
+            setShowImages(checked);
+          }}
         />
         <ToggleButton
           isChecked={showFancy}
           label="Fancy"
-          onChange={(checked) => setShowFancy(checked)}
+          onChange={(checked) => {
+            setShowOnlyTheBasics(false);
+            setShowFancy(checked);
+          }}
         />
         <ToggleButton
           isChecked={showOpinions}
           label="Opinionated"
-          onChange={(checked) => setShowOpinions(checked)}
+          onChange={(checked) => {
+            setShowOnlyTheBasics(false);
+            setShowOpinions(checked);
+          }}
         />
 
-        {/* TODO: if `showOnlyTheBasics` is selected, the other two are disabled and forced `false` */}
         <ToggleButton
           isChecked={showOnlyTheBasics}
           label="Only the Basics"
-          onChange={(checked) => setShowOnlyTheBasics(checked)}
+          onChange={(checked) => {
+            if (checked) {
+              setShowFancy(false);
+              setShowImages(false);
+              setShowOpinions(false);
+            }
+
+            setShowOnlyTheBasics(checked);
+          }}
         />
         <ToggleButton
           isChecked={colorMode === "dark"}
