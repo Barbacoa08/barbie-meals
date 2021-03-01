@@ -3,7 +3,7 @@ import { Badge, Box, Text } from "@chakra-ui/layout";
 import { useGlobal } from "reactn";
 
 interface IIngredient {
-  img: string;
+  img?: string;
   ingredient: string;
   ingredientOpinionated: string;
   portion: string;
@@ -25,7 +25,7 @@ export const Ingredient = ({
         {showOpinions ? ingredientOpinionated : ingredient}
       </Badge>
       <Text>{portion}</Text>
-      <Image
+      {img && <Image
         alt={ingredientOpinionated}
         boxSize="150px"
         fallbackSrc="https://via.placeholder.com/150"
@@ -33,7 +33,7 @@ export const Ingredient = ({
         margin="auto"
         objectFit="contain"
         src={img}
-      />
+      />}
     </Box>
   );
 };

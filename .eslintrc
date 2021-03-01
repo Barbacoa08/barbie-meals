@@ -2,6 +2,8 @@
   "parser": "@typescript-eslint/parser",
   "extends": [
     "standard",
+    "standard-react",
+    "plugin:react-hooks/recommended",
     "plugin:jsx-a11y/recommended",
     "plugin:@typescript-eslint/eslint-recommended",
     "prettier"
@@ -23,6 +25,9 @@
     }
   },
   "rules": {
-    "no-unused-vars": "warn"
+    "jsx-quotes": "warn",
+    "no-unused-vars": "warn",
+    "react-hooks/exhaustive-deps": 0,
+    "react/react-in-jsx-scope": 0
   }
 }

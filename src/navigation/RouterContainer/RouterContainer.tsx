@@ -1,10 +1,12 @@
 import { Router } from "@reach/router";
 
-import { Homepage, SloppyJoes } from "components";
+import { Homepage } from "components";
+import { PBJ, SloppyJoes } from "components/recipes";
 
 export const routes = {
   homepage: "homepage",
   sloppyJoes: "sloppy-joes",
+  pbj: "pbj",
 };
 
 export const RouterContainer = () => {
@@ -12,6 +14,7 @@ export const RouterContainer = () => {
     <Router>
       <Homepage default path={routes.homepage} />
       <SloppyJoes path={routes.sloppyJoes} />
+      <PBJ path={routes.pbj} />
     </Router>
   );
 };

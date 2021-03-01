@@ -25,9 +25,9 @@ export const LeftNav = () => {
       overflow="auto"
     >
       <Heading size="sm" mt="10" mb="2">
-        Recipies
+        Recipes
       </Heading>
-      <List>
+      <List textAlign="right">
         <ListItem>
           <Link as={ReachLink} to={routes.homepage}>
             Home
@@ -38,11 +38,12 @@ export const LeftNav = () => {
             Sloppy Joes
           </Link>
         </ListItem>
-        {/* <ListItem>
-          <Link as={ReachLink} to={routes.todo}>
-            Burger
+        <ListItem>
+          <Link as={ReachLink} to={routes.pbj}>
+            Toasted PBJ
           </Link>
         </ListItem>
+        {/*
         <ListItem>
           <Link as={ReachLink} to={routes.todo}>
             Pasta
@@ -50,12 +51,17 @@ export const LeftNav = () => {
         </ListItem>
         <ListItem>
           <Link as={ReachLink} to={routes.todo}>
-            PB & J
+            Burger
           </Link>
         </ListItem>
         <ListItem>
           <Link as={ReachLink} to={routes.todo}>
             Nachos
+          </Link>
+        </ListItem>
+        <ListItem>
+          <Link as={ReachLink} to={routes.todo}>
+            Tacos
           </Link>
         </ListItem> */}
       </List>
