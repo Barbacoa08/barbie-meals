@@ -37,6 +37,7 @@ export const LeftNav = () => {
         icon={<HamburgerIcon />}
         margin="1"
         onClick={onOpen}
+        position="absolute"
       />
       <Drawer placement="left" isOpen={isOpen} onClose={onClose}>
         <DrawerOverlay>
