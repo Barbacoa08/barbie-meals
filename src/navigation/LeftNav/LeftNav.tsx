@@ -30,16 +30,21 @@ export const LeftNav = () => {
   );
 
   return (
-    <Box as="nav" data-testid="LeftNav-root" maxHeight="100vh" ref={btnRef}>
+    <Box as="nav" data-testid="LeftNav-root" maxHeight="100vh">
       <IconButton
         aria-label="Nav Menu Button"
-        finalFocusRef={btnRef}
         icon={<HamburgerIcon />}
         margin="1"
         onClick={onOpen}
         position="absolute"
+        ref={btnRef}
       />
-      <Drawer placement="left" isOpen={isOpen} onClose={onClose}>
+      <Drawer
+        finalFocusRef={btnRef}
+        isOpen={isOpen}
+        onClose={onClose}
+        placement="left"
+      >
         <DrawerOverlay>
           <DrawerContent>
             <DrawerCloseButton />
