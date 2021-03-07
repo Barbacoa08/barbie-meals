@@ -94,6 +94,10 @@ export const SloppyJoes = (_: RouteComponentProps) => {
         </Flex>
       </Stack>
 
+      {/*
+        TODO: striped list items
+        https://chakra-ui.com/docs/features/chakra-factory#attaching-styles
+      */}
       <Stack textAlign="right">
         <Heading size="sm">instructions</Heading>
 

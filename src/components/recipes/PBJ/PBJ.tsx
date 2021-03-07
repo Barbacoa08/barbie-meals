@@ -73,6 +73,10 @@ export const PBJ = (_: RouteComponentProps) => {
       <Stack textAlign="right">
         <Heading size="sm">instructions</Heading>
 
+        {/*
+          TODO: striped list items
+          https://chakra-ui.com/docs/features/chakra-factory#attaching-styles
+        */}
         <OrderedList stylePosition="outside">
           <ListItem>
             {showFancy ? (

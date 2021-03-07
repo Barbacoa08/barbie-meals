@@ -29,6 +29,15 @@ export const LeftNav = () => {
     "showOnlyTheBasics"
   );
 
+  /**
+   * TODO: useMediaQuery to optionally use `Drawer` vs `Box`? With all nav items in their own component?
+   * https://chakra-ui.com/docs/hooks/use-media-query
+   *
+   * could optionaly use a hook to change on screen width change, but that's probably overkill
+   * https://stackoverflow.com/questions/36862334/get-viewport-window-height-in-reactjs
+   * https://usehooks.com/useWindowSize/
+   */
+
   return (
     <Box as="nav" data-testid="LeftNav-root" maxHeight="100vh">
       <IconButton
