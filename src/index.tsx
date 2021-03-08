@@ -19,6 +19,7 @@ setGlobal<IGlobalState>(globalDefaults);
 // TODO: need to set sufficient color contrast
 // https://chakra-ui.com/docs/features/global-styles
 // https://chakra-ui.com/docs/theming/customize-theme
+// https://coolors.co/contrast-checker
 
 ReactDOM.render(
   <StrictMode>
