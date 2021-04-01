@@ -78,27 +78,43 @@ export const LeftNav = () => {
                     Toasted PBJ
                   </Link>
                 </ListItem>
+                <ListItem>
+                  <Link as={ReachLink} to={routes.burgers}>
+                    Burgers
+                  </Link>
+                </ListItem>
                 {/*
-        <ListItem>
-          <Link as={ReachLink} to={routes.todo}>
-            Pasta
-          </Link>
-        </ListItem>
-        <ListItem>
-          <Link as={ReachLink} to={routes.todo}>
-            Burger
-          </Link>
-        </ListItem>
-        <ListItem>
-          <Link as={ReachLink} to={routes.todo}>
-            Nachos
-          </Link>
-        </ListItem>
-        <ListItem>
-          <Link as={ReachLink} to={routes.todo}>
-            Tacos
-          </Link>
-        </ListItem> */}
+                <ListItem>
+                  <Link as={ReachLink} to={routes.todo}>
+                    Pasta
+                  </Link>
+                </ListItem>
+                <ListItem>
+                  <Link as={ReachLink} to={routes.todo}>
+                    Nachos
+                  </Link>
+                </ListItem>
+                <ListItem>
+                  <Link as={ReachLink} to={routes.todo}>
+                    Tacos
+                  </Link>
+                </ListItem> */}
+              </List>
+
+              <Heading size="sm" mt="10" mb="2">
+                Alcohol
+              </Heading>
+              <List textAlign="right">
+                <ListItem>
+                  <Link as={ReachLink} to={routes.beer}>
+                    Beer
+                  </Link>
+                </ListItem>
+                <ListItem>
+                  <Link as={ReachLink} to={routes.wine}>
+                    Wine
+                  </Link>
+                </ListItem>
               </List>
 
               <Heading size="sm" mt="10">
