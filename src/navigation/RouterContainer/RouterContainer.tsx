@@ -24,7 +24,7 @@ export const RouterContainer = () => {
       <SloppyJoes path={routes.sloppyJoes} />
 
       <Beer path={routes.beer} />
-      <Wine path={routes.beer} />
+      <Wine path={routes.wine} />
     </Router>
   );
 };
