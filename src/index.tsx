@@ -1,4 +1,4 @@
-import { ChakraProvider } from "@chakra-ui/react";
+import { ChakraProvider, extendTheme } from "@chakra-ui/react";
 import { setGlobal, StrictMode } from "reactn";
 import ReactDOM from "react-dom";
 
@@ -16,14 +16,22 @@ const globalDefaults: IGlobalState = {
 };
 setGlobal<IGlobalState>(globalDefaults);
 
-// TODO: need to set sufficient color contrast
+// for setting sufficient color contrast
 // https://chakra-ui.com/docs/features/global-styles
 // https://chakra-ui.com/docs/theming/customize-theme
 // https://coolors.co/contrast-checker
+const theme = extendTheme({
+  colors: {
+    gray: {
+    // need just a touch more contrast for the Ingredient/Badge components
+    200: "#FFF",
+    },
+  },
+});
 
 ReactDOM.render(
   <StrictMode>
-    <ChakraProvider>
+    <ChakraProvider theme={theme}>
       <App />
     </ChakraProvider>
   </StrictMode>,
