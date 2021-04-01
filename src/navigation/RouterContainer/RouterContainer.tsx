@@ -1,14 +1,16 @@
 import { Router } from "@reach/router";
 
 import { Beer, Homepage, Wine } from "components";
-import { PBJ, SloppyJoes } from "components/recipes";
+import { Burgers, PBJ, SloppyJoes } from "components/recipes";
 
-// good, not great, but drinkable: https://www.tgbrews.com/pseudo-sue
 export const routes = {
-  beer: "beer",
   homepage: "homepage",
+
+  burgers: "burgers",
   pbj: "pbj",
   sloppyJoes: "sloppy-joes",
+
+  beer: "beer",
   wine: "wine",
 };
 
@@ -16,9 +18,12 @@ export const RouterContainer = () => {
   return (
     <Router>
       <Homepage default path={routes.homepage} />
-      <Beer path={routes.beer} />
+
+      <Burgers path={routes.burgers} />
       <PBJ path={routes.pbj} />
       <SloppyJoes path={routes.sloppyJoes} />
+
+      <Beer path={routes.beer} />
       <Wine path={routes.beer} />
     </Router>
   );
