@@ -19,6 +19,7 @@ import ketchup from "images/condiments/ketchup.webp";
 import buns from "images/misc/buns.webp";
 import meat from "images/misc/impossible-meat.webp";
 import pepper from "images/seasonings/black-pepper.webp";
+import mexispice from "images/seasonings/mexi-spice.webp";
 import salt from "images/seasonings/salt.webp";
 
 export const Burgers = (_: RouteComponentProps) => {
@@ -86,7 +87,7 @@ const PattiesDirections = () => {
           />
 
           <Ingredient
-            img={""}
+            img={mexispice}
             ingredient="mexican spice"
             ingredientOpinionated="mexican spice"
             portion="~2tsp"
