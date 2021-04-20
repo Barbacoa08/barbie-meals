@@ -174,7 +174,7 @@ const OnionsDirections = () => {
           </ListItem>
 
           <ListItem>
-            <Text>stir continiously until carmalized then set asside</Text>
+            <Text>stir continiously until carmalized then set aside</Text>
           </ListItem>
         </OrderedList>
       </Stack>
