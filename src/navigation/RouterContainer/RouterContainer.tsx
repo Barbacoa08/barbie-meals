@@ -1,6 +1,7 @@
 import { Router } from "@reach/router";
 
 import { Beer, Homepage, Wine } from "components";
+import { AsainFoodStore, CostCo } from "components/FoodStores";
 import { Burgers, PBJ, SloppyJoes } from "components/recipes";
 
 export const routes = {
@@ -12,6 +13,9 @@ export const routes = {
 
   beer: "beer",
   wine: "wine",
+
+  costco: "costco",
+  asainFoodStore: "asain-food-store",
 };
 
 export const RouterContainer = () => {
@@ -25,6 +29,9 @@ export const RouterContainer = () => {
 
       <Beer path={routes.beer} />
       <Wine path={routes.wine} />
+
+      <CostCo path={routes.costco} />
+      <AsainFoodStore path={routes.asainFoodStore} />
     </Router>
   );
 };
