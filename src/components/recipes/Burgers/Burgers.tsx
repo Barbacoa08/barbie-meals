@@ -15,9 +15,12 @@ import { RouteComponentProps } from "@reach/router";
 import { useGlobal } from "reactn";
 
 import { Ingredient } from "components";
-import buns from "images/buns.webp";
-import meat from "images/impossible-meat.webp";
-import ketchup from "images/ketchup.webp";
+import ketchup from "images/condiments/ketchup.webp";
+import buns from "images/misc/buns.webp";
+import meat from "images/misc/impossible-meat.webp";
+import pepper from "images/seasonings/black-pepper.webp";
+import mexispice from "images/seasonings/mexi-spice.webp";
+import salt from "images/seasonings/salt.webp";
 
 export const Burgers = (_: RouteComponentProps) => {
   const [showFancy] = useGlobal("showFancy");
@@ -84,21 +87,21 @@ const PattiesDirections = () => {
           />
 
           <Ingredient
-            img={""}
+            img={mexispice}
             ingredient="mexican spice"
             ingredientOpinionated="mexican spice"
             portion="~2tsp"
           />
 
           <Ingredient
-            img={""}
+            img={salt}
             ingredient="salt"
             ingredientOpinionated="salt"
             portion="pinch"
           />
 
           <Ingredient
-            img={""}
+            img={pepper}
             ingredient="pepper"
             ingredientOpinionated="pepper"
             portion="pinch"
@@ -171,7 +174,7 @@ const OnionsDirections = () => {
           </ListItem>
 
           <ListItem>
-            <Text>stir continiously until carmalized then set asside</Text>
+            <Text>stir continiously until carmalized then set aside</Text>
           </ListItem>
         </OrderedList>
       </Stack>

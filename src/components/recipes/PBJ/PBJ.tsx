@@ -56,7 +56,7 @@ export const PBJ = (_: RouteComponentProps) => {
 
           <Ingredient
             img={""} // TODO: add image
-            ingredient="jam/jelly"
+            ingredient="jam / jelly"
             ingredientOpinionated="fig jam from your local farmers market"
             portion=""
           />
@@ -111,8 +111,7 @@ export const PBJ = (_: RouteComponentProps) => {
           </ListItem>
 
           <ListItem>
-            remove sandwich from heat, cut, plate, and consume before it gets
-            cold!
+            remove sandwich from heat, cut, plate, and consume
           </ListItem>
         </OrderedList>
       </Stack>

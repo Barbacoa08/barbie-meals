@@ -83,10 +83,20 @@ export const LeftNav = () => {
                     Burgers
                   </Link>
                 </ListItem>
+                <ListItem>
+                  <Link as={ReachLink} to={routes.pasta}>
+                    Pasta
+                  </Link>
+                </ListItem>
                 {/*
                 <ListItem>
                   <Link as={ReachLink} to={routes.todo}>
-                    Pasta
+                    Grilled Cheese
+                  </Link>
+                </ListItem>
+                <ListItem>
+                  <Link as={ReachLink} to={routes.todo}>
+                    Pizza
                   </Link>
                 </ListItem>
                 <ListItem>
@@ -113,6 +123,22 @@ export const LeftNav = () => {
                 <ListItem>
                   <Link as={ReachLink} to={routes.wine}>
                     Wine
+                  </Link>
+                </ListItem>
+              </List>
+
+              <Heading size="sm" mt="10" mb="2">
+                Store Specific favorites
+              </Heading>
+              <List textAlign="right">
+                <ListItem>
+                  <Link as={ReachLink} to={routes.costco}>
+                    CostCo
+                  </Link>
+                </ListItem>
+                <ListItem>
+                  <Link as={ReachLink} to={routes.asainFoodStore}>
+                    Asain Food Store
                   </Link>
                 </ListItem>
               </List>
