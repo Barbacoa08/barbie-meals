@@ -15,9 +15,11 @@ import { RouteComponentProps } from "@reach/router";
 import { useGlobal } from "reactn";
 
 import { Ingredient } from "components";
-import buns from "images/buns.webp";
-import meat from "images/impossible-meat.webp";
-import ketchup from "images/ketchup.webp";
+import ketchup from "images/condiments/ketchup.webp";
+import buns from "images/misc/buns.webp";
+import meat from "images/misc/impossible-meat.webp";
+import pepper from "images/seasonings/black-pepper.webp";
+import salt from "images/seasonings/salt.webp";
 
 export const Burgers = (_: RouteComponentProps) => {
   const [showFancy] = useGlobal("showFancy");
@@ -91,14 +93,14 @@ const PattiesDirections = () => {
           />
 
           <Ingredient
-            img={""}
+            img={salt}
             ingredient="salt"
             ingredientOpinionated="salt"
             portion="pinch"
           />
 
           <Ingredient
-            img={""}
+            img={pepper}
             ingredient="pepper"
             ingredientOpinionated="pepper"
             portion="pinch"

@@ -56,7 +56,7 @@ export const PBJ = (_: RouteComponentProps) => {
 
           <Ingredient
             img={""} // TODO: add image
-            ingredient="jam/jelly"
+            ingredient="jam / jelly"
             ingredientOpinionated="fig jam from your local farmers market"
             portion=""
           />

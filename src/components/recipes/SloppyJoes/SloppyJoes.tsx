@@ -12,12 +12,12 @@ import { RouteComponentProps } from "@reach/router";
 import { useGlobal } from "reactn";
 
 import { Ingredient } from "components";
-import buns from "images/buns.webp";
-import meat from "images/impossible-meat.webp";
-import ketchup from "images/ketchup.webp";
-import sweetBabyRays from "images/sweet-baby-rays.webp";
-import garlicPowder from "images/garlic-powder.webp";
-import worcestershireSauce from "images/worcestershire-sauce.webp";
+import ketchup from "images/condiments/ketchup.webp";
+import sweetBabyRays from "images/condiments/sweet-baby-rays.webp";
+import buns from "images/misc/buns.webp";
+import meat from "images/misc/impossible-meat.webp";
+import garlicPowder from "images/seasonings/garlic-powder.webp";
+import worcestershireSauce from "images/seasonings/worcestershire-sauce.webp";
 
 export const SloppyJoes = (_: RouteComponentProps) => {
   const [showFancy] = useGlobal("showFancy");
