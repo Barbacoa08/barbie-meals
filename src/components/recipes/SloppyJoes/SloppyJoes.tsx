@@ -18,6 +18,7 @@ import buns from "images/misc/buns.webp";
 import meat from "images/misc/impossible-meat.webp";
 import garlicPowder from "images/seasonings/garlic-powder.webp";
 import worcestershireSauce from "images/seasonings/worcestershire-sauce.webp";
+// import meatKetchupSBRPreMix from "images/recipe-specific/sloppy-joes-ketchup+SBR+meat.webp";
 
 export const SloppyJoes = (_: RouteComponentProps) => {
   const [showFancy] = useGlobal("showFancy");

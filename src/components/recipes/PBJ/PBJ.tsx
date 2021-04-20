@@ -111,8 +111,7 @@ export const PBJ = (_: RouteComponentProps) => {
           </ListItem>
 
           <ListItem>
-            remove sandwich from heat, cut, plate, and consume before it gets
-            cold!
+            remove sandwich from heat, cut, plate, and consume
           </ListItem>
         </OrderedList>
       </Stack>

@@ -83,6 +83,11 @@ export const LeftNav = () => {
                     Burgers
                   </Link>
                 </ListItem>
+                <ListItem>
+                  <Link as={ReachLink} to={routes.pasta}>
+                    Pasta
+                  </Link>
+                </ListItem>
                 {/*
                 <ListItem>
                   <Link as={ReachLink} to={routes.todo}>
@@ -92,11 +97,6 @@ export const LeftNav = () => {
                 <ListItem>
                   <Link as={ReachLink} to={routes.todo}>
                     Pizza
-                  </Link>
-                </ListItem>
-                <ListItem>
-                  <Link as={ReachLink} to={routes.todo}>
-                    Pasta
                   </Link>
                 </ListItem>
                 <ListItem>
