@@ -9,9 +9,21 @@ import {
   Textarea,
 } from "@chakra-ui/react";
 import { RouteComponentProps } from "@reach/router";
-import { PathForm, PathFormField, PathFormProvider } from "react-pathform";
+import { useForm } from "react-hook-form";
 
 export const ContactMe = (_: RouteComponentProps) => {
+  const {
+    formState: { errors },
+    handleSubmit,
+    register,
+    watch,
+  } = useForm({
+    defaultValues: {
+      email: "",
+      subject: "",
+      message: "Your page is _amazing_!",
+    },
+  });
   return (
     <Container data-testid="ContactMe-root">
       <Text>
@@ -20,63 +32,72 @@ export const ContactMe = (_: RouteComponentProps) => {
         Go ahead and send it to me!
       </Text>
 
-      <Box>
-        <PathFormProvider
-          initialRenderValues={{
-            nested: {
-              items: [
-                {
-                  email: "person@location.org",
-                  subject: "Your page is _amazing_!",
-                },
-              ],
+      <Box
+        marginTop="10"
+        border="1px"
+        borderColor="gray.200"
+        padding="5"
+        paddingBottom="50"
+      >
+        <FormControl id="email">
+          <FormLabel>Return Email (optional)</FormLabel>
+          <Input
+            {...register("email", {
+              minLength: { message: "email length not valid", value: 10 },
+            })}
+            isInvalid={!!errors.email?.message?.length}
+          />
+          <FormHelperText>{errors.email?.message || ""}</FormHelperText>
+        </FormControl>
+
+        <FormControl id="subject">
+          <FormLabel>Subject</FormLabel>
+          <Input
+            {...register("subject", {
+              required: "a subject is required",
+              minLength: { message: "subject length too short", value: 10 },
+              maxLength: { message: "subject length too long", value: 40 },
+            })}
+            isInvalid={!!errors.subject?.message?.length}
+          />
+          <FormHelperText>{errors.subject?.message || ""}</FormHelperText>
+        </FormControl>
+
+        <FormControl id="message">
+          <FormLabel>Message</FormLabel>
+          <Textarea
+            {...register("message", {
+              required: "a message is required",
+              minLength: { message: "message too short", value: 1 },
+              maxLength: {
+                message: "ok buddy, that message is a bit too long",
+                value: 400,
+              },
+            })}
+            isInvalid={!!errors.message?.message?.length}
+          />
+          <FormHelperText>{errors.message?.message || ""}</FormHelperText>
+          <FormHelperText>
+            {watch("message").length}/400 characters
+          </FormHelperText>
+        </FormControl>
+
+        <Button
+          type="submit"
+          float="right"
+          onClick={handleSubmit(
+            (data) => {
+              console.info("successful form submission data");
+              console.info(data);
             },
-          }}
+            (formErrors) => {
+              console.error("failed form submission errors");
+              console.info(formErrors);
+            }
+          )}
         >
-          <PathForm
-            onSubmit={(values) => console.info(JSON.stringify(values, null, 2))}
-          >
-            <PathFormField
-              path={["nested", "items", 0, "email"]}
-              defaultValue=""
-              render={({ inputProps, meta }) => (
-                <FormControl id="email">
-                  <FormLabel>Return Email (optional)</FormLabel>
-                  <Input isInvalid={!!meta.error} {...inputProps} />
-                  <FormHelperText>{meta.error?.message || ""}</FormHelperText>
-                </FormControl>
-              )}
-            />
-
-            <PathFormField
-              path={["nested", "items", 0, "subject"]}
-              defaultValue=""
-              render={({ inputProps, meta }) => (
-                <FormControl id="subject">
-                  <FormLabel>Subject</FormLabel>
-                  <Input isInvalid={!!meta.error} {...inputProps} />
-                  <FormHelperText>{meta.error?.message || ""}</FormHelperText>
-                </FormControl>
-              )}
-            />
-
-            <PathFormField
-              path={["nested", "items", 0, "message"]}
-              defaultValue=""
-              render={({ inputProps, meta }) => (
-                <FormControl id="message">
-                  <FormLabel>Message</FormLabel>
-                  <Textarea isInvalid={!!meta.error} {...inputProps} />
-                  <FormHelperText>{meta.error?.message || ""}</FormHelperText>
-                </FormControl>
-              )}
-            />
-
-            <Button type="submit" float="right">
-              Submit
-            </Button>
-          </PathForm>
-        </PathFormProvider>
+          Submit
+        </Button>
       </Box>
     </Container>
   );
