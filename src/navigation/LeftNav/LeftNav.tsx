@@ -59,15 +59,24 @@ export const LeftNav = () => {
             <DrawerCloseButton />
 
             <DrawerBody>
-              <Heading size="sm" mt="10" mb="2">
-                Recipes
-              </Heading>
-              <List textAlign="right">
+              <List>
                 <ListItem>
                   <Link as={ReachLink} to={routes.homepage}>
                     Home
                   </Link>
                 </ListItem>
+
+                <ListItem>
+                  <Link as={ReachLink} to={routes.contactMe}>
+                    Contact Me
+                  </Link>
+                </ListItem>
+              </List>
+
+              <Heading size="sm" mt="10" mb="2">
+                Recipes
+              </Heading>
+              <List textAlign="right">
                 <ListItem>
                   <Link as={ReachLink} to={routes.sloppyJoes}>
                     Sloppy Joes
