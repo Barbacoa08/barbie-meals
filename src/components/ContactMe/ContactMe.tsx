@@ -89,6 +89,26 @@ export const ContactMe = (_: RouteComponentProps) => {
             (data) => {
               console.info("successful form submission data");
               console.info(data);
+
+              const encode = (plainData: any) => {
+                return Object.keys(plainData)
+                  .map(
+                    (key) =>
+                      encodeURIComponent(key) +
+                      "=" +
+                      encodeURIComponent(plainData[key])
+                  )
+                  .join("&");
+              };
+              fetch("/", {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/x-www-form-urlencoded",
+                },
+                body: encode({ "form-name": "contact", ...data }),
+              })
+                .then(() => console.info("Success!"))
+                .catch((error) => console.error(error));
             },
             (formErrors) => {
               console.error("failed form submission errors");
