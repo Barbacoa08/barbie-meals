@@ -20,3 +20,7 @@ describe("App Component", () => {
     expect(rootElement).toBeTruthy();
   });
 });
+
+// TODO: should work w/ just-the-recipie
+// https://www.justtherecipe.app/
+// https://www.justtherecipe.app/recipe?url=https://www.allrecipes.com/recipe/16354/easy-meatloaf/
