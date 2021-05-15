@@ -1,11 +1,13 @@
 import { Router } from "@reach/router";
 
-import { Beer, Homepage, Wine } from "components";
-import { AsainFoodStore, CostCo } from "components/FoodStores";
+import { ContactMe, Homepage } from "components";
+import { Beer, Wine } from "components/alcohol";
+import { AsainFoodStore, CostCo } from "components/food-stores";
 import { Burgers, Pasta, PBJ, SloppyJoes } from "components/recipes";
 
 export const routes = {
   homepage: "homepage",
+  contactMe: "contact-me",
 
   burgers: "burgers",
   pasta: "pasta",
@@ -23,6 +25,7 @@ export const RouterContainer = () => {
   return (
     <Router>
       <Homepage default path={routes.homepage} />
+      <ContactMe path={routes.contactMe} />
 
       <Burgers path={routes.burgers} />
       <Pasta path={routes.pasta} />
