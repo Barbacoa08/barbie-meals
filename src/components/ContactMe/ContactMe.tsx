@@ -55,7 +55,7 @@ export const ContactMe = (_: RouteComponentProps) => {
           <Input
             {...register("subject", {
               required: "a subject is required",
-              minLength: { message: "subject length too short", value: 10 },
+              minLength: { message: "subject length too short", value: 5 },
               maxLength: { message: "subject length too long", value: 40 },
             })}
             isInvalid={!!errors.subject?.message?.length}
