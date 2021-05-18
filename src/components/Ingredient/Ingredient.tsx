@@ -28,7 +28,7 @@ export const Ingredient = ({
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
-    <Box textAlign="center">
+    <Box textAlign="center" data-testid="Ingredient-root">
       <Badge margin="0px 2px 2px 2px" whiteSpace="break-spaces">
         {showOpinions ? ingredientOpinionated : ingredient}
       </Badge>
