@@ -23,9 +23,12 @@ setGlobal<IGlobalState>(globalDefaults);
 const theme = extendTheme({
   colors: {
     gray: {
-    // need just a touch more contrast for the Ingredient/Badge components
-    200: "#FFF",
+      // need just a touch more contrast for the Ingredient/Badge components
+      200: "#FFF",
     },
+  },
+  fonts: {
+    body: "OpenDyslexicMono",
   },
 });
 
