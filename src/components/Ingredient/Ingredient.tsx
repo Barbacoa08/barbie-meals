@@ -1,8 +1,12 @@
 import { Image } from "@chakra-ui/image";
 import { Badge, Box, Text } from "@chakra-ui/layout";
-import { useGlobal, useMemo } from "reactn";
-
-import "./Ingredient.css";
+import {
+  Modal,
+  ModalContent,
+  ModalOverlay,
+  useDisclosure,
+} from "@chakra-ui/react";
+import { useGlobal } from "reactn";
 
 interface IIngredient {
   img?: string;
@@ -21,10 +25,7 @@ export const Ingredient = ({
   const [showOpinions] = useGlobal("showOpinions");
   // TODO: useEffect, if any of these change, fade(transition) change. Probably need a new component.
 
-  const inputId = useMemo(
-    () => `input-click-zoom-${ingredient.replace(/ /g, "_")}`,
-    [ingredient]
-  );
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
     <Box textAlign="center">
@@ -33,21 +34,31 @@ export const Ingredient = ({
       </Badge>
       <Text>{portion}</Text>
       {img && (
-        <Box className="click-zoom">
-          <label id={`click-zoom-${ingredient}`} htmlFor={inputId}>
-            <input type="checkbox" id={inputId} />
-            <Image
-              alt={ingredientOpinionated}
-              boxSize="150px"
-              fallbackSrc="https://via.placeholder.com/150"
-              hidden={!showImages}
-              margin="auto"
-              objectFit="contain"
-              src={img}
-            />
-          </label>
-        </Box>
+        <Image
+          alt={ingredientOpinionated}
+          boxSize="150px"
+          fallbackSrc="https://via.placeholder.com/150"
+          hidden={!showImages}
+          margin="auto"
+          objectFit="contain"
+          onClick={onOpen}
+          src={img}
+        />
       )}
+
+      <Modal isOpen={isOpen} onClose={onClose}>
+        <ModalOverlay />
+        <ModalContent>
+          <Image
+            alt={ingredientOpinionated}
+            fallbackSrc="https://via.placeholder.com/150"
+            hidden={!showImages}
+            margin="auto"
+            objectFit="contain"
+            src={img}
+          />
+        </ModalContent>
+      </Modal>
     </Box>
   );
 };
