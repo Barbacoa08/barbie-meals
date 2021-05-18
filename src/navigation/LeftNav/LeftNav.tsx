@@ -28,6 +28,10 @@ export const LeftNav = () => {
   const [showOnlyTheBasics, setShowOnlyTheBasics] =
     useGlobal("showOnlyTheBasics");
 
+  const [useOpenDyslexicMono, setUseOpenDyslexicMono] = useGlobal(
+    "useOpenDyslexicMono"
+  );
+
   /**
    * TODO: useMediaQuery to optionally use `Drawer` vs `Box`? With all nav items in their own component?
    * https://chakra-ui.com/docs/hooks/use-media-query
@@ -202,6 +206,16 @@ export const LeftNav = () => {
                   isChecked={colorMode === "dark"}
                   label={"Color Mode"}
                   onChange={toggleColorMode}
+                />
+                <ToggleButton
+                  isChecked={useOpenDyslexicMono}
+                  label=""
+                  labelElement={
+                    <span style={{ fontFamily: "OpenDyslexicMono" }}>
+                      Use OpenDyslexic
+                    </span>
+                  }
+                  onChange={(checked) => setUseOpenDyslexicMono(checked)}
                 />
               </Stack>
             </DrawerBody>

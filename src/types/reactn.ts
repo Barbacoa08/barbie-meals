@@ -3,4 +3,7 @@ export interface IGlobalState {
   showImages: boolean;
   showOnlyTheBasics: boolean;
   showOpinions: boolean;
+
+  // accessibility
+  useOpenDyslexicMono: boolean;
 }
