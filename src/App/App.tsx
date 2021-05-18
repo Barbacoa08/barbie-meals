@@ -50,8 +50,8 @@ export const App = () => {
   }, [globals.useOpenDyslexicMono]);
 
   return (
-    <ChakraProvider theme={theme}>
-      <main className="app" data-testid="App-root">
+    <main className="app" data-testid="App-root">
+      <ChakraProvider theme={theme}>
         <Flex>
           <LeftNav />
 
@@ -63,7 +63,7 @@ export const App = () => {
             <RouterContainer />
           </Container>
         </Flex>
-      </main>
-    </ChakraProvider>
+      </ChakraProvider>
+    </main>
   );
 };
