@@ -37,6 +37,7 @@ export const Ingredient = ({
         <Image
           alt={ingredientOpinionated}
           boxSize="150px"
+          cursor="zoom-in"
           fallbackSrc="https://via.placeholder.com/150"
           hidden={!showImages}
           margin="auto"
