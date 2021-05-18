@@ -1,4 +1,3 @@
-import { ChakraProvider, extendTheme } from "@chakra-ui/react";
 import { setGlobal, StrictMode } from "reactn";
 import ReactDOM from "react-dom";
 
@@ -13,30 +12,15 @@ const globalDefaults: IGlobalState = {
   showImages: true,
   showOnlyTheBasics: false,
   showOpinions: true,
+
+  // accessibility
+  useOpenDyslexicMono: false,
 };
 setGlobal<IGlobalState>(globalDefaults);
 
-// for setting sufficient color contrast
-// https://chakra-ui.com/docs/features/global-styles
-// https://chakra-ui.com/docs/theming/customize-theme
-// https://coolors.co/contrast-checker
-const theme = extendTheme({
-  colors: {
-    gray: {
-      // need just a touch more contrast for the Ingredient/Badge components
-      200: "#FFF",
-    },
-  },
-  fonts: {
-    body: "OpenDyslexicMono",
-  },
-});
-
 ReactDOM.render(
   <StrictMode>
-    <ChakraProvider theme={theme}>
-      <App />
-    </ChakraProvider>
+    <App />
   </StrictMode>,
   document.getElementById("root")
 );

@@ -1,10 +1,11 @@
 import { Center, Container, Flex, Heading } from "@chakra-ui/layout";
-import { useEffect, useGlobal } from "reactn";
+import { ChakraProvider, extendTheme } from "@chakra-ui/react";
+import { useEffect, useGlobal, useMemo } from "reactn";
 
 import { LeftNav, RouterContainer } from "navigation";
+import { hashValue } from "utils";
 
 import "./App.css";
-import { hashValue } from "utils";
 
 const localStorageKey = "barbie-meals";
 
@@ -25,19 +26,42 @@ export const App = () => {
     window.localStorage.setItem(localStorageKey, JSON.stringify(globals));
   }, [hashValue({ ...globals })]); // gotta spread because the attributes are getters
 
+  const theme = useMemo(() => {
+    const opendyslexic = globals.useOpenDyslexicMono && {
+      fonts: {
+        body: "OpenDyslexicMono",
+        heading: "OpenDyslexicMono",
+      },
+    };
+    const extendedTheme = extendTheme({
+      colors: {
+        gray: {
+          // need just a touch more contrast for the Ingredient/Badge components
+          200: "#FFF",
+        },
+      },
+
+      ...opendyslexic,
+    });
+
+    return extendedTheme;
+  }, [globals.useOpenDyslexicMono]);
+
   return (
-    <main className="app" data-testid="App-root">
-      <Flex>
-        <LeftNav />
+    <ChakraProvider theme={theme}>
+      <main className="app" data-testid="App-root">
+        <Flex>
+          <LeftNav />
 
-        <Container>
-          <Center>
-            <Heading as="h1">Barbie Meals</Heading>
-          </Center>
+          <Container>
+            <Center>
+              <Heading as="h1">Barbie Meals</Heading>
+            </Center>
 
-          <RouterContainer />
-        </Container>
-      </Flex>
-    </main>
+            <RouterContainer />
+          </Container>
+        </Flex>
+      </main>
+    </ChakraProvider>
   );
 };
