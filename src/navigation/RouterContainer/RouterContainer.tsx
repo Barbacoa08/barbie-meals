@@ -4,12 +4,14 @@ import { ContactMe, Homepage } from "components";
 import { Beer, Wine } from "components/alcohol";
 import { AsainFoodStore, CostCo } from "components/food-stores";
 import { Burgers, Pasta, PBJ, SloppyJoes } from "components/recipes";
+import { GrilledCheese } from "components/recipes/GrilledCheese";
 
 export const routes = {
   homepage: "homepage",
   contactMe: "contact-me",
 
   burgers: "burgers",
+  grilledCheese: "grilled-cheese",
   pasta: "pasta",
   pbj: "pbj",
   sloppyJoes: "sloppy-joes",
@@ -28,6 +30,7 @@ export const RouterContainer = () => {
       <ContactMe path={routes.contactMe} />
 
       <Burgers path={routes.burgers} />
+      <GrilledCheese path={routes.grilledCheese} />
       <Pasta path={routes.pasta} />
       <PBJ path={routes.pbj} />
       <SloppyJoes path={routes.sloppyJoes} />
