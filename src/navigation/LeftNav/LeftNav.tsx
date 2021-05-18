@@ -25,9 +25,8 @@ export const LeftNav = () => {
   const [showImages, setShowImages] = useGlobal("showImages");
   const [showFancy, setShowFancy] = useGlobal("showFancy");
   const [showOpinions, setShowOpinions] = useGlobal("showOpinions");
-  const [showOnlyTheBasics, setShowOnlyTheBasics] = useGlobal(
-    "showOnlyTheBasics"
-  );
+  const [showOnlyTheBasics, setShowOnlyTheBasics] =
+    useGlobal("showOnlyTheBasics");
 
   /**
    * TODO: useMediaQuery to optionally use `Drawer` vs `Box`? With all nav items in their own component?
@@ -88,6 +87,11 @@ export const LeftNav = () => {
                   </Link>
                 </ListItem>
                 <ListItem>
+                  <Link as={ReachLink} to={routes.grilledCheese}>
+                    Grilled Cheese
+                  </Link>
+                </ListItem>
+                <ListItem>
                   <Link as={ReachLink} to={routes.burgers}>
                     Burgers
                   </Link>
@@ -100,7 +104,7 @@ export const LeftNav = () => {
                 {/*
                 <ListItem>
                   <Link as={ReachLink} to={routes.todo}>
-                    Grilled Cheese
+                    Quesadillas
                   </Link>
                 </ListItem>
                 <ListItem>
