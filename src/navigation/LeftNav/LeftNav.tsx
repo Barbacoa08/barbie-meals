@@ -209,7 +209,12 @@ export const LeftNav = () => {
                 />
                 <ToggleButton
                   isChecked={useOpenDyslexicMono}
-                  label="Use OpenDyslexicMono"
+                  label=""
+                  labelElement={
+                    <span style={{ fontFamily: "OpenDyslexicMono" }}>
+                      Use OpenDyslexic
+                    </span>
+                  }
                   onChange={(checked) => setUseOpenDyslexicMono(checked)}
                 />
               </Stack>

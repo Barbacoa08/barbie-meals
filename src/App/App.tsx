@@ -27,12 +27,14 @@ export const App = () => {
   }, [hashValue({ ...globals })]); // gotta spread because the attributes are getters
 
   const theme = useMemo(() => {
-    const opendyslexic = globals.useOpenDyslexicMono && {
-      fonts: {
-        body: "OpenDyslexicMono",
-        heading: "OpenDyslexicMono",
-      },
-    };
+    const opendyslexic = globals.useOpenDyslexicMono
+      ? {
+          fonts: {
+            body: "OpenDyslexicMono",
+            heading: "OpenDyslexicMono",
+          },
+        }
+      : {};
     const extendedTheme = extendTheme({
       colors: {
         gray: {
