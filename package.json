@@ -9,13 +9,16 @@
   "proxy": "http://localhost:9000",
   "scripts": {
     "lint": "eslint .",
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "start": "run-p start:*",
+    "start:app": "react-scripts start",
+    "start:lambda": "netlify-lambda serve src/lambda-functions",
+    "build": "run-p build:**",
+    "build:app": "react-scripts build",
+    "build:lambda": "netlify-lambda build src/lambda-functions",
     "test": "react-scripts test --watchAll=false",
     "test:coverage": "react-scripts test --coverage=true --watchAll=false",
     "test:watch": "react-scripts test",
     "storybook": "start-storybook -p 6006 -s public",
-    "lambda": "netlify-lambda serve src/example-lambda",
     "prepublish": "yarn lint && yarn build && yarn test"
   },
   "dependencies": {
@@ -65,6 +68,7 @@
     "eslint-plugin-promise": "^5.1.0",
     "eslint-plugin-react": "^7.23.2",
     "eslint-plugin-react-hooks": "^4.2.0",
+    "npm-run-all": "^4.1.5",
     "prettier": "2.3.0",
     "react-test-renderer": "^17.0.2",
     "typescript": "^4.2.4"

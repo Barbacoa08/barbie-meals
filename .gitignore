@@ -9,7 +9,7 @@
 # production
 /build
 /dist
-/server-lambda
+/lambda-server
 /coverage
 .rpt2_cache
 
