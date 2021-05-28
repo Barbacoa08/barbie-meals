@@ -1,5 +1,6 @@
 build/
 dist/
+lambda-server/
 node_modules/
 .snapshots/
 *.min.js
