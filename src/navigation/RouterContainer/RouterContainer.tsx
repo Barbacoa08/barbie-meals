@@ -1,6 +1,6 @@
 import { Router } from "@reach/router";
 
-import { ContactMe, Homepage } from "components";
+import { ContactMe, Hidden, Homepage } from "components";
 import { Beer, Wine } from "components/alcohol";
 import { AsainFoodStore, CostCo } from "components/food-stores";
 import { Burgers, Pasta, PBJ, SloppyJoes } from "components/recipes";
@@ -21,6 +21,8 @@ export const routes = {
 
   costco: "costco",
   asainFoodStore: "asain-food-store",
+
+  hidden: "hidden",
 };
 
 export const RouterContainer = () => {
@@ -40,6 +42,8 @@ export const RouterContainer = () => {
 
       <CostCo path={routes.costco} />
       <AsainFoodStore path={routes.asainFoodStore} />
+
+      <Hidden path={routes.hidden} />
     </Router>
   );
 };
