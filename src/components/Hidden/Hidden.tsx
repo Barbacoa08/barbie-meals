@@ -19,8 +19,13 @@ export const Hidden = (_: RouteComponentProps) => {
             colorScheme="blue"
             variant="outline"
             onClick={() => {
-              // TODO: implement
-              setLambdaResult("hit, no result");
+              try {
+                fetch("/.netlify/functions/hello")
+                  .then((data) => data.json())
+                  .then((body) => setLambdaResult(body.message));
+              } catch (_e) {
+                setLambdaResult("hit, no result");
+              }
             }}
           >
             hit it
