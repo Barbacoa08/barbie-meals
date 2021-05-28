@@ -6,6 +6,7 @@
   "license": "MIT",
   "repository": "https://github.com/Barbacoa08/barbie-meals",
   "private": false,
+  "proxy": "http://localhost:9000",
   "scripts": {
     "lint": "eslint .",
     "start": "react-scripts start",
@@ -14,6 +15,7 @@
     "test:coverage": "react-scripts test --coverage=true --watchAll=false",
     "test:watch": "react-scripts test",
     "storybook": "start-storybook -p 6006 -s public",
+    "lambda": "netlify-lambda serve src/example-lambda",
     "prepublish": "yarn lint && yarn build && yarn test"
   },
   "dependencies": {
@@ -22,7 +24,9 @@
     "@emotion/react": "^11.4.0",
     "@emotion/styled": "^11.3.0",
     "@reach/router": "^1.3.4",
+    "aws-lambda": "^1.0.6",
     "framer-motion": "^4.1.17",
+    "netlify-lambda": "^2.0.7",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-hook-form": "^7.6.0",
@@ -42,6 +46,7 @@
     "@testing-library/jest-dom": "^5.12.0",
     "@testing-library/react": "^11.2.7",
     "@testing-library/user-event": "^13.1.9",
+    "@types/aws-lambda": "^8.10.76",
     "@types/jest": "^26.0.23",
     "@types/node": "^15.3.0",
     "@types/react": "^17.0.5",
