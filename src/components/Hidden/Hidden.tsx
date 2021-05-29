@@ -1,36 +1,17 @@
+import { gql, useQuery } from "@apollo/client";
 import { Container, Text } from "@chakra-ui/layout";
 import { Box, Button, Code, Heading } from "@chakra-ui/react";
 import { RouteComponentProps } from "@reach/router";
 import { useState } from "react";
 
-import ApolloClient, { gql } from "apollo-boost";
-import { ApolloProvider, Query } from "react-apollo";
-import { useQuery } from "@apollo/client";
-
-const client = new ApolloClient({
-  uri: "/.netlify/functions/graphql",
-});
-
-// export const NUMBER_QUERY = gql`
-//   query NumberQuery($lower: Int, $upper: Int) {
-//     multiply(lower: $lower, upper: $upper)
-//   }
-// `;
-
 const PING_QUERY = gql`
-  {
+  query {
     ping
   }
 `;
-// export const PING_QUERY = gql`
-//   query PingQuery() {
-//     ping
-//   }
-// `;
 
 export const Hidden = (_: RouteComponentProps) => {
   const [lambdaResult, setLambdaResult] = useState("initial state");
-  const [gqlResult, setGQLResult] = useState("GraphQL's initial state");
 
   const { data } = useQuery(PING_QUERY);
 
@@ -64,44 +45,9 @@ export const Hidden = (_: RouteComponentProps) => {
         <Code>{lambdaResult}</Code>
       </Box>
 
-      <Box>
-        <Text>
-          hit the `hello` lambda function via GraphQL?{" "}
-          <Button
-            colorScheme="red"
-            variant="outline"
-            onClick={() => {
-              try {
-                // const { data } = useQuery(PING_QUERY);
-                console.log(data);
-              } catch (_e) {
-                setGQLResult("hit, no result");
-              }
-            }}
-          >
-            hell-to-the-yeah
-          </Button>
-        </Text>
-
-        <Text>Results:</Text>
-        <Code>{gqlResult}</Code>
-
-        <Text paddingTop="10">LambdaDemo Results:</Text>
-        <Code>
-          <ApolloProvider client={client}>
-            <Query
-              query={gql`
-                {
-                  hello
-                }
-              `}
-            >
-              {({ data = { hello: "" } }) => (
-                <div>A greeting from the server: {data.hello}</div>
-              )}
-            </Query>
-          </ApolloProvider>
-        </Code>
+      <Box paddingTop="10">
+        <Text>Ping Results:</Text>
+        <Code>{data ? data.ping : "no results"}</Code>
       </Box>
     </Container>
   );
