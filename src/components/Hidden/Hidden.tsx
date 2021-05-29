@@ -2,27 +2,17 @@ import { gql, useQuery } from "@apollo/client";
 import { Container, Text } from "@chakra-ui/layout";
 import { Box, Button, Code, Heading } from "@chakra-ui/react";
 import { RouteComponentProps } from "@reach/router";
+import { useMultiplyQuery, usePingQuery } from "graphql/types/graphql";
 import { useState } from "react";
-
-const PING_QUERY = gql`
-  query {
-    ping
-  }
-`;
-
-export const MULTIPLY_QUERY = gql`
-  query Multiply($lower: Int!, $upper: Int!) {
-    multiply(lower: $lower, upper: $upper)
-  }
-`;
 
 export const Hidden = (_: RouteComponentProps) => {
   const [lambdaResult, setLambdaResult] = useState("initial state");
+  const [v, setV] = useState(10);
 
-  const { data } = useQuery(PING_QUERY);
-  const { data: multiplyResult } = useQuery(MULTIPLY_QUERY, {
-    variables: { lower: 5, upper: 10 },
-  });
+  const { data } = usePingQuery();
+  const { data: multiplyResult } = useMultiplyQuery({
+    variables: { lower: 5, upper: v },
+  }); // TODO: update this to be a mutation
 
   return (
     <Container data-testid="Hidden-root">
@@ -61,6 +51,7 @@ export const Hidden = (_: RouteComponentProps) => {
 
       <Box paddingTop="10">
         <Text>Ping Results:</Text>
+        <Button onClick={() => setV(100)}>set as 100</Button>
         <Code>{multiplyResult ? multiplyResult.multiply : "no results"}</Code>
       </Box>
     </Container>

@@ -3,14 +3,13 @@ import { ApolloServer, gql } from "apollo-server-lambda";
 const typeDefs = gql`
   type Query {
     ping: String
-    multiply(lower: Int, upper: Int): Int
+    multiply(lower: Int!, upper: Int!): Int
   }
 `;
 
 const resolvers = {
   Query: {
     ping: () => {
-      console.log("ping");
       return "ping!";
     },
     multiply: (root, { lower, upper }, context) => {
