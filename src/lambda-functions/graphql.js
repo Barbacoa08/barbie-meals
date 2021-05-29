@@ -13,7 +13,7 @@ const resolvers = {
       console.log("ping");
       return "ping!";
     },
-    multiply: (lower, upper) => {
+    multiply: (root, { lower, upper }, context) => {
       return lower * upper;
     },
   },

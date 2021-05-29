@@ -10,10 +10,19 @@ const PING_QUERY = gql`
   }
 `;
 
+export const MULTIPLY_QUERY = gql`
+  query Multiply($lower: Int!, $upper: Int!) {
+    multiply(lower: $lower, upper: $upper)
+  }
+`;
+
 export const Hidden = (_: RouteComponentProps) => {
   const [lambdaResult, setLambdaResult] = useState("initial state");
 
   const { data } = useQuery(PING_QUERY);
+  const { data: multiplyResult } = useQuery(MULTIPLY_QUERY, {
+    variables: { lower: 5, upper: 10 },
+  });
 
   return (
     <Container data-testid="Hidden-root">
@@ -48,6 +57,11 @@ export const Hidden = (_: RouteComponentProps) => {
       <Box paddingTop="10">
         <Text>Ping Results:</Text>
         <Code>{data ? data.ping : "no results"}</Code>
+      </Box>
+
+      <Box paddingTop="10">
+        <Text>Ping Results:</Text>
+        <Code>{multiplyResult ? multiplyResult.multiply : "no results"}</Code>
       </Box>
     </Container>
   );

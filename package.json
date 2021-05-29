@@ -11,6 +11,7 @@
     "lint": "eslint .",
     "start": "run-p start:*",
     "start:app": "react-scripts start",
+    "start-dev:lambda": "NODE_ENV=development netlify-lambda serve src/lambda-functions",
     "start:lambda": "netlify-lambda serve src/lambda-functions",
     "build": "run-p build:**",
     "build:app": "react-scripts build",
