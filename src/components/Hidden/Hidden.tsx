@@ -10,7 +10,7 @@ export const Hidden = (_: RouteComponentProps) => {
 
   const { data } = usePingQuery();
   const { data: multiplyResult } = useMultiplyQuery({
-    variables: { lower: 5, upper: v },
+    variables: { x: 5, y: v },
   }); // TODO: update this to be a mutation
 
   return (

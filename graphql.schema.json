@@ -51,7 +51,7 @@
             "description": null,
             "args": [
               {
-                "name": "lower",
+                "name": "x",
                 "description": null,
                 "type": {
                   "kind": "NON_NULL",
@@ -67,7 +67,7 @@
                 "deprecationReason": null
               },
               {
-                "name": "upper",
+                "name": "y",
                 "description": null,
                 "type": {
                   "kind": "NON_NULL",

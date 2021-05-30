@@ -4,7 +4,7 @@ module.exports = {
       "http://localhost:9000/.netlify/functions/graphql": {},
     },
   ],
-  documents: ["./src/**/*.tsx", "./src/**/*.ts"],
+  documents: ["./src/**/*.graphql"],
   overwrite: true,
   generates: {
     "./src/graphql/types/index.ts": {

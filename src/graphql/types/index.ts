@@ -30,8 +30,8 @@ export type Query = {
 
 
 export type QueryMultiplyArgs = {
-  lower: Scalars['Int'];
-  upper: Scalars['Int'];
+  x: Scalars['Int'];
+  y: Scalars['Int'];
 };
 
 
@@ -44,8 +44,8 @@ export type PingQuery = (
 );
 
 export type MultiplyQueryVariables = Exact<{
-  lower: Scalars['Int'];
-  upper: Scalars['Int'];
+  x: Scalars['Int'];
+  y: Scalars['Int'];
 }>;
 
 
@@ -88,8 +88,8 @@ export type PingQueryHookResult = ReturnType<typeof usePingQuery>;
 export type PingLazyQueryHookResult = ReturnType<typeof usePingLazyQuery>;
 export type PingQueryResult = Apollo.QueryResult<PingQuery, PingQueryVariables>;
 export const MultiplyDocument = gql`
-    query Multiply($lower: Int!, $upper: Int!) {
-  multiply(lower: $lower, upper: $upper)
+    query Multiply($x: Int!, $y: Int!) {
+  multiply(x: $x, y: $y)
 }
     `;
 
@@ -105,8 +105,8 @@ export const MultiplyDocument = gql`
  * @example
  * const { data, loading, error } = useMultiplyQuery({
  *   variables: {
- *      lower: // value for 'lower'
- *      upper: // value for 'upper'
+ *      x: // value for 'x'
+ *      y: // value for 'y'
  *   },
  * });
  */
