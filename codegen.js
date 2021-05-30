@@ -1,13 +1,13 @@
 module.exports = {
   schema: [
     {
-      ["http://localhost:9000/.netlify/functions/graphql"]: {},
+      "http://localhost:9000/.netlify/functions/graphql": {},
     },
   ],
   documents: ["./src/**/*.tsx", "./src/**/*.ts"],
   overwrite: true,
   generates: {
-    "./src/graphql/types/graphql.tsx": {
+    "./src/graphql/types/index.ts": {
       plugins: [
         "typescript",
         "typescript-operations",

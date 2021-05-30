@@ -1,6 +1,7 @@
+*.min.js
+.snapshots/
 build/
 dist/
 lambda-server/
 node_modules/
-.snapshots/
-*.min.js
+src/graphql/types/

@@ -1,8 +1,7 @@
-import { gql, useQuery } from "@apollo/client";
 import { Container, Text } from "@chakra-ui/layout";
 import { Box, Button, Code, Heading } from "@chakra-ui/react";
 import { RouteComponentProps } from "@reach/router";
-import { useMultiplyQuery, usePingQuery } from "graphql/types/graphql";
+import { useMultiplyQuery, usePingQuery } from "graphql/types";
 import { useState } from "react";
 
 export const Hidden = (_: RouteComponentProps) => {

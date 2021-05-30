@@ -30,8 +30,8 @@ export type Query = {
 
 
 export type QueryMultiplyArgs = {
-  lower?: Maybe<Scalars['Int']>;
-  upper?: Maybe<Scalars['Int']>;
+  lower: Scalars['Int'];
+  upper: Scalars['Int'];
 };
 
 
