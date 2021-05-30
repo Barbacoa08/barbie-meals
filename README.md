@@ -4,18 +4,39 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 A place for Barbie to store his favorite meals, [view it in action here](https://barbie-meals.netlify.app/)
 
-### `yarn lint`
 
-### `yarn start`
+## build commands
 
-### `yarn build`
+### `yarn build` build a prod version of both the app and lambda functions
+### `yarn build:app` build only the app in prod mode
+### `yarn build:lambda` build only the lambda functions in prod mode
+
+
+## start commands
+
+### `yarn start` runs the app in dev mode and the lambda functions in prod mode
+### `yarn start:app` runs only the app in dev mode
+### `yarn start:lambda` runs only the lambda functions in prod mode
+### `yarn start-dev:lambda` runs the lambda functions in dev mode
+
+
+## testing commands
 
 ### `yarn test`
-
+### `yarn test:watch`
 ### `yarn test:coverage`
 
-### `yarn test:watch`
+
+## misc commands
+### `yarn lint`
+
+### `yarn generate` if lambda functions are beign run in dev mode, will generate hooks based on `src/graphql/*.graphql`
 
 ### `yarn storybook`
 
 ### `yarn` lint, build, test
+
+
+## further dev notes
+
+`codegen.js` is only used by the script `generate`, similartly, `graphql.schema.json` is auto-generated via running that script.

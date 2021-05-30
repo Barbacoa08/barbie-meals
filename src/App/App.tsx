@@ -1,3 +1,4 @@
+import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
 import { Center, Container, Flex, Heading } from "@chakra-ui/layout";
 import { ChakraProvider, extendTheme } from "@chakra-ui/react";
 import { useEffect, useGlobal, useMemo } from "reactn";
@@ -8,6 +9,10 @@ import { hashValue } from "utils";
 import "./App.css";
 
 const localStorageKey = "barbie-meals";
+const client = new ApolloClient({
+  cache: new InMemoryCache(),
+  uri: "/.netlify/functions/graphql",
+});
 
 export const App = () => {
   const [globals, setGlobals] = useGlobal();
@@ -51,19 +56,21 @@ export const App = () => {
 
   return (
     <main className="app" data-testid="App-root">
-      <ChakraProvider theme={theme}>
-        <Flex>
-          <LeftNav />
+      <ApolloProvider client={client}>
+        <ChakraProvider theme={theme}>
+          <Flex>
+            <LeftNav />
 
-          <Container>
-            <Center>
-              <Heading as="h1">Barbie Meals</Heading>
-            </Center>
+            <Container>
+              <Center>
+                <Heading as="h1">Barbie Meals</Heading>
+              </Center>
 
-            <RouterContainer />
-          </Container>
-        </Flex>
-      </ChakraProvider>
+              <RouterContainer />
+            </Container>
+          </Flex>
+        </ChakraProvider>
+      </ApolloProvider>
     </main>
   );
 };
