@@ -3,6 +3,9 @@ import { ApolloServer, gql } from "apollo-server-lambda";
 const typeDefs = gql`
   type Query {
     ping: String
+  }
+
+  type Mutation {
     multiply(x: Int!, y: Int!): Int
   }
 `;
@@ -12,6 +15,9 @@ const resolvers = {
     ping: () => {
       return "ping!";
     },
+  },
+
+  Mutation: {
     multiply: (
       _root: any,
       { x, y }: { x: number; y: number },
