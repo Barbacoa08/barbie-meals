@@ -27,7 +27,7 @@ export const Hidden = (_: RouteComponentProps) => {
             variant="outline"
             onClick={() => {
               try {
-                fetch("/.netlify/functions/hello")
+                fetch("/.netlify/functions/ping")
                   .then((data) => data.json())
                   .then((body) => setLambdaResult(body.message));
               } catch (_e) {
