@@ -11,7 +11,6 @@ export const Hidden = (_: RouteComponentProps) => {
   const [lambdaResult, setLambdaResult] = useState("initial state");
 
   const { data: pingData } = usePingQuery();
-  const pingResult = pingData?.ping;
 
   const [multiply, { data: multiplyData }] = useMultiplyMutation();
 
@@ -47,7 +46,7 @@ export const Hidden = (_: RouteComponentProps) => {
 
       <Box paddingTop="10">
         <Text>Ping Results (GraphQL endpoint):</Text>
-        <Code>{pingResult ?? "no results"}</Code>
+        <Code>{pingData?.ping ?? "no results"}</Code>
       </Box>
 
       <Box paddingTop="10">
