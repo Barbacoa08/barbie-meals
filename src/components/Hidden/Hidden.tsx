@@ -9,13 +9,11 @@ const getRandomInt = () => Math.floor(Math.random() * 100);
 
 export const Hidden = (_: RouteComponentProps) => {
   const [lambdaResult, setLambdaResult] = useState("initial state");
-  const [storedMultiplyResult, setMultiplyResult] = useState("initial state");
 
-  const { data } = usePingQuery();
-  const [multiply, { called, loading, data: multiplyData }] =
-    useMultiplyMutation({
-      variables: { x: getRandomInt(), y: getRandomInt() },
-    });
+  const { data: pingData } = usePingQuery();
+  const pingResult = pingData?.ping;
+
+  const [multiply, { data: multiplyData }] = useMultiplyMutation();
 
   return (
     <Container data-testid="Hidden-root">
@@ -24,20 +22,15 @@ export const Hidden = (_: RouteComponentProps) => {
       </Heading>
 
       <Box>
-        <Text>Ping Results (static REST endpoint via lambda func):</Text>
-        <Code>{data ? data.ping : "no results"}</Code>
-      </Box>
-
-      <Box paddingTop="10">
         <Text>
-          hit the `hello` lambda function?{" "}
+          hit the `ping` lambda function?{" "}
           <Button
             colorScheme="blue"
             variant="outline"
             onClick={() => {
               try {
                 fetch("/.netlify/functions/ping")
-                  .then((data) => data.json())
+                  .then((restDataResult) => restDataResult.json())
                   .then((body) => setLambdaResult(body.message));
               } catch (_e) {
                 setLambdaResult("hit, no result");
@@ -48,26 +41,28 @@ export const Hidden = (_: RouteComponentProps) => {
           </Button>
         </Text>
 
-        <Text>Results:</Text>
+        <Text>Ping Results (REST endpoint):</Text>
         <Code>{lambdaResult}</Code>
       </Box>
 
       <Box paddingTop="10">
-        <Text>Ping Results:</Text>
-        <Button
-          onClick={async () => {
-            const { data } = await multiply({
-              variables: { x: getRandomInt(), y: getRandomInt() },
-            });
+        <Text>Ping Results (GraphQL endpoint):</Text>
+        <Code>{pingResult ?? "no results"}</Code>
+      </Box>
 
-            console.log("multiply result:");
-            console.log(data ? data.multiply : "no result yet");
-            setMultiplyResult(data ? `${data.multiply}` : "no result yet");
-          }}
+      <Box paddingTop="10">
+        <Button
+          colorScheme="blue"
+          variant="outline"
+          onClick={async () =>
+            multiply({ variables: { x: getRandomInt(), y: getRandomInt() } })
+          }
         >
           calculate random multiplication
         </Button>
-        <Code>{storedMultiplyResult}</Code>
+
+        <Text>Multiply Result:</Text>
+        <Code>{multiplyData?.multiply ?? "no result"}</Code>
       </Box>
     </Container>
   );

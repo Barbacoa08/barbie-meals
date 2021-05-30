@@ -1,0 +1,3 @@
+mutation Multiply($x: Int!, $y: Int!) {
+  multiply(x: $x, y: $y)
+}
