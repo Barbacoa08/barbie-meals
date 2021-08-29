@@ -30,7 +30,10 @@ A place for Barbie to store his favorite meals, [view it in action here](https:/
 ## misc commands
 ### `yarn lint`
 
-### `yarn generate` if lambda functions are beign run in dev mode, will generate hooks based on `src/graphql/*.graphql`
+### `yarn generate` if lambda functions are being run in dev mode, will generate hooks based on `src/graphql/*.graphql`
+Generates files:
+- `graphql.schema.json`
+- `src/graphql/types/index.ts`
 
 ### `yarn storybook`
 
