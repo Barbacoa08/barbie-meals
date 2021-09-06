@@ -11,6 +11,7 @@ import {
   Nachos,
   Pasta,
   PBJ,
+  Pizza,
   SloppyJoes,
 } from "components/recipes";
 
@@ -25,6 +26,7 @@ export const routes = {
   nachos: "nachos",
   pasta: "pasta",
   pbj: "pbj",
+  pizza: "pizza",
   sloppyJoes: "sloppy-joes",
 
   beer: "beer",
@@ -49,6 +51,7 @@ export const RouterContainer = () => {
       <Pasta path={routes.pasta} />
       <PBJ path={routes.pbj} />
       <SloppyJoes path={routes.sloppyJoes} />
+      <Pizza path={routes.pizza} />
       <Nachos path={routes.nachos} />
 
       <Beer path={routes.beer} />
