@@ -4,6 +4,7 @@ import { useGlobal } from "reactn";
 
 import { Ingredient } from "components";
 import ramenWithBeefBroth from "images/asain-food-store/ramen_beef-broth.webp";
+import jinRamenSpicy from "images/asain-food-store/jin-ramen-spicy.webp";
 
 export const AsainFoodStore = (_: RouteComponentProps) => {
   const [showImages] = useGlobal("showImages");
@@ -19,6 +20,13 @@ export const AsainFoodStore = (_: RouteComponentProps) => {
           img={ramenWithBeefBroth}
           ingredient="Ramen With Beef Broth"
           ingredientOpinionated="Ramen With Beef Broth"
+          portion=""
+        />
+
+        <Ingredient
+          img={jinRamenSpicy}
+          ingredient="Jin Spicy Ramen"
+          ingredientOpinionated="Jin Spicy Ramen"
           portion=""
         />
       </Flex>

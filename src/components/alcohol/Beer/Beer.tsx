@@ -7,6 +7,7 @@ import marionberry from "images/beer/beer-marionberry-sour-sour-ale.webp";
 import pseudosue from "images/beer/beer-pseudo-sue-pale-ale.webp";
 import rosella from "images/beer/beer-rosella.webp";
 import wildlittlething from "images/beer/beer-wild-little-thing-slightly-sour-ale.webp";
+import modist from "images/beer/modist-brewing-_limited_run_-esoteric-eclecticism.webp";
 
 export const Beer = (_: RouteComponentProps) => {
   const [showImages] = useGlobal("showImages");
@@ -22,6 +23,13 @@ export const Beer = (_: RouteComponentProps) => {
           img={marionberry}
           ingredient="marionberry sour ale"
           ingredientOpinionated="marionberry sour ale"
+          portion=""
+        />
+
+        <Ingredient
+          img={modist}
+          ingredient="modist brewing: esoteric eclecticism"
+          ingredientOpinionated="modist brewing's limited run: esoteric eclecticism"
           portion=""
         />
 

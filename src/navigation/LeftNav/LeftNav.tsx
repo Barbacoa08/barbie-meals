@@ -105,6 +105,16 @@ export const LeftNav = () => {
                     Pasta
                   </Link>
                 </ListItem>
+                <ListItem>
+                  <Link as={ReachLink} to={routes.breakfastBurritos}>
+                    Brealfast Burritos
+                  </Link>
+                </ListItem>
+                <ListItem>
+                  <Link as={ReachLink} to={routes.bakedCarrotPotatoes}>
+                    Baked Carrots and Potatoes
+                  </Link>
+                </ListItem>
                 {/*
                 <ListItem>
                   <Link as={ReachLink} to={routes.todo}>

@@ -3,13 +3,22 @@ import { Router } from "@reach/router";
 import { ContactMe, Hidden, Homepage } from "components";
 import { Beer, Wine } from "components/alcohol";
 import { AsainFoodStore, CostCo } from "components/food-stores";
-import { Burgers, Pasta, PBJ, SloppyJoes } from "components/recipes";
-import { GrilledCheese } from "components/recipes/GrilledCheese";
+import {
+  BakedCarrotPotatoes,
+  BreakfastBurritos,
+  Burgers,
+  GrilledCheese,
+  Pasta,
+  PBJ,
+  SloppyJoes,
+} from "components/recipes";
 
 export const routes = {
   homepage: "homepage",
   contactMe: "contact-me",
 
+  bakedCarrotPotatoes: "baked-carrot-potatoes",
+  breakfastBurritos: "breakfast-burritos",
   burgers: "burgers",
   grilledCheese: "grilled-cheese",
   pasta: "pasta",
@@ -31,6 +40,8 @@ export const RouterContainer = () => {
       <Homepage default path={routes.homepage} />
       <ContactMe path={routes.contactMe} />
 
+      <BakedCarrotPotatoes path={routes.bakedCarrotPotatoes} />
+      <BreakfastBurritos path={routes.breakfastBurritos} />
       <Burgers path={routes.burgers} />
       <GrilledCheese path={routes.grilledCheese} />
       <Pasta path={routes.pasta} />
