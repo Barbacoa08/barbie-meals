@@ -4,6 +4,7 @@ import { ContactMe, Hidden, Homepage } from "components";
 import { Beer, Wine } from "components/alcohol";
 import { AsainFoodStore, CostCo } from "components/food-stores";
 import {
+  BakedCarrotPotatoes,
   BreakfastBurritos,
   Burgers,
   GrilledCheese,
@@ -16,6 +17,7 @@ export const routes = {
   homepage: "homepage",
   contactMe: "contact-me",
 
+  bakedCarrotPotatoes: "baked-carrot-potatoes",
   breakfastBurritos: "breakfast-burritos",
   burgers: "burgers",
   grilledCheese: "grilled-cheese",
@@ -38,6 +40,7 @@ export const RouterContainer = () => {
       <Homepage default path={routes.homepage} />
       <ContactMe path={routes.contactMe} />
 
+      <BakedCarrotPotatoes path={routes.bakedCarrotPotatoes} />
       <BreakfastBurritos path={routes.breakfastBurritos} />
       <Burgers path={routes.burgers} />
       <GrilledCheese path={routes.grilledCheese} />
