@@ -5,4 +5,5 @@ export * from "./GrilledCheese";
 export * from "./Nachos";
 export * from "./PBJ";
 export * from "./Pasta";
+export * from "./Pizza";
 export * from "./SloppyJoes";
