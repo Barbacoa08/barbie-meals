@@ -115,27 +115,11 @@ export const LeftNav = () => {
                     Baked Carrots and Potatoes
                   </Link>
                 </ListItem>
-                {/*
                 <ListItem>
-                  <Link as={ReachLink} to={routes.todo}>
-                    Quesadillas
-                  </Link>
-                </ListItem>
-                <ListItem>
-                  <Link as={ReachLink} to={routes.todo}>
-                    Pizza
-                  </Link>
-                </ListItem>
-                <ListItem>
-                  <Link as={ReachLink} to={routes.todo}>
+                  <Link as={ReachLink} to={routes.nachos}>
                     Nachos
                   </Link>
                 </ListItem>
-                <ListItem>
-                  <Link as={ReachLink} to={routes.todo}>
-                    Tacos
-                  </Link>
-                </ListItem> */}
               </List>
 
               <Heading size="sm" mt="10" mb="2">
