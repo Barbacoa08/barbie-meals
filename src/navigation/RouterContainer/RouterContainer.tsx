@@ -8,6 +8,7 @@ import {
   BreakfastBurritos,
   Burgers,
   GrilledCheese,
+  Nachos,
   Pasta,
   PBJ,
   SloppyJoes,
@@ -21,6 +22,7 @@ export const routes = {
   breakfastBurritos: "breakfast-burritos",
   burgers: "burgers",
   grilledCheese: "grilled-cheese",
+  nachos: "nachos",
   pasta: "pasta",
   pbj: "pbj",
   sloppyJoes: "sloppy-joes",
@@ -47,6 +49,7 @@ export const RouterContainer = () => {
       <Pasta path={routes.pasta} />
       <PBJ path={routes.pbj} />
       <SloppyJoes path={routes.sloppyJoes} />
+      <Nachos path={routes.nachos} />
 
       <Beer path={routes.beer} />
       <Wine path={routes.wine} />
