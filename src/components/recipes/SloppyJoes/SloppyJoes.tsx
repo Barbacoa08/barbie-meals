@@ -29,7 +29,7 @@ export const SloppyJoes = (_: RouteComponentProps) => {
   return (
     <Stack data-testid="SloppyJoes-root">
       <Flex justifyContent="space-evenly">
-        <Heading size="lg">Sloppy Joes</Heading>
+        <Heading as="h1" size="lg">Sloppy Joes</Heading>
 
         <Box display="inline-flex">
           {/*

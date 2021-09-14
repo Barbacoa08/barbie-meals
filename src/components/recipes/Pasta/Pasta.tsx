@@ -19,7 +19,7 @@ export const Pasta = (_: RouteComponentProps) => {
   return (
     <Stack data-testid="Pasta-root">
       <Flex justifyContent="space-evenly">
-        <Heading size="lg">Pasta</Heading>
+        <Heading as="h1" size="lg">Pasta</Heading>
 
         <Box display="inline-flex">
           <Tag>#vegan</Tag>

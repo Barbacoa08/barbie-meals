@@ -24,7 +24,7 @@ export const BreakfastBurritos = (_: RouteComponentProps) => {
   return (
     <Stack data-testid="BreakfastBurritos-root">
       <Flex justifyContent="space-evenly">
-        <Heading size="lg">Breakfast Burritos</Heading>
+        <Heading as="h1" size="lg">Breakfast Burritos</Heading>
 
         <Box display="inline-flex">
           <Tag>#filling</Tag>

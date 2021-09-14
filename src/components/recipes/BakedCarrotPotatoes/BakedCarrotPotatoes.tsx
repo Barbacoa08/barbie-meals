@@ -26,7 +26,7 @@ export const BakedCarrotPotatoes = (_: RouteComponentProps) => {
   return (
     <Stack data-testid="BakedCarrotPotatoes-root">
       <Flex justifyContent="space-evenly">
-        <Heading size="lg">Baked Carrots and Potatoes</Heading>
+        <Heading as="h1" size="lg">Baked Carrots and Potatoes</Heading>
 
         <Box display="inline-flex">
           <Tag>#side</Tag>

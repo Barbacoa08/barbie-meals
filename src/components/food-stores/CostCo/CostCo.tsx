@@ -11,7 +11,7 @@ export const CostCo = (_: RouteComponentProps) => {
 
   return (
     <Stack data-testid="CostCo-root">
-      <Heading size="lg" textAlign="center">
+      <Heading as="h1" size="lg" textAlign="center">
         CostCo {showImages === false && "(`Images` are turned off)"}
       </Heading>
 

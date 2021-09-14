@@ -11,7 +11,7 @@ export const AsainFoodStore = (_: RouteComponentProps) => {
 
   return (
     <Stack data-testid="AsainFoodStore-root">
-      <Heading size="lg" textAlign="center">
+      <Heading as="h1" size="lg" textAlign="center">
         AsainFoodStore {showImages === false && "(`Images` are turned off)"}
       </Heading>
 
