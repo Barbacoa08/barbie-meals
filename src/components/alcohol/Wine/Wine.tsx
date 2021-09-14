@@ -12,7 +12,7 @@ export const Wine = (_: RouteComponentProps) => {
 
   return (
     <Stack data-testid="Wine-root">
-      <Heading as="h1" size="lg" textAlign="center">
+      <Heading as="h2" size="lg" textAlign="center">
         Wine {showImages === false && "(`Images` are turned off)"}
       </Heading>
 

@@ -29,7 +29,7 @@ export const Burgers = (_: RouteComponentProps) => {
   return (
     <Stack data-testid="Burgers-root">
       <Flex justifyContent="space-evenly">
-        <Heading as="h1" size="lg">Burgers</Heading>
+        <Heading as="h2" size="lg">Burgers</Heading>
 
         <Box display="inline-flex">
           <Tag>#filling</Tag>

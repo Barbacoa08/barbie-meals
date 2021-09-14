@@ -22,7 +22,7 @@ export const PBJ = (_: RouteComponentProps) => {
   return (
     <Stack data-testid="PBJ-root">
       <Flex justifyContent="space-evenly">
-        <Heading as="h1" size="lg">Toasted PBJ</Heading>
+        <Heading as="h2" size="lg">Toasted PBJ</Heading>
 
         <Box display="inline-flex">
           {/*

@@ -18,7 +18,7 @@ export const Nachos = (_: RouteComponentProps) => {
   return (
     <Stack data-testid="Nachos-root">
       <Flex justifyContent="space-evenly">
-        <Heading as="h1" size="lg">Nachos (serves six)</Heading>
+        <Heading as="h2" size="lg">Nachos (serves six)</Heading>
 
         <Box display="inline-flex">
           <Tag>#side</Tag>

@@ -16,7 +16,7 @@ export const Pizza = (_: RouteComponentProps) => {
   return (
     <Stack data-testid="Pizza-root">
       <Flex justifyContent="space-evenly">
-        <Heading as="h1" size="lg">Pizza</Heading>
+        <Heading as="h2" size="lg">Pizza</Heading>
 
         <Box display="inline-flex">
           <Tag>#side</Tag>
