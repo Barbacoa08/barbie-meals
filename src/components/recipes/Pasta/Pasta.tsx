@@ -29,7 +29,7 @@ export const Pasta = (_: RouteComponentProps) => {
       </Flex>
 
       <Stack justifyContent="space-between">
-        <Heading as="h3" size="sm">ingredients</Heading>
+        <Heading as="h4" size="sm">ingredients</Heading>
         <OrderedList stylePosition="outside">
           <Flex justifyContent="space-between">
             <Ingredient
@@ -64,7 +64,7 @@ export const Pasta = (_: RouteComponentProps) => {
       </Stack>
 
       <Stack textAlign="right">
-        <Heading as="h3" size="sm">instructions</Heading>
+        <Heading as="h4" size="sm">instructions</Heading>
 
         <OrderedList stylePosition="outside">
           <ListItem>

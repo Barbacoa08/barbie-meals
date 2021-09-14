@@ -77,7 +77,7 @@ const PattiesDirections = () => {
   return (
     <>
       <Stack justifyContent="space-between">
-        <Heading as="h3" size="sm">
+        <Heading as="h4" size="sm">
           patties ingredients
         </Heading>
         <Flex>
@@ -112,7 +112,7 @@ const PattiesDirections = () => {
       </Stack>
 
       <Stack textAlign="right">
-        <Heading as="h3" size="sm">
+        <Heading as="h4" size="sm">
           patties instructions
         </Heading>
 
@@ -138,7 +138,7 @@ const OnionsDirections = () => {
   return (
     <>
       <Stack justifyContent="space-between">
-        <Heading as="h3" size="sm">
+        <Heading as="h4" size="sm">
           onions ingredients
         </Heading>
         <Flex>
@@ -166,7 +166,7 @@ const OnionsDirections = () => {
       </Stack>
 
       <Stack textAlign="right">
-        <Heading as="h3" size="sm">
+        <Heading as="h4" size="sm">
           onion instructions
         </Heading>
 
@@ -194,7 +194,7 @@ const AoliDirections = () => {
   return (
     <>
       <Stack justifyContent="space-between">
-        <Heading as="h3" size="sm">
+        <Heading as="h4" size="sm">
           aoli ingredients
         </Heading>
         <Flex>
@@ -243,7 +243,7 @@ const AoliDirections = () => {
       </Stack>
 
       <Stack textAlign="right">
-        <Heading as="h3" size="sm">
+        <Heading as="h4" size="sm">
           aoli instructions
         </Heading>
 
@@ -268,7 +268,7 @@ const AssemblyDirections = () => {
   return (
     <>
       <Stack justifyContent="space-between">
-        <Heading as="h3" size="sm">assembly ingredients</Heading>
+        <Heading as="h4" size="sm">assembly ingredients</Heading>
         <Flex>
           <Ingredient
             img={""}
@@ -319,7 +319,7 @@ const AssemblyDirections = () => {
       </Stack>
 
       <Stack textAlign="right">
-        <Heading as="h3" size="sm">
+        <Heading as="h4" size="sm">
           assembly instructions
         </Heading>
 

@@ -76,7 +76,7 @@ export const LeftNav = () => {
                 </ListItem>
               </List>
 
-              <Heading as="h3" size="sm" mt="10" mb="2">
+              <Heading as="h4" size="sm" mt="10" mb="2">
                 Recipes
               </Heading>
               <List textAlign="right">
@@ -127,7 +127,7 @@ export const LeftNav = () => {
                 </ListItem>
               </List>
 
-              <Heading as="h3" size="sm" mt="10" mb="2">
+              <Heading as="h4" size="sm" mt="10" mb="2">
                 Alcohol
               </Heading>
               <List textAlign="right">
@@ -143,7 +143,7 @@ export const LeftNav = () => {
                 </ListItem>
               </List>
 
-              <Heading as="h3" size="sm" mt="10" mb="2">
+              <Heading as="h4" size="sm" mt="10" mb="2">
                 Store Specific favorites
               </Heading>
               <List textAlign="right">
@@ -159,7 +159,7 @@ export const LeftNav = () => {
                 </ListItem>
               </List>
 
-              <Heading as="h3" size="sm" mt="10">
+              <Heading as="h4" size="sm" mt="10">
                 View Options
               </Heading>
               <Stack my="2">

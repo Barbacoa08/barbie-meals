@@ -34,7 +34,7 @@ export const BreakfastBurritos = (_: RouteComponentProps) => {
       </Flex>
 
       <Stack justifyContent="space-between">
-        <Heading as="h3" size="sm">ingredients</Heading>
+        <Heading as="h4" size="sm">ingredients</Heading>
 
         <Flex>
           <Ingredient
@@ -96,7 +96,7 @@ export const BreakfastBurritos = (_: RouteComponentProps) => {
       </Stack>
 
       <Stack textAlign="right">
-        <Heading as="h3" size="sm">instructions</Heading>
+        <Heading as="h4" size="sm">instructions</Heading>
 
         <OrderedList>
           <ListItem>
