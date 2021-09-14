@@ -33,4 +33,5 @@ const server = new ApolloServer({
   resolvers,
 });
 
-export const handler = server.createHandler();
+// TODO: figure out what this type is actually supposed to be
+export const handler: any = server.createHandler();
