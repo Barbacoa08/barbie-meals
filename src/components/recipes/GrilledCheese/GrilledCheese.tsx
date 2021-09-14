@@ -42,7 +42,7 @@ export const GrilledCheese = (_: RouteComponentProps) => {
       </Flex>
 
       <Stack justifyContent="space-between">
-        <Heading size="sm">ingredients</Heading>
+        <Heading as="h3" size="sm">ingredients</Heading>
 
         <Flex>
           {showFancy && (
@@ -96,7 +96,7 @@ export const GrilledCheese = (_: RouteComponentProps) => {
       </Stack>
 
       <Stack textAlign="right">
-        <Heading size="sm">instructions</Heading>
+        <Heading as="h3" size="sm">instructions</Heading>
 
         <OrderedList stylePosition="outside">
           {showFancy && (

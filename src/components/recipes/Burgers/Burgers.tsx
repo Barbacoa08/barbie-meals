@@ -77,7 +77,9 @@ const PattiesDirections = () => {
   return (
     <>
       <Stack justifyContent="space-between">
-        <Heading size="sm">patties ingredients</Heading>
+        <Heading as="h3" size="sm">
+          patties ingredients
+        </Heading>
         <Flex>
           <Ingredient
             img={meat}
@@ -110,7 +112,9 @@ const PattiesDirections = () => {
       </Stack>
 
       <Stack textAlign="right">
-        <Heading size="sm">patties instructions</Heading>
+        <Heading as="h3" size="sm">
+          patties instructions
+        </Heading>
 
         <OrderedList stylePosition="outside">
           <ListItem>
@@ -134,7 +138,9 @@ const OnionsDirections = () => {
   return (
     <>
       <Stack justifyContent="space-between">
-        <Heading size="sm">onions ingredients</Heading>
+        <Heading as="h3" size="sm">
+          onions ingredients
+        </Heading>
         <Flex>
           <Ingredient
             img={""}
@@ -160,7 +166,9 @@ const OnionsDirections = () => {
       </Stack>
 
       <Stack textAlign="right">
-        <Heading size="sm">onion instructions</Heading>
+        <Heading as="h3" size="sm">
+          onion instructions
+        </Heading>
 
         <OrderedList stylePosition="outside">
           <ListItem>
@@ -186,7 +194,9 @@ const AoliDirections = () => {
   return (
     <>
       <Stack justifyContent="space-between">
-        <Heading size="sm">aoli ingredients</Heading>
+        <Heading as="h3" size="sm">
+          aoli ingredients
+        </Heading>
         <Flex>
           <Ingredient
             img={""}
@@ -233,7 +243,9 @@ const AoliDirections = () => {
       </Stack>
 
       <Stack textAlign="right">
-        <Heading size="sm">aoli instructions</Heading>
+        <Heading as="h3" size="sm">
+          aoli instructions
+        </Heading>
 
         <OrderedList stylePosition="outside">
           <ListItem>
@@ -256,7 +268,7 @@ const AssemblyDirections = () => {
   return (
     <>
       <Stack justifyContent="space-between">
-        <Heading size="sm">assembly ingredients</Heading>
+        <Heading as="h3" size="sm">assembly ingredients</Heading>
         <Flex>
           <Ingredient
             img={""}
@@ -307,7 +319,9 @@ const AssemblyDirections = () => {
       </Stack>
 
       <Stack textAlign="right">
-        <Heading size="sm">assembly instructions</Heading>
+        <Heading as="h3" size="sm">
+          assembly instructions
+        </Heading>
 
         <OrderedList stylePosition="outside">
           <ListItem>
