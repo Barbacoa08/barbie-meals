@@ -1,19 +1,62 @@
-import { Container, Text } from "@chakra-ui/layout";
-import { RouteComponentProps } from "@reach/router";
+import { Image } from "@chakra-ui/image";
+import {
+  Container,
+  Flex,
+  Heading,
+  Link,
+  Spacer,
+  Stack,
+  Text,
+} from "@chakra-ui/layout";
+import { Link as ReachLink, RouteComponentProps } from "@reach/router";
+
+import { routes } from "navigation";
 
 export const Homepage = (_: RouteComponentProps) => {
   return (
     <Container data-testid="Homepage-root">
-      <Text>
-        I'm going to be right up front and let you know that this site if more
-        for me than it is for you. I didn't really like the other options that I
-        had for writing down recipes, and being a front-end engineer, I just
-        wanted a quick reference for myself to be able to find my recipes. So I
-        built this! I do hope that you find this useful, but this is more for me
-        than you. Just wanted to be clear on that.
-      </Text>
+      <Heading as="h2" size="lg">
+        Recently added deliciousness
+      </Heading>
 
-      <Text>Okie dokie! Enough of that, time for food!</Text>
+      <Flex marginTop={5}>
+        <Link as={ReachLink} to={routes.pizza} color="Highlight">
+          <Stack>
+            <Text margin="auto">Pizza</Text>
+
+            <Image
+              alt={"pizza"}
+              fallbackSrc="https://via.placeholder.com/100"
+            />
+          </Stack>
+        </Link>
+
+        <Spacer />
+
+        <Link as={ReachLink} to={routes.nachos} color="Highlight">
+          <Stack>
+            <Text margin="auto">Nachos</Text>
+
+            <Image
+              alt={"nachos"}
+              fallbackSrc="https://via.placeholder.com/100"
+            />
+          </Stack>
+        </Link>
+
+        <Spacer />
+
+        <Link as={ReachLink} to={routes.breakfastBurritos} color="Highlight">
+          <Stack>
+            <Text margin="auto">Breakfast Burritos</Text>
+
+            <Image
+              alt={"breakfast burritos"}
+              fallbackSrc="https://via.placeholder.com/100"
+            />
+          </Stack>
+        </Link>
+      </Flex>
     </Container>
   );
 };
