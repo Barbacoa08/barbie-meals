@@ -16,26 +16,26 @@ import {
 } from "components/recipes";
 
 export const routes = {
-  homepage: "homepage",
-  contactMe: "contact-me",
+  homepage: "/homepage",
+  contactMe: "/contact-me",
 
-  bakedCarrotPotatoes: "baked-carrot-potatoes",
-  breakfastBurritos: "breakfast-burritos",
-  burgers: "burgers",
-  grilledCheese: "grilled-cheese",
-  nachos: "nachos",
-  pasta: "pasta",
-  pbj: "pbj",
-  pizza: "pizza",
-  sloppyJoes: "sloppy-joes",
+  bakedCarrotPotatoes: "/baked-carrot-potatoes",
+  breakfastBurritos: "/breakfast-burritos",
+  burgers: "/burgers",
+  grilledCheese: "/grilled-cheese",
+  nachos: "/nachos",
+  pasta: "/pasta",
+  pbj: "/pbj",
+  pizza: "/pizza",
+  sloppyJoes: "/sloppy-joes",
 
-  beer: "beer",
-  wine: "wine",
+  beer: "/beer",
+  wine: "/wine",
 
-  costco: "costco",
-  asainFoodStore: "asain-food-store",
+  costco: "/costco",
+  asainFoodStore: "/asain-food-store",
 
-  hidden: "hidden",
+  hidden: "/hidden",
 };
 
 export const RouterContainer = () => {
