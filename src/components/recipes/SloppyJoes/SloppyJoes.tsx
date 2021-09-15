@@ -29,7 +29,7 @@ export const SloppyJoes = (_: RouteComponentProps) => {
   return (
     <Stack data-testid="SloppyJoes-root">
       <Flex justifyContent="space-evenly">
-        <Heading size="lg">Sloppy Joes</Heading>
+        <Heading as="h2" size="lg">Sloppy Joes</Heading>
 
         <Box display="inline-flex">
           {/*
@@ -44,7 +44,7 @@ export const SloppyJoes = (_: RouteComponentProps) => {
       </Flex>
 
       <Stack justifyContent="space-between">
-        <Heading size="sm">ingredients</Heading>
+        <Heading as="h4" size="sm">ingredients</Heading>
 
         <Flex>
           <Ingredient
@@ -100,7 +100,7 @@ export const SloppyJoes = (_: RouteComponentProps) => {
         https://chakra-ui.com/docs/features/chakra-factory#attaching-styles
       */}
       <Stack textAlign="right">
-        <Heading size="sm">instructions</Heading>
+        <Heading as="h4" size="sm">instructions</Heading>
 
         <OrderedList stylePosition="outside">
           <ListItem>

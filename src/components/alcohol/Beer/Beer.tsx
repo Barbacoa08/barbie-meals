@@ -14,7 +14,7 @@ export const Beer = (_: RouteComponentProps) => {
 
   return (
     <Stack data-testid="Beer-root">
-      <Heading size="lg" textAlign="center">
+      <Heading as="h2" size="lg" textAlign="center">
         Beer {showImages === false && "(`Images` are turned off)"}
       </Heading>
 

@@ -26,7 +26,7 @@ export const BakedCarrotPotatoes = (_: RouteComponentProps) => {
   return (
     <Stack data-testid="BakedCarrotPotatoes-root">
       <Flex justifyContent="space-evenly">
-        <Heading size="lg">Baked Carrots and Potatoes</Heading>
+        <Heading as="h2" size="lg">Baked Carrots and Potatoes</Heading>
 
         <Box display="inline-flex">
           <Tag>#side</Tag>
@@ -35,7 +35,7 @@ export const BakedCarrotPotatoes = (_: RouteComponentProps) => {
       </Flex>
 
       <Stack justifyContent="space-between">
-        <Heading size="sm">ingredients</Heading>
+        <Heading as="h4" size="sm">ingredients</Heading>
 
         <Flex>
           <Ingredient
@@ -85,7 +85,7 @@ export const BakedCarrotPotatoes = (_: RouteComponentProps) => {
       </Stack>
 
       <Stack textAlign="right">
-        <Heading size="sm">instructions</Heading>
+        <Heading as="h4" size="sm">instructions</Heading>
 
         <OrderedList>
           <ListItem>

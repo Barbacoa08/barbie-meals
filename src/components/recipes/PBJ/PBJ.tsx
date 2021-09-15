@@ -22,7 +22,7 @@ export const PBJ = (_: RouteComponentProps) => {
   return (
     <Stack data-testid="PBJ-root">
       <Flex justifyContent="space-evenly">
-        <Heading size="lg">Toasted PBJ</Heading>
+        <Heading as="h2" size="lg">Toasted PBJ</Heading>
 
         <Box display="inline-flex">
           {/*
@@ -37,7 +37,7 @@ export const PBJ = (_: RouteComponentProps) => {
       </Flex>
 
       <Stack>
-        <Heading size="sm">ingredients</Heading>
+        <Heading as="h4" size="sm">ingredients</Heading>
 
         <Flex justifyContent="space-between">
           <Ingredient
@@ -71,7 +71,7 @@ export const PBJ = (_: RouteComponentProps) => {
       </Stack>
 
       <Stack textAlign="right">
-        <Heading size="sm">instructions</Heading>
+        <Heading as="h4" size="sm">instructions</Heading>
 
         {/*
           TODO: striped list items

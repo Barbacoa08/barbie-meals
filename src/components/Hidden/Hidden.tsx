@@ -16,7 +16,7 @@ export const Hidden = (_: RouteComponentProps) => {
 
   return (
     <Container data-testid="Hidden-root">
-      <Heading size="md" padding="4">
+      <Heading as="h3" size="md" padding="4">
         This page is for experimental features
       </Heading>
 
