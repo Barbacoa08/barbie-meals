@@ -15,7 +15,7 @@ import { routes } from "navigation";
 export const Homepage = (_: RouteComponentProps) => {
   return (
     <Container data-testid="Homepage-root">
-      <Heading as="h2" size="lg">
+      <Heading as="h2" size="lg" textAlign="center">
         Recently added deliciousness
       </Heading>
 
@@ -53,6 +53,8 @@ export const Homepage = (_: RouteComponentProps) => {
             <Image
               alt={"breakfast burritos"}
               fallbackSrc="https://via.placeholder.com/100"
+              width={100}
+              style={{ marginLeft: "auto", marginRight: "auto" }}
             />
           </Stack>
         </Link>
