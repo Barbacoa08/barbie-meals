@@ -3,117 +3,106 @@ import { Flex, Heading, Link, Stack } from "@chakra-ui/layout";
 import { Divider, IconButton } from "@chakra-ui/react";
 import { Link as ReachLink, RouteComponentProps } from "@reach/router";
 import PouchDB from "pouchdb";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 import { routes } from "navigation";
 import { stringCamelCaseToSentence } from "utils";
 
 import { MealOptionProps, PouchDbMealName, PouchMeal } from "./FavoritesTypes";
 
-// TODO: https://pouchdb.com/getting-started.html
-// https://pouchdb.com/guides/setup-couchdb.html
 // https://neighbourhood.ie/download-apache-couchdb-mac/
 // https://www.ibm.com/cloud/free
 
 export const Favorites = (_: RouteComponentProps) => {
-  // TODO: will need to add a mock for PouchDB
+  // TODO: will need to add a mock for PouchDB for unit tests
   const dbMeal = new PouchDB(PouchDbMealName); // TODO: does this need to be higher up the chain? in `App`?
-
-  // const mealToPut: PouchMeal = {
-  //   _id: "1",
-  //   // _rev: "1",
-  //   name: "Pizza",
-  //   description: "A pizza",
-  //   image: "https://i.imgur.com/qJc1nEp.jpg",
-  //   ingredients: ["tomato", "cheese"],
-  //   instructions: ["cook", "eat"],
-  // };
-  // dbMeal
-  //   .put(mealToPut)
-  //   .then((result) => {
-  //     console.log("put result");
-  //     console.log(result);
-  //   })
-  //   .catch(function (err) {
-  //     console.log("PUT err");
-  //     console.log(err);
-  //   });
 
   const [favorites, setFavorites] = useState<JSX.Element[]>([]);
   const [additionalMeals, setAdditionalMeals] = useState<JSX.Element[]>([]);
+
+  // TODO: thid method is so... yuck... find a cleaner solution
+  const calculateMeals = useCallback(
+    (storedFavoriteMeals: PouchDB.Core.AllDocsResponse<{}>) => {
+      const storedIds = storedFavoriteMeals.rows.map((row) => row.id);
+
+      const addtMeals: JSX.Element[] = [];
+      const favMeals: JSX.Element[] = [];
+      Object.keys(routes.recipes).forEach((mealId) => {
+        const uri = routes.recipes[mealId];
+        const title = stringCamelCaseToSentence(mealId);
+        const key = `meal-option-${mealId}`;
+
+        if (storedIds.includes(mealId)) {
+          favMeals.push(
+            <MealOption
+              icon="remove"
+              title={title}
+              linkTo={uri}
+              key={key}
+              onClick={(e) => {
+                e.preventDefault();
+
+                dbMeal.get(mealId).then((doc) => {
+                  dbMeal
+                    .remove(doc)
+                    .then(() => {
+                      dbMeal
+                        .allDocs()
+                        .then(calculateMeals)
+                        .catch((err) =>
+                          console.error("PouchDb.allDocs err", err)
+                        );
+                    })
+                    .catch((err) => console.error("meal removal err", err));
+                });
+              }}
+            />
+          );
+        } else {
+          addtMeals.push(
+            <MealOption
+              icon="add"
+              title={title}
+              linkTo={uri}
+              key={key}
+              onClick={(e) => {
+                e.preventDefault();
+
+                const meal: PouchMeal = {
+                  _id: mealId,
+                  title,
+                  icon: "add",
+                  linkTo: uri,
+                  key,
+                };
+                dbMeal
+                  .put(meal)
+                  .then(() => {
+                    dbMeal
+                      .allDocs()
+                      .then(calculateMeals)
+                      .catch((err) =>
+                        console.error("PouchDb.allDocs err", err)
+                      );
+                  })
+                  .catch((err) => console.error("meal PUT err", err));
+              }}
+            />
+          );
+        }
+      });
+
+      setFavorites(favMeals);
+      setAdditionalMeals(addtMeals);
+    },
+    [routes.recipes]
+  );
   useEffect(() => {
     dbMeal
       .allDocs()
-      .then((storedFavoriteMeals) => {
-        const storedIds = storedFavoriteMeals.rows.map((row) => row.id);
-
-        const addtMeals: JSX.Element[] = [];
-        const favMeals: JSX.Element[] = [];
-        Object.keys(routes.recipes).forEach((mealId) => {
-          const uri = routes.recipes[mealId];
-          const title = stringCamelCaseToSentence(mealId);
-          const key = `meal-option-${mealId}`;
-
-          if (storedIds.includes(mealId)) {
-            favMeals.push(
-              <MealOption
-                icon="remove"
-                title={title}
-                linkTo={uri}
-                key={key}
-                onClick={(e) => {
-                  e.preventDefault();
-
-                  dbMeal.get(mealId).then((doc) => {
-                    dbMeal
-                      .remove(doc)
-                      .then((result) => {
-                        console.log("remove result");
-                        console.log(result);
-                        // setFavorites(favMeals);
-                        // setAdditionalMeals(addtMeals);
-                      })
-                      .catch(function (err) {
-                        console.log("remove err");
-                        console.log(err);
-                      });
-                  });
-                }}
-              />
-            );
-          } else {
-            addtMeals.push(
-              <MealOption
-                icon="add"
-                title={title}
-                linkTo={uri}
-                key={key}
-                onClick={(e) => {
-                  e.preventDefault();
-
-                  const meal: PouchMeal = {
-                    _id: mealId,
-                    title,
-                    icon: "add",
-                    linkTo: uri,
-                    key,
-                  };
-                  dbMeal.put(meal).then((result) => {
-                    console.log("put result");
-                    console.log(result);
-                    // TODO: remove from array
-                  });
-                }}
-              />
-            );
-          }
-        });
-
-        setFavorites(favMeals);
-        setAdditionalMeals(addtMeals);
-      })
-      .catch((err) => console.error("allDocs err", err));
-  }, [routes.recipes]);
+      .then(calculateMeals)
+      .catch((err) => console.error("PouchDb.allDocs err", err));
+  }, []);
 
   return (
     <Stack data-testid="Favorites-root">
