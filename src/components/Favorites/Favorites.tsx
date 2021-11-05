@@ -1,14 +1,14 @@
 import { AddIcon, MinusIcon } from "@chakra-ui/icons";
-import { Flex, Heading, Link, Stack, Text } from "@chakra-ui/layout";
-import { Box, Divider, IconButton } from "@chakra-ui/react";
+import { Flex, Heading, Link, Stack } from "@chakra-ui/layout";
+import { Divider, IconButton } from "@chakra-ui/react";
 import { Link as ReachLink, RouteComponentProps } from "@reach/router";
 import PouchDB from "pouchdb";
-import { FC, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 
 import { routes } from "navigation";
 import { stringCamelCaseToSentence } from "utils";
 
-import { MealOptionProps, PouchDbMealName } from "./FavoritesTypes";
+import { MealOptionProps, PouchDbMealName, PouchMeal } from "./FavoritesTypes";
 
 // TODO: https://pouchdb.com/getting-started.html
 // https://pouchdb.com/guides/setup-couchdb.html
@@ -17,28 +17,7 @@ import { MealOptionProps, PouchDbMealName } from "./FavoritesTypes";
 
 export const Favorites = (_: RouteComponentProps) => {
   // TODO: will need to add a mock for PouchDB
-  const dbMeal = new PouchDB(PouchDbMealName);
-
-  dbMeal
-    .info()
-    .then((info) => {
-      console.log("info");
-      console.log(info);
-    })
-    .catch(function (err) {
-      console.log("info err");
-      console.log(err);
-    });
-  dbMeal
-    .allDocs()
-    .then((result) => {
-      console.log("allDocs result");
-      console.log(result);
-    })
-    .catch(function (err) {
-      console.log("allDocs err");
-      console.log(err);
-    });
+  const dbMeal = new PouchDB(PouchDbMealName); // TODO: does this need to be higher up the chain? in `App`?
 
   // const mealToPut: PouchMeal = {
   //   _id: "1",
@@ -60,27 +39,58 @@ export const Favorites = (_: RouteComponentProps) => {
   //     console.log(err);
   //   });
 
-  // const [favorites, setFavorites] = useState<JSX.Element[]>([]);
-  const allMeals = useMemo(() => {
-    const recipeLinks: JSX.Element[] = [];
-    Object.keys(routes.recipes).forEach((recipeObjectKey) => {
-      const uri = routes.recipes[recipeObjectKey];
+  const [favorites, setFavorites] = useState<JSX.Element[]>([]);
+  const [additionalMeals, setAdditionalMeals] = useState<JSX.Element[]>([]);
+  useEffect(() => {
+    console.log("dbMeal useEffect");
+    dbMeal
+      .allDocs()
+      .then((result) => {
+        console.log("allDocs result");
+        console.log(result);
 
-      const title = stringCamelCaseToSentence(recipeObjectKey);
+        const addtMeals: JSX.Element[] = [];
+        const favMeals: JSX.Element[] = [];
+        Object.keys(routes.recipes).forEach((recipeObjectKey) => {
+          const uri = routes.recipes[recipeObjectKey];
+          const title = stringCamelCaseToSentence(recipeObjectKey);
+          const key = `meal-option-${recipeObjectKey}`;
 
-      const icon = "add"; // TODO: set icon properly based on PouchDB
-      recipeLinks.push(
-        <MealOption icon={icon} key={`meal-option-${recipeObjectKey}`}>
-          <Stack justify="center">
-            <Link as={ReachLink} to={uri}>
-              {title}
-            </Link>
-          </Stack>
-        </MealOption>
-      );
-    });
+          // TODO: set icon and array properly
+          // favMeals.push(<MealOption icon="remove" title={title} linkTo={uri} key={key} />);
+          addtMeals.push(
+            <MealOption
+              icon="add"
+              title={title}
+              linkTo={uri}
+              key={key}
+              onClick={(e) => {
+                e.preventDefault();
 
-    return recipeLinks;
+                const meal: PouchMeal = {
+                  _id: recipeObjectKey,
+                  title,
+                  icon: "add",
+                  linkTo: uri,
+                  key,
+                };
+                dbMeal.put(meal).then((result) => {
+                  console.log("put result");
+                  console.log(result);
+                  // TODO: remove from array
+                });
+              }}
+            />
+          );
+        });
+
+        setFavorites(favMeals);
+        setAdditionalMeals(addtMeals);
+      })
+      .catch(function (err) {
+        console.log("allDocs err");
+        console.log(err);
+      });
   }, [routes.recipes]);
 
   return (
@@ -99,7 +109,7 @@ export const Favorites = (_: RouteComponentProps) => {
 
           <Divider />
 
-          {/* <MealOption icon="remove" text="Burgers" /> */}
+          {favorites}
         </Stack>
 
         <Stack>
@@ -109,27 +119,25 @@ export const Favorites = (_: RouteComponentProps) => {
 
           <Divider />
 
-          {allMeals}
+          {additionalMeals}
         </Stack>
       </Flex>
     </Stack>
   );
 };
 
-const MealOption = ({ children, icon, key }: MealOptionProps) => {
+const MealOption = ({ icon, title, linkTo, onClick }: MealOptionProps) => {
   const buttonIcon = icon === "add" ? <AddIcon /> : <MinusIcon />;
 
   return (
-    <Flex
-      borderWidth="2px"
-      justifyContent="space-between"
-      key={key}
-      p={3}
-      shadow="md"
-    >
-      {children}
+    <Flex borderWidth="2px" justifyContent="space-between" p={3} shadow="md">
+      <Stack justify="center">
+        <Link as={ReachLink} to={linkTo}>
+          {title}
+        </Link>
+      </Stack>
 
-      <IconButton aria-label={icon} icon={buttonIcon} />
+      <IconButton aria-label={icon} icon={buttonIcon} onClick={onClick} />
     </Flex>
   );
 };

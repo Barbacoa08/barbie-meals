@@ -1,17 +1,15 @@
-export interface PouchMeal {
+export interface MealOptionProps {
+  icon: "add" | "remove";
+  title: string;
+  linkTo: string;
+
+  onClick: (e: React.MouseEvent<HTMLButtonElement>) => void;
+}
+
+export interface PouchMeal extends Omit<MealOptionProps, "onClick"> {
   _id: string;
   _rev?: string;
-  name: string;
-  description: string;
-  image: string;
-  ingredients: string[];
-  instructions: string[];
+  key: string;
 }
 
 export const PouchDbMealName = "bm-favorites";
-
-export interface MealOptionProps {
-  children: React.ReactNode;
-  icon: "add" | "remove";
-  key: string;
-}
