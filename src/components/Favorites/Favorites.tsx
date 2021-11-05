@@ -42,55 +42,77 @@ export const Favorites = (_: RouteComponentProps) => {
   const [favorites, setFavorites] = useState<JSX.Element[]>([]);
   const [additionalMeals, setAdditionalMeals] = useState<JSX.Element[]>([]);
   useEffect(() => {
-    console.log("dbMeal useEffect");
     dbMeal
       .allDocs()
-      .then((result) => {
-        console.log("allDocs result");
-        console.log(result);
+      .then((storedFavoriteMeals) => {
+        const storedIds = storedFavoriteMeals.rows.map((row) => row.id);
 
         const addtMeals: JSX.Element[] = [];
         const favMeals: JSX.Element[] = [];
-        Object.keys(routes.recipes).forEach((recipeObjectKey) => {
-          const uri = routes.recipes[recipeObjectKey];
-          const title = stringCamelCaseToSentence(recipeObjectKey);
-          const key = `meal-option-${recipeObjectKey}`;
+        Object.keys(routes.recipes).forEach((mealId) => {
+          const uri = routes.recipes[mealId];
+          const title = stringCamelCaseToSentence(mealId);
+          const key = `meal-option-${mealId}`;
 
-          // TODO: set icon and array properly
-          // favMeals.push(<MealOption icon="remove" title={title} linkTo={uri} key={key} />);
-          addtMeals.push(
-            <MealOption
-              icon="add"
-              title={title}
-              linkTo={uri}
-              key={key}
-              onClick={(e) => {
-                e.preventDefault();
+          if (storedIds.includes(mealId)) {
+            favMeals.push(
+              <MealOption
+                icon="remove"
+                title={title}
+                linkTo={uri}
+                key={key}
+                onClick={(e) => {
+                  e.preventDefault();
 
-                const meal: PouchMeal = {
-                  _id: recipeObjectKey,
-                  title,
-                  icon: "add",
-                  linkTo: uri,
-                  key,
-                };
-                dbMeal.put(meal).then((result) => {
-                  console.log("put result");
-                  console.log(result);
-                  // TODO: remove from array
-                });
-              }}
-            />
-          );
+                  dbMeal.get(mealId).then((doc) => {
+                    dbMeal
+                      .remove(doc)
+                      .then((result) => {
+                        console.log("remove result");
+                        console.log(result);
+                        // setFavorites(favMeals);
+                        // setAdditionalMeals(addtMeals);
+                      })
+                      .catch(function (err) {
+                        console.log("remove err");
+                        console.log(err);
+                      });
+                  });
+                }}
+              />
+            );
+          } else {
+            addtMeals.push(
+              <MealOption
+                icon="add"
+                title={title}
+                linkTo={uri}
+                key={key}
+                onClick={(e) => {
+                  e.preventDefault();
+
+                  const meal: PouchMeal = {
+                    _id: mealId,
+                    title,
+                    icon: "add",
+                    linkTo: uri,
+                    key,
+                  };
+                  dbMeal.put(meal).then((result) => {
+                    console.log("put result");
+                    console.log(result);
+                    // TODO: remove from array
+                  });
+                }}
+              />
+            );
+          }
         });
 
         setFavorites(favMeals);
         setAdditionalMeals(addtMeals);
       })
-      .catch(function (err) {
-        console.log("allDocs err");
-        console.log(err);
-      });
+      .catch((err) => console.error("allDocs err", err));
   }, [routes.recipes]);
 
   return (
