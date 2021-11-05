@@ -8,15 +8,11 @@ import {
   Stack,
   Text,
 } from "@chakra-ui/layout";
+import { Box } from "@chakra-ui/react";
 import { Link as ReachLink, RouteComponentProps } from "@reach/router";
 
+import { Favorites } from "components";
 import { routes } from "navigation";
-
-// TODO: https://pouchdb.com/getting-started.html
-// use :pointup: to allow people to save their favorites
-// https://pouchdb.com/guides/setup-couchdb.html
-// https://neighbourhood.ie/download-apache-couchdb-mac/
-// https://www.ibm.com/cloud/free
 
 export const Homepage = (_: RouteComponentProps) => {
   return (
@@ -65,6 +61,10 @@ export const Homepage = (_: RouteComponentProps) => {
           </Stack>
         </Link>
       </Flex>
+
+      <Box marginTop="20">
+        <Favorites />
+      </Box>
     </Container>
   );
 };

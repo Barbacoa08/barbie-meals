@@ -1,6 +1,6 @@
 import { Router } from "@reach/router";
 
-import { ContactMe, Hidden, Homepage } from "components";
+import { ContactMe, Favorites, Hidden, Homepage } from "components";
 import { Beer, Wine } from "components/alcohol";
 import { AsainFoodStore, CostCo } from "components/food-stores";
 import {
@@ -18,6 +18,7 @@ import {
 export const routes = {
   homepage: "/homepage",
   contactMe: "/contact-me",
+  favorites: "/favorites",
 
   bakedCarrotPotatoes: "/baked-carrot-potatoes",
   breakfastBurritos: "/breakfast-burritos",
@@ -43,6 +44,7 @@ export const RouterContainer = () => {
     <Router>
       <Homepage default path={routes.homepage} />
       <ContactMe path={routes.contactMe} />
+      <Favorites path={routes.favorites} />
 
       <BakedCarrotPotatoes path={routes.bakedCarrotPotatoes} />
       <BreakfastBurritos path={routes.breakfastBurritos} />

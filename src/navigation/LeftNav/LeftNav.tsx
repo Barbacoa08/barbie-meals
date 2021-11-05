@@ -70,6 +70,12 @@ export const LeftNav = () => {
                 </ListItem>
 
                 <ListItem>
+                  <Link as={ReachLink} to={routes.favorites}>
+                    Favorites
+                  </Link>
+                </ListItem>
+
+                <ListItem>
                   <Link as={ReachLink} to={routes.contactMe}>
                     Contact Me
                   </Link>
