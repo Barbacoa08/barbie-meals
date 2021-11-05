@@ -1,6 +1,11 @@
 import { AddIcon, MinusIcon } from "@chakra-ui/icons";
 import { Flex, Heading, Link, Stack } from "@chakra-ui/layout";
-import { Divider, IconButton } from "@chakra-ui/react";
+import {
+  Divider,
+  IconButton,
+  ScaleFade,
+  useDisclosure,
+} from "@chakra-ui/react";
 import { Link as ReachLink, RouteComponentProps } from "@reach/router";
 import PouchDB from "pouchdb";
 import { useCallback, useEffect, useState } from "react";
@@ -138,17 +143,28 @@ export const Favorites = (_: RouteComponentProps) => {
 };
 
 const MealOption = ({ icon, title, linkTo, onClick }: MealOptionProps) => {
+  const { isOpen, onToggle } = useDisclosure({ isOpen: true });
+
   const buttonIcon = icon === "add" ? <AddIcon /> : <MinusIcon />;
 
   return (
-    <Flex borderWidth="2px" justifyContent="space-between" p={3} shadow="md">
-      <Stack justify="center">
-        <Link as={ReachLink} to={linkTo}>
-          {title}
-        </Link>
-      </Stack>
+    <ScaleFade initialScale={0.1} in={isOpen}>
+      <Flex borderWidth="2px" justifyContent="space-between" p={3} shadow="md">
+        <Stack justify="center">
+          <Link as={ReachLink} to={linkTo}>
+            {title}
+          </Link>
+        </Stack>
 
-      <IconButton aria-label={icon} icon={buttonIcon} onClick={onClick} />
-    </Flex>
+        <IconButton
+          aria-label={icon}
+          icon={buttonIcon}
+          onClick={(e) => {
+            onToggle();
+            onClick(e);
+          }}
+        />
+      </Flex>
+    </ScaleFade>
   );
 };
