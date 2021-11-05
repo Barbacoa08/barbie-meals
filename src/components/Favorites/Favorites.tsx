@@ -12,7 +12,9 @@ import { MealOptionProps, PouchDbMealName } from "./FavoritesTypes";
 // https://www.ibm.com/cloud/free
 
 export const Favorites = (_: RouteComponentProps) => {
+  // TODO: will need to add a mock for PouchDB
   const dbMeal = new PouchDB(PouchDbMealName);
+
   dbMeal
     .info()
     .then((info) => {

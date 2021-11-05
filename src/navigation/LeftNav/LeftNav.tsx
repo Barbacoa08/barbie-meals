@@ -41,6 +41,24 @@ export const LeftNav = () => {
    * https://usehooks.com/useWindowSize/
    */
 
+  const recipeLinks: JSX.Element[] = [];
+  Object.keys(routes.recipes).forEach((recipieObjectKey) => {
+    const uri = routes.recipes[recipieObjectKey];
+
+    // credit: https://stackoverflow.com/a/4149393/1022765
+    const title = recipieObjectKey
+      .replace(/([A-Z])/g, " $1") // insert a space before all caps
+      .replace(/^./, (str) => str.toUpperCase()); // uppercase the first character
+
+    recipeLinks.push(
+      <ListItem key={`left-nav-recipie-${recipieObjectKey}`}>
+        <Link as={ReachLink} to={uri}>
+          {title}
+        </Link>
+      </ListItem>
+    );
+  });
+
   return (
     <Box as="nav" data-testid="LeftNav-root" maxHeight="100vh">
       <IconButton
@@ -85,53 +103,7 @@ export const LeftNav = () => {
               <Heading as="h4" size="sm" mt="10" mb="2">
                 Recipes
               </Heading>
-              <List textAlign="right">
-                <ListItem>
-                  <Link as={ReachLink} to={routes.sloppyJoes}>
-                    Sloppy Joes
-                  </Link>
-                </ListItem>
-                <ListItem>
-                  <Link as={ReachLink} to={routes.pbj}>
-                    Toasted PBJ
-                  </Link>
-                </ListItem>
-                <ListItem>
-                  <Link as={ReachLink} to={routes.grilledCheese}>
-                    Grilled Cheese
-                  </Link>
-                </ListItem>
-                <ListItem>
-                  <Link as={ReachLink} to={routes.burgers}>
-                    Burgers
-                  </Link>
-                </ListItem>
-                <ListItem>
-                  <Link as={ReachLink} to={routes.pasta}>
-                    Pasta
-                  </Link>
-                </ListItem>
-                <ListItem>
-                  <Link as={ReachLink} to={routes.breakfastBurritos}>
-                    Brealfast Burritos
-                  </Link>
-                </ListItem>
-                <ListItem>
-                  <Link as={ReachLink} to={routes.bakedCarrotPotatoes}>
-                    Baked Carrots and Potatoes
-                  </Link>
-                </ListItem>
-                <ListItem>
-                  <Link as={ReachLink} to={routes.nachos}>
-                    Nachos
-                  </Link>
-                </ListItem>
-                <ListItem>
-                  <Link as={ReachLink} to={routes.pizza}>
-                    Pizza
-                  </Link>
-                </ListItem>
-              </List>
+              <List textAlign="right">{recipeLinks}</List>
 
               <Heading as="h4" size="sm" mt="10" mb="2">
                 Alcohol

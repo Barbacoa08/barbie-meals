@@ -22,7 +22,7 @@ export const Homepage = (_: RouteComponentProps) => {
       </Heading>
 
       <Flex marginTop={5}>
-        <Link as={ReachLink} to={routes.pizza} color="Highlight">
+        <Link as={ReachLink} to={routes.recipes.pizza} color="Highlight">
           <Stack>
             <Text margin="auto">Pizza</Text>
 
@@ -35,7 +35,7 @@ export const Homepage = (_: RouteComponentProps) => {
 
         <Spacer />
 
-        <Link as={ReachLink} to={routes.nachos} color="Highlight">
+        <Link as={ReachLink} to={routes.recipes.nachos} color="Highlight">
           <Stack>
             <Text margin="auto">Nachos</Text>
 
@@ -48,7 +48,11 @@ export const Homepage = (_: RouteComponentProps) => {
 
         <Spacer />
 
-        <Link as={ReachLink} to={routes.breakfastBurritos} color="Highlight">
+        <Link
+          as={ReachLink}
+          to={routes.recipes.breakfastBurritos}
+          color="Highlight"
+        >
           <Stack>
             <Text margin="auto">Breakfast Burritos</Text>
 
