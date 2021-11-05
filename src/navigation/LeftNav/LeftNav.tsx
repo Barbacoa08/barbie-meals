@@ -16,6 +16,7 @@ import { useGlobal } from "reactn";
 
 import { ToggleButton } from "components";
 import { routes } from "navigation";
+import { stringCamelCaseToSentence } from "utils";
 
 export const LeftNav = () => {
   const { isOpen, onClose, onOpen } = useDisclosure();
@@ -42,16 +43,13 @@ export const LeftNav = () => {
    */
 
   const recipeLinks: JSX.Element[] = [];
-  Object.keys(routes.recipes).forEach((recipieObjectKey) => {
-    const uri = routes.recipes[recipieObjectKey];
+  Object.keys(routes.recipes).forEach((recipeObjectKey) => {
+    const uri = routes.recipes[recipeObjectKey];
 
-    // credit: https://stackoverflow.com/a/4149393/1022765
-    const title = recipieObjectKey
-      .replace(/([A-Z])/g, " $1") // insert a space before all caps
-      .replace(/^./, (str) => str.toUpperCase()); // uppercase the first character
+    const title = stringCamelCaseToSentence(recipeObjectKey);
 
     recipeLinks.push(
-      <ListItem key={`left-nav-recipie-${recipieObjectKey}`}>
+      <ListItem key={`left-nav-recipe-${recipeObjectKey}`}>
         <Link as={ReachLink} to={uri}>
           {title}
         </Link>

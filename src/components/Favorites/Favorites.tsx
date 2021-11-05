@@ -1,8 +1,12 @@
 import { AddIcon, MinusIcon } from "@chakra-ui/icons";
-import { Flex, Heading, Stack, Text } from "@chakra-ui/layout";
-import { Divider, IconButton } from "@chakra-ui/react";
-import { RouteComponentProps } from "@reach/router";
+import { Flex, Heading, Link, Stack, Text } from "@chakra-ui/layout";
+import { Box, Divider, IconButton } from "@chakra-ui/react";
+import { Link as ReachLink, RouteComponentProps } from "@reach/router";
 import PouchDB from "pouchdb";
+import { FC, useMemo, useState } from "react";
+
+import { routes } from "navigation";
+import { stringCamelCaseToSentence } from "utils";
 
 import { MealOptionProps, PouchDbMealName } from "./FavoritesTypes";
 
@@ -28,7 +32,7 @@ export const Favorites = (_: RouteComponentProps) => {
   dbMeal
     .allDocs()
     .then((result) => {
-      console.log("result");
+      console.log("allDocs result");
       console.log(result);
     })
     .catch(function (err) {
@@ -56,6 +60,29 @@ export const Favorites = (_: RouteComponentProps) => {
   //     console.log(err);
   //   });
 
+  // const [favorites, setFavorites] = useState<JSX.Element[]>([]);
+  const allMeals = useMemo(() => {
+    const recipeLinks: JSX.Element[] = [];
+    Object.keys(routes.recipes).forEach((recipeObjectKey) => {
+      const uri = routes.recipes[recipeObjectKey];
+
+      const title = stringCamelCaseToSentence(recipeObjectKey);
+
+      const icon = "add"; // TODO: set icon properly based on PouchDB
+      recipeLinks.push(
+        <MealOption icon={icon} key={`meal-option-${recipeObjectKey}`}>
+          <Stack justify="center">
+            <Link as={ReachLink} to={uri}>
+              {title}
+            </Link>
+          </Stack>
+        </MealOption>
+      );
+    });
+
+    return recipeLinks;
+  }, [routes.recipes]);
+
   return (
     <Stack data-testid="Favorites-root">
       <Heading as="h2" size="lg" textAlign="center">
@@ -72,7 +99,7 @@ export const Favorites = (_: RouteComponentProps) => {
 
           <Divider />
 
-          <MealOption icon="remove" text="Burgers" />
+          {/* <MealOption icon="remove" text="Burgers" /> */}
         </Stack>
 
         <Stack>
@@ -82,23 +109,27 @@ export const Favorites = (_: RouteComponentProps) => {
 
           <Divider />
 
-          <MealOption icon="add" text="Pizza" />
-          <MealOption icon="add" text="Pasta" />
+          {allMeals}
         </Stack>
       </Flex>
     </Stack>
   );
 };
 
-const MealOption = ({ icon, iconAriaLabel, text }: MealOptionProps) => {
+const MealOption = ({ children, icon, key }: MealOptionProps) => {
   const buttonIcon = icon === "add" ? <AddIcon /> : <MinusIcon />;
 
   return (
-    <Flex justifyContent="space-evenly" p={5} shadow="md" borderWidth="1px">
-      <Stack justify="center">
-        <Text fontSize="lg">{text}</Text>
-      </Stack>
-      <IconButton aria-label={iconAriaLabel || icon} icon={buttonIcon} />
+    <Flex
+      borderWidth="2px"
+      justifyContent="space-between"
+      key={key}
+      p={3}
+      shadow="md"
+    >
+      {children}
+
+      <IconButton aria-label={icon} icon={buttonIcon} />
     </Flex>
   );
 };

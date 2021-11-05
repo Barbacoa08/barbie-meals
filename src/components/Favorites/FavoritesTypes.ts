@@ -11,8 +11,7 @@ export interface PouchMeal {
 export const PouchDbMealName = "bm-favorites";
 
 export interface MealOptionProps {
+  children: React.ReactNode;
   icon: "add" | "remove";
-  text: string;
-
-  iconAriaLabel?: string;
+  key: string;
 }

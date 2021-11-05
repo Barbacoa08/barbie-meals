@@ -21,6 +21,6 @@ describe("App Component", () => {
   });
 });
 
-// TODO: should work w/ just-the-recipie
+// TODO: should work w/ just-the-recipe
 // https://www.justtherecipe.app/
 // https://www.justtherecipe.app/recipe?url=https://www.allrecipes.com/recipe/16354/easy-meatloaf/
