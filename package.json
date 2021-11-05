@@ -8,6 +8,7 @@
   "private": false,
   "proxy": "http://localhost:9000",
   "scripts": {
+    "clean": "rm -rf coverage dist lambda-server",
     "lint": "eslint .",
     "build": "run-p build:**",
     "build:app": "react-scripts build",
@@ -21,7 +22,7 @@
     "start:app": "react-scripts start",
     "start:lambda": "netlify-lambda serve src/lambda-functions",
     "start-dev:lambda": "NODE_ENV=development netlify-lambda serve src/lambda-functions",
-    "prepublish": "yarn lint && yarn build && yarn test"
+    "prepublish": "yarn clean && yarn lint && yarn build && yarn test"
   },
   "dependencies": {
     "@apollo/client": "^3.4.16",
