@@ -15,12 +15,12 @@ import { stringCamelCaseToSentence } from "utils";
 
 import { MealOptionProps, PouchDbMealName, PouchMeal } from "./FavoritesTypes";
 
-// https://neighbourhood.ie/download-apache-couchdb-mac/
-// https://www.ibm.com/cloud/free
-
 export const Favorites = (_: RouteComponentProps) => {
   // TODO: will need to add a mock for PouchDB for unit tests
-  const dbMeal = new PouchDB(PouchDbMealName); // TODO: does this need to be higher up the chain? in `App`?
+  const dbMeal = new PouchDB(PouchDbMealName); // TODO: https://causlayer.orgs.hk/Terreii/use-pouchdb
+  // TODO: still need to setup `sync`: https://pouchdb.com/api.html#sync
+  // https://neighbourhood.ie/download-apache-couchdb-mac/
+  // https://www.ibm.com/cloud/free
 
   const [favorites, setFavorites] = useState<JSX.Element[]>([]);
   const [additionalMeals, setAdditionalMeals] = useState<JSX.Element[]>([]);
