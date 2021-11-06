@@ -20,9 +20,8 @@
 .env.test.local
 .env.production.locallocal
 .eslintcache
+bm-favorites/
 
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-
-bm-favorites/
