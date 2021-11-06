@@ -1,9 +1,26 @@
 import { render } from "@testing-library/react";
+import PouchDB from "pouchdb";
+import memory from "pouchdb-adapter-memory";
 import * as ShallowRenderer from "react-test-renderer/shallow";
 
 import { App } from ".";
 
 describe("App Component", () => {
+  PouchDB.plugin(memory);
+
+  let myPouch: PouchDB.Database<{}> | undefined;
+  beforeEach(() => {
+    // before each test, create a new DB with the memory adapter.
+    // nothing will be saved on disc!
+    myPouch = new PouchDB("test", { adapter: "memory" });
+  });
+
+  afterEach(async () => {
+    // Destroy the database after each test,
+    // so that no data will be left from the previous test.
+    await myPouch?.destroy();
+  });
+
   it("shallow renders without exploding", () => {
     const renderer = ShallowRenderer.createRenderer();
     renderer.render(<App />);
@@ -14,6 +31,7 @@ describe("App Component", () => {
   });
 
   it("fully renders without exploding", () => {
+    jest.spyOn(console, "error").mockImplementation(() => {}); // HACK: Favorites.tsx needs to mock things properly
     const { getByTestId } = render(<App />);
 
     const rootElement = getByTestId("App-root");
@@ -21,6 +39,6 @@ describe("App Component", () => {
   });
 });
 
-// TODO: should work w/ just-the-recipie
+// TODO: should work w/ just-the-recipe
 // https://www.justtherecipe.app/
 // https://www.justtherecipe.app/recipe?url=https://www.allrecipes.com/recipe/16354/easy-meatloaf/

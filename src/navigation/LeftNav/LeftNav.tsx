@@ -16,6 +16,7 @@ import { useGlobal } from "reactn";
 
 import { ToggleButton } from "components";
 import { routes } from "navigation";
+import { stringCamelCaseToSentence } from "utils";
 
 export const LeftNav = () => {
   const { isOpen, onClose, onOpen } = useDisclosure();
@@ -40,6 +41,21 @@ export const LeftNav = () => {
    * https://stackoverflow.com/questions/36862334/get-viewport-window-height-in-reactjs
    * https://usehooks.com/useWindowSize/
    */
+
+  const recipeLinks: JSX.Element[] = [];
+  Object.keys(routes.recipes).forEach((recipeObjectKey) => {
+    const uri = routes.recipes[recipeObjectKey];
+
+    const title = stringCamelCaseToSentence(recipeObjectKey);
+
+    recipeLinks.push(
+      <ListItem key={`left-nav-recipe-${recipeObjectKey}`}>
+        <Link as={ReachLink} to={uri}>
+          {title}
+        </Link>
+      </ListItem>
+    );
+  });
 
   return (
     <Box as="nav" data-testid="LeftNav-root" maxHeight="100vh">
@@ -70,6 +86,12 @@ export const LeftNav = () => {
                 </ListItem>
 
                 <ListItem>
+                  <Link as={ReachLink} to={routes.favorites}>
+                    Favorites
+                  </Link>
+                </ListItem>
+
+                <ListItem>
                   <Link as={ReachLink} to={routes.contactMe}>
                     Contact Me
                   </Link>
@@ -79,53 +101,7 @@ export const LeftNav = () => {
               <Heading as="h4" size="sm" mt="10" mb="2">
                 Recipes
               </Heading>
-              <List textAlign="right">
-                <ListItem>
-                  <Link as={ReachLink} to={routes.sloppyJoes}>
-                    Sloppy Joes
-                  </Link>
-                </ListItem>
-                <ListItem>
-                  <Link as={ReachLink} to={routes.pbj}>
-                    Toasted PBJ
-                  </Link>
-                </ListItem>
-                <ListItem>
-                  <Link as={ReachLink} to={routes.grilledCheese}>
-                    Grilled Cheese
-                  </Link>
-                </ListItem>
-                <ListItem>
-                  <Link as={ReachLink} to={routes.burgers}>
-                    Burgers
-                  </Link>
-                </ListItem>
-                <ListItem>
-                  <Link as={ReachLink} to={routes.pasta}>
-                    Pasta
-                  </Link>
-                </ListItem>
-                <ListItem>
-                  <Link as={ReachLink} to={routes.breakfastBurritos}>
-                    Brealfast Burritos
-                  </Link>
-                </ListItem>
-                <ListItem>
-                  <Link as={ReachLink} to={routes.bakedCarrotPotatoes}>
-                    Baked Carrots and Potatoes
-                  </Link>
-                </ListItem>
-                <ListItem>
-                  <Link as={ReachLink} to={routes.nachos}>
-                    Nachos
-                  </Link>
-                </ListItem>
-                <ListItem>
-                  <Link as={ReachLink} to={routes.pizza}>
-                    Pizza
-                  </Link>
-                </ListItem>
-              </List>
+              <List textAlign="right">{recipeLinks}</List>
 
               <Heading as="h4" size="sm" mt="10" mb="2">
                 Alcohol
