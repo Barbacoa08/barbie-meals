@@ -7,20 +7,16 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import { Link as ReachLink, RouteComponentProps } from "@reach/router";
-import PouchDB from "pouchdb";
 import { useCallback, useEffect, useState } from "react";
+import { usePouch } from "use-pouchdb";
 
 import { routes } from "navigation";
 import { stringCamelCaseToSentence } from "utils";
 
-import { MealOptionProps, PouchDbMealName, PouchMeal } from "./FavoritesTypes";
+import { MealOptionProps, PouchMeal } from "./FavoritesTypes";
 
 export const Favorites = (_: RouteComponentProps) => {
-  // TODO: will need to add a mock for PouchDB for unit tests
-  const dbMeal = new PouchDB(PouchDbMealName); // TODO: https://causlayer.orgs.hk/Terreii/use-pouchdb
-  // TODO: still need to setup `sync`: https://pouchdb.com/api.html#sync
-  // https://neighbourhood.ie/download-apache-couchdb-mac/
-  // https://www.ibm.com/cloud/free
+  const dbMeal = usePouch<PouchMeal>();
 
   const [favorites, setFavorites] = useState<JSX.Element[]>([]);
   const [additionalMeals, setAdditionalMeals] = useState<JSX.Element[]>([]);

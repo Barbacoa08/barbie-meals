@@ -11,5 +11,3 @@ export interface PouchMeal extends Omit<MealOptionProps, "onClick"> {
   _rev?: string;
   key: string;
 }
-
-export const PouchDbMealName = "bm-favorites";

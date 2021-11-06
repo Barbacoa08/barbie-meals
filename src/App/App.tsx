@@ -1,7 +1,9 @@
 import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
 import { Center, Container, Flex, Heading } from "@chakra-ui/layout";
 import { ChakraProvider, extendTheme } from "@chakra-ui/react";
+import PouchDB from "pouchdb";
 import { useEffect, useGlobal, useMemo } from "reactn";
+import { Provider as PouchDBProvider } from "use-pouchdb";
 
 import { LeftNav, RouterContainer } from "navigation";
 import { hashValue } from "utils";
@@ -15,6 +17,11 @@ const client = new ApolloClient({
 });
 
 export const App = () => {
+  // TODO: still need to setup `sync`: https://pouchdb.com/api.html#sync
+  // https://neighbourhood.ie/download-apache-couchdb-mac/
+  // https://www.ibm.com/cloud/free
+  const dbMeal = new PouchDB("bm-favorites");
+
   const [globals, setGlobals] = useGlobal();
 
   // on init, pull localStorage once-and-only-once
@@ -58,17 +65,19 @@ export const App = () => {
     <main className="app" data-testid="App-root">
       <ApolloProvider client={client}>
         <ChakraProvider theme={theme}>
-          <Flex>
-            <LeftNav />
+          <PouchDBProvider pouchdb={dbMeal}>
+            <Flex>
+              <LeftNav />
 
-            <Container>
-              <Center>
-                <Heading as="h1">Barbie Meals</Heading>
-              </Center>
+              <Container>
+                <Center>
+                  <Heading as="h1">Barbie Meals</Heading>
+                </Center>
 
-              <RouterContainer />
-            </Container>
-          </Flex>
+                <RouterContainer />
+              </Container>
+            </Flex>
+          </PouchDBProvider>
         </ChakraProvider>
       </ApolloProvider>
     </main>
