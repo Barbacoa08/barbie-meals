@@ -1,14 +1,12 @@
 import { render } from "@testing-library/react";
 import PouchDB from "pouchdb";
 import memory from "pouchdb-adapter-memory";
-import { act } from "react-dom/test-utils";
 import { Provider } from "use-pouchdb";
 
 import { Favorites } from ".";
 
 describe("Favorites Component", () => {
   PouchDB.plugin(memory);
-
   let mockPouchDB;
   beforeEach(() => {
     mockPouchDB = new PouchDB("test", { adapter: "memory" });
@@ -27,7 +25,5 @@ describe("Favorites Component", () => {
 
     const rootElement = getByTestId("Favorites-root");
     expect(rootElement).toBeTruthy();
-
-    await act(new Promise((resolve) => setImmediate(resolve)));
   });
 });

@@ -15,8 +15,6 @@ import { Favorites } from "components";
 import { routes } from "navigation";
 
 export const Homepage = (_: RouteComponentProps) => {
-  // TODO: instead of just importing Favorites, put _just_ current favorites here, with a "Click here to Edit your Favorites"
-
   return (
     <Container data-testid="Homepage-root">
       <Heading as="h2" size="lg" textAlign="center">
