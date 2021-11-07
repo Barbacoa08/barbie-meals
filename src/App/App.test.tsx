@@ -7,17 +7,11 @@ import { App } from ".";
 
 describe("App Component", () => {
   PouchDB.plugin(memory);
-
   let myPouch: PouchDB.Database<{}> | undefined;
   beforeEach(() => {
-    // before each test, create a new DB with the memory adapter.
-    // nothing will be saved on disc!
     myPouch = new PouchDB("test", { adapter: "memory" });
   });
-
   afterEach(async () => {
-    // Destroy the database after each test,
-    // so that no data will be left from the previous test.
     await myPouch?.destroy();
   });
 
