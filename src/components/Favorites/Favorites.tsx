@@ -11,7 +11,7 @@ import { useCallback, useEffect, useState } from "react";
 import { usePouch } from "use-pouchdb";
 
 import { routes } from "navigation";
-import { stringCamelCaseToSentence } from "utils";
+import { hashValue, stringCamelCaseToSentence } from "utils";
 
 import { MealOptionProps, PouchMeal } from "./FavoritesTypes";
 
@@ -21,7 +21,7 @@ export const Favorites = (_: RouteComponentProps) => {
   const [favorites, setFavorites] = useState<JSX.Element[]>([]);
   const [additionalMeals, setAdditionalMeals] = useState<JSX.Element[]>([]);
 
-  // TODO: thid method is so... yuck... find a cleaner solution
+  // TODO: this method is so... yuck... find a cleaner solution
   const calculateMeals = useCallback(
     (storedFavoriteMeals: PouchDB.Core.AllDocsResponse<{}>) => {
       const storedIds = storedFavoriteMeals.rows.map((row) => row.id);
@@ -93,8 +93,14 @@ export const Favorites = (_: RouteComponentProps) => {
         }
       });
 
-      setFavorites(favMeals);
-      setAdditionalMeals(addtMeals);
+      const favMealsUpdated = hashValue(favMeals) !== hashValue(favorites);
+      const addtMealsUpdated =
+        hashValue(addtMeals) !== hashValue(additionalMeals);
+
+      if (favMealsUpdated || addtMealsUpdated) {
+        setFavorites(favMeals);
+        setAdditionalMeals(addtMeals);
+      }
     },
     [routes.recipes]
   );
