@@ -1,15 +1,16 @@
+import { Container } from "@chakra-ui/layout";
 import * as ShallowRenderer from "react-test-renderer/shallow";
 
-import { App } from ".";
+import { Homepage } from ".";
 
-describe("App Component", () => {
+describe("Homepage Component", () => {
   it("shallow renders without exploding", () => {
     const renderer = ShallowRenderer.createRenderer();
-    renderer.render(<App />);
+    renderer.render(<Homepage />);
     const { type, props } = renderer.getRenderOutput();
 
-    expect(type).toBe("main");
-    expect(props["data-testid"]).toBe("App-root");
+    expect(type).toBe(Container);
+    expect(props["data-testid"]).toBe("Homepage-root");
   });
 
   /**
@@ -19,13 +20,13 @@ describe("App Component", () => {
    */
   // import { render } from "@testing-library/react";
   // it("fully renders without exploding", () => {
-  //   const { getByTestId } = render(<App />);
+  //   const { getByTestId } = render(
+  //     <Provider pouchdb={mockPouchDB}>
+  //       <Homepage />
+  //     </Provider>
+  //   );
 
-  //   const rootElement = getByTestId("App-root");
+  //   const rootElement = getByTestId("Homepage-root");
   //   expect(rootElement).toBeTruthy();
   // });
 });
-
-// TODO: should work w/ just-the-recipe
-// https://www.justtherecipe.app/
-// https://www.justtherecipe.app/recipe?url=https://www.allrecipes.com/recipe/16354/easy-meatloaf/
