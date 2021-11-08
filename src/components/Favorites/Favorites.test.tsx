@@ -3,6 +3,8 @@ import PouchDB from "pouchdb";
 import memory from "pouchdb-adapter-memory";
 import { Provider } from "use-pouchdb";
 
+import { routes } from "navigation";
+
 import { Favorites } from ".";
 
 jest.mock("navigation", () => {
@@ -13,7 +15,6 @@ jest.mock("navigation", () => {
     },
   };
 });
-import { routes } from "navigation";
 
 describe("Favorites Component", () => {
   PouchDB.plugin(memory);
