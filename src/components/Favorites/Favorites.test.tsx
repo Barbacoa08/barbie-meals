@@ -17,12 +17,12 @@ import { routes } from "navigation";
 
 describe("Favorites Component", () => {
   PouchDB.plugin(memory);
-  let mockPouchDB;
+  let mockPouchDB = new PouchDB("test", { adapter: "memory" });
   beforeEach(() => {
     mockPouchDB = new PouchDB("test", { adapter: "memory" });
   });
   afterEach(async () => {
-    await mockPouchDB?.destroy();
+    await mockPouchDB.destroy();
     cleanup();
   });
 

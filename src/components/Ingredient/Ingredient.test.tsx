@@ -6,7 +6,6 @@ describe("Ingredient Component", () => {
   it("fully renders without exploding", () => {
     const { getByTestId } = render(
       <Ingredient
-        img={null}
         ingredient="example"
         ingredientOpinionated=""
         portion="1/2 cup"
