@@ -21,6 +21,7 @@ setGlobal<IGlobalState>(globalDefaults);
 ReactDOM.render(
   <StrictMode>
     <App />
+  </StrictMode>,
   document.getElementById("root")
 );
 
