@@ -1,3 +1,5 @@
+[![Netlify Status](https://api.netlify.com/api/v1/badges/0782926b-bd38-468e-a394-cc034d4712f1/deploy-status)](https://app.netlify.com/sites/barbie-meals/deploys)
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 # Barbie Meals
