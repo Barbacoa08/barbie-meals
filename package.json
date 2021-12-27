@@ -22,6 +22,7 @@
     "start:app": "react-scripts start",
     "start:lambda": "netlify-lambda serve src/lambda-functions",
     "start-dev:lambda": "NODE_ENV=development netlify-lambda serve src/lambda-functions",
+    "github": "yarn && yarn lint && yarn build && yarn test && yarn build-storybook",
     "prepublish": "yarn clean && yarn lint && yarn build && yarn test"
   },
   "dependencies": {
