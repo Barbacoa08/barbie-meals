@@ -2,6 +2,11 @@
 
 ![github workflow status](https://github.com/Barbacoa08/barbie-meals/actions/workflows/run-yarn.yml/badge.svg)
 
+![Coverage lines](./badges/badge-lines.svg)
+![Coverage functions](./badges/badge-functions.svg)
+![Coverage branches](./badges/badge-branches.svg)
+![Coverage statements](./badges/badge-statements.svg)
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 # Barbie Meals
