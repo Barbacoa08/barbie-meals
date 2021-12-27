@@ -17,14 +17,14 @@
     "test": "react-scripts test --watchAll=false",
     "test:watch": "react-scripts test",
     "test:coverage": "react-scripts test --coverage=true --watchAll=false",
-    "test:badges": "yarn test:coverage  && jest-coverage-badges",
+    "test:badges": "yarn test:coverage  && jest-coverage-badges --output ./badges",
     "storybook": "start-storybook -p 6006 -s public",
     "start": "run-p start:*",
     "start:app": "react-scripts start",
     "start:lambda": "netlify-lambda serve src/lambda-functions",
     "start-dev:lambda": "NODE_ENV=development netlify-lambda serve src/lambda-functions",
     "github": "yarn && yarn lint && yarn build && yarn test && yarn build-storybook",
-    "prepublish": "yarn clean && yarn lint && yarn build && yarn test"
+    "prepublish": "yarn clean && yarn lint && yarn build && yarn test:badges"
   },
   "jest": {
     "coverageReporters": [
