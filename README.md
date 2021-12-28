@@ -1,6 +1,10 @@
 [![Netlify Status](https://api.netlify.com/api/v1/badges/0782926b-bd38-468e-a394-cc034d4712f1/deploy-status)](https://app.netlify.com/sites/barbie-meals/deploys)
-
 ![github workflow status](https://github.com/Barbacoa08/barbie-meals/actions/workflows/run-yarn.yml/badge.svg)
+
+![Coverage lines](./badges/badge-lines.svg)
+![Coverage functions](./badges/badge-functions.svg)
+![Coverage branches](./badges/badge-branches.svg)
+![Coverage statements](./badges/badge-statements.svg)
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
