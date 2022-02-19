@@ -57,6 +57,21 @@ export const LeftNav = () => {
     );
   });
 
+  const alcoholLinks: JSX.Element[] = [];
+  Object.keys(routes.alcohol).forEach((recipeObjectKey) => {
+    const uri = routes.alcohol[recipeObjectKey];
+
+    const title = stringCamelCaseToSentence(recipeObjectKey);
+
+    alcoholLinks.push(
+      <ListItem key={`left-nav-recipe-${recipeObjectKey}`}>
+        <Link as={ReachLink} to={uri}>
+          {title}
+        </Link>
+      </ListItem>
+    );
+  });
+
   return (
     <Box as="nav" data-testid="LeftNav-root" maxHeight="100vh">
       <IconButton
@@ -106,25 +121,7 @@ export const LeftNav = () => {
               <Heading as="h4" size="sm" mt="10" mb="2">
                 Alcohol
               </Heading>
-              <List textAlign="right">
-                <ListItem>
-                  <Link as={ReachLink} to={routes.beer}>
-                    Beer
-                  </Link>
-                </ListItem>
-
-                <ListItem>
-                  <Link as={ReachLink} to={routes.wine}>
-                    Wine
-                  </Link>
-                </ListItem>
-
-                <ListItem>
-                  <Link as={ReachLink} to={routes.ginAndTonic}>
-                    Gin and Tonic
-                  </Link>
-                </ListItem>
-              </List>
+              <List textAlign="right">{alcoholLinks}</List>
 
               <Heading as="h4" size="sm" mt="10" mb="2">
                 Store Specific favorites

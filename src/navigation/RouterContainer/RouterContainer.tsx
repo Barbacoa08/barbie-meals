@@ -32,9 +32,11 @@ export const routes = {
     sloppyJoes: "/sloppy-joes",
   },
 
-  beer: "/beer",
-  wine: "/wine",
-  ginAndTonic: "/gin-and-tonic",
+  alcohol: {
+    beer: "/beer",
+    wine: "/wine",
+    ginAndTonic: "/gin-and-tonic",
+  },
 
   costco: "/costco",
   asainFoodStore: "/asain-food-store",
@@ -59,9 +61,9 @@ export const RouterContainer = () => {
       <Pizza path={routes.recipes.pizza} />
       <Nachos path={routes.recipes.nachos} />
 
-      <Beer path={routes.beer} />
-      <Wine path={routes.wine} />
-      <GinAndTonic path={routes.ginAndTonic} />
+      <Beer path={routes.alcohol.beer} />
+      <Wine path={routes.alcohol.wine} />
+      <GinAndTonic path={routes.alcohol.ginAndTonic} />
 
       <CostCo path={routes.costco} />
       <AsainFoodStore path={routes.asainFoodStore} />
