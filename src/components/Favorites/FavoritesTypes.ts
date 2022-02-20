@@ -1,4 +1,4 @@
-export interface MealOptionProps {
+export interface FavoriteOptionProps {
   icon: "add" | "remove";
   title: string;
   linkTo: string;
@@ -6,7 +6,7 @@ export interface MealOptionProps {
   onClick: (e: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
-export interface PouchMeal extends Omit<MealOptionProps, "onClick"> {
+export interface PouchFavorites extends Omit<FavoriteOptionProps, "onClick"> {
   _id: string;
   _rev?: string;
   key: string;

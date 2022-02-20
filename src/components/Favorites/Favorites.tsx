@@ -13,13 +13,17 @@ import { usePouch } from "use-pouchdb";
 import { routes } from "navigation";
 import { hashValue, stringCamelCaseToSentence } from "utils";
 
-import { MealOptionProps, PouchMeal } from "./FavoritesTypes";
+import { FavoriteOptionProps, PouchFavorites } from "./FavoritesTypes";
 
 export const Favorites = (_: RouteComponentProps) => {
-  const dbMeal = usePouch<PouchMeal>();
+  const { alcohol, recipes } = routes;
+  const dbFavorites = usePouch<PouchFavorites>();
 
-  const [favorites, setFavorites] = useState<JSX.Element[]>([]);
+  const [meals, setMeals] = useState<JSX.Element[]>([]);
   const [additionalMeals, setAdditionalMeals] = useState<JSX.Element[]>([]);
+
+  const [drinks, setDrinks] = useState<JSX.Element[]>([]);
+  const [additionalDrinks, setAdditionalDrinks] = useState<JSX.Element[]>([]);
 
   // TODO: this method is so... yuck... find a cleaner solution
   const calculateMeals = useCallback(
@@ -28,14 +32,14 @@ export const Favorites = (_: RouteComponentProps) => {
 
       const addtMeals: JSX.Element[] = [];
       const favMeals: JSX.Element[] = [];
-      Object.keys(routes.recipes).forEach((mealId) => {
-        const uri = routes.recipes[mealId];
+      Object.keys(recipes).forEach((mealId) => {
+        const uri = recipes[mealId];
         const title = stringCamelCaseToSentence(mealId);
         const key = `meal-option-${mealId}`;
 
         if (storedIds.includes(mealId)) {
           favMeals.push(
-            <MealOption
+            <FavoriteOption
               icon="remove"
               title={title}
               linkTo={uri}
@@ -43,11 +47,11 @@ export const Favorites = (_: RouteComponentProps) => {
               onClick={(e) => {
                 e.preventDefault();
 
-                dbMeal.get(mealId).then((doc) => {
-                  dbMeal
+                dbFavorites.get(mealId).then((doc) => {
+                  dbFavorites
                     .remove(doc)
                     .then(() => {
-                      dbMeal
+                      dbFavorites
                         .allDocs()
                         .then(calculateMeals)
                         .catch((err) =>
@@ -61,7 +65,7 @@ export const Favorites = (_: RouteComponentProps) => {
           );
         } else {
           addtMeals.push(
-            <MealOption
+            <FavoriteOption
               icon="add"
               title={title}
               linkTo={uri}
@@ -69,17 +73,17 @@ export const Favorites = (_: RouteComponentProps) => {
               onClick={(e) => {
                 e.preventDefault();
 
-                const meal: PouchMeal = {
+                const meal: PouchFavorites = {
                   _id: mealId,
                   title,
                   icon: "add",
                   linkTo: uri,
                   key,
                 };
-                dbMeal
+                dbFavorites
                   .put(meal)
                   .then(() => {
-                    dbMeal
+                    dbFavorites
                       .allDocs()
                       .then(calculateMeals)
                       .catch((err) =>
@@ -93,21 +97,108 @@ export const Favorites = (_: RouteComponentProps) => {
         }
       });
 
-      const favMealsUpdated = hashValue(favMeals) !== hashValue(favorites);
+      const favMealsUpdated = hashValue(favMeals) !== hashValue(meals);
       const addtMealsUpdated =
         hashValue(addtMeals) !== hashValue(additionalMeals);
 
       if (favMealsUpdated || addtMealsUpdated) {
-        setFavorites(favMeals);
+        setMeals(favMeals);
         setAdditionalMeals(addtMeals);
       }
     },
-    [routes.recipes]
+    [recipes]
   );
+
+  const calculateDrinks = useCallback(
+    (storedFavoriteDrinks: PouchDB.Core.AllDocsResponse<{}>) => {
+      const storedIds = storedFavoriteDrinks.rows.map((row) => row.id);
+
+      const addtDrinks: JSX.Element[] = [];
+      const favDrinks: JSX.Element[] = [];
+      Object.keys(alcohol).forEach((drinkId) => {
+        const uri = alcohol[drinkId];
+        const title = stringCamelCaseToSentence(drinkId);
+        const key = `drink-option-${drinkId}`;
+
+        if (storedIds.includes(drinkId)) {
+          favDrinks.push(
+            <FavoriteOption
+              icon="remove"
+              title={title}
+              linkTo={uri}
+              key={key}
+              onClick={(e) => {
+                e.preventDefault();
+
+                dbFavorites.get(drinkId).then((doc) => {
+                  dbFavorites
+                    .remove(doc)
+                    .then(() => {
+                      dbFavorites
+                        .allDocs()
+                        .then(calculateDrinks)
+                        .catch((err) =>
+                          console.error("PouchDb.allDocs err", err)
+                        );
+                    })
+                    .catch((err) => console.error("drink removal err", err));
+                });
+              }}
+            />
+          );
+        } else {
+          addtDrinks.push(
+            <FavoriteOption
+              icon="add"
+              title={title}
+              linkTo={uri}
+              key={key}
+              onClick={(e) => {
+                e.preventDefault();
+
+                const drink: PouchFavorites = {
+                  _id: drinkId,
+                  title,
+                  icon: "add",
+                  linkTo: uri,
+                  key,
+                };
+                dbFavorites
+                  .put(drink)
+                  .then(() => {
+                    dbFavorites
+                      .allDocs()
+                      .then(calculateDrinks)
+                      .catch((err) =>
+                        console.error("PouchDb.allDocs err", err)
+                      );
+                  })
+                  .catch((err) => console.error("drink PUT err", err));
+              }}
+            />
+          );
+        }
+      });
+
+      const favDrinksUpdated = hashValue(favDrinks) !== hashValue(drinks);
+      const addtDrinksUpdated =
+        hashValue(addtDrinks) !== hashValue(additionalDrinks);
+
+      if (favDrinksUpdated || addtDrinksUpdated) {
+        setDrinks(favDrinks);
+        setAdditionalDrinks(addtDrinks);
+      }
+    },
+    [alcohol]
+  );
+
   useEffect(() => {
-    dbMeal
+    dbFavorites
       .allDocs()
-      .then(calculateMeals)
+      .then((result) => {
+        calculateDrinks(result);
+        calculateMeals(result);
+      })
       .catch((err) => console.error("PouchDb.allDocs err", err));
   }, []);
 
@@ -122,12 +213,12 @@ export const Favorites = (_: RouteComponentProps) => {
       <Flex justifyContent="space-between">
         <Stack>
           <Heading as="h3" size="lg">
-            Current Favorites
+            Meals
           </Heading>
 
           <Divider />
 
-          {favorites}
+          {meals}
         </Stack>
 
         <Stack>
@@ -140,11 +231,38 @@ export const Favorites = (_: RouteComponentProps) => {
           {additionalMeals}
         </Stack>
       </Flex>
+
+      <Flex justifyContent="space-between">
+        <Stack>
+          <Heading as="h3" size="lg">
+            Drinks
+          </Heading>
+
+          <Divider />
+
+          {drinks}
+        </Stack>
+
+        <Stack>
+          <Heading as="h2" size="lg">
+            Additional Drinks
+          </Heading>
+
+          <Divider />
+
+          {additionalDrinks}
+        </Stack>
+      </Flex>
     </Stack>
   );
 };
 
-const MealOption = ({ icon, title, linkTo, onClick }: MealOptionProps) => {
+const FavoriteOption = ({
+  icon,
+  title,
+  linkTo,
+  onClick,
+}: FavoriteOptionProps) => {
   const { isOpen, onToggle } = useDisclosure({ isOpen: true });
 
   const buttonIcon = icon === "add" ? <AddIcon /> : <MinusIcon />;
