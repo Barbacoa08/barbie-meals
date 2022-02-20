@@ -11,6 +11,7 @@ jest.mock("navigation", () => {
   return {
     __esModule: true,
     routes: {
+      alcohol: {},
       recipes: {},
     },
   };
@@ -28,7 +29,8 @@ describe("Favorites Component", () => {
   });
 
   it("mocks navigation import so that we don't have unexpected state updates", () => {
-    expect(Object.keys(routes)).toHaveLength(1);
+    expect(Object.keys(routes)).toHaveLength(2);
+    expect(Object.keys(routes.alcohol)).toHaveLength(0);
     expect(Object.keys(routes.recipes)).toHaveLength(0);
   });
 
