@@ -59,7 +59,7 @@ export const GinAndTonic = (_: RouteComponentProps) => {
             img={lime}
             ingredient="lime juice"
             ingredientOpinionated="fresh squeezed lime juice"
-            portion={showOpinions ? "1.5 oz" : "0.75 oz"}
+            portion={showOpinions ? "1 oz" : "1.5 oz"}
           />
 
           <Ingredient
@@ -79,8 +79,8 @@ export const GinAndTonic = (_: RouteComponentProps) => {
         <OrderedList>
           <ListItem>
             <Text>
-              squeeze enough lime juice to get a 1-to-2 lime to gin ratio, if
-              you are using presqueezed lime juice, use a 1-to-1 ratio
+              squeeze enough lime juice to get a 2-to-3 lime to gin ratio, if
+              you are using bottled lime juice, use a 1-to-1 ratio
             </Text>
           </ListItem>
 
@@ -93,7 +93,11 @@ export const GinAndTonic = (_: RouteComponentProps) => {
           </ListItem>
 
           <ListItem>
-            <Text>pour the lime juice directly onto the ice</Text>
+            <Text>
+              pour the lime juice directly onto the ice
+              {showOpinions &&
+                ", passing through a fine mesh strainer if freshly squeezed"}
+            </Text>
           </ListItem>
 
           <ListItem>
