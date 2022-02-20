@@ -1,7 +1,7 @@
 import { Router } from "@reach/router";
 
 import { ContactMe, Favorites, Hidden, Homepage } from "components";
-import { Beer, GinAndTonic, Wine } from "components/alcohol";
+import { Beer, French75, GinAndTonic, Wine } from "components/alcohol";
 import { AsainFoodStore, CostCo } from "components/food-stores";
 import {
   BakedCarrotPotatoes,
@@ -36,6 +36,7 @@ export const routes = {
     beer: "/beer",
     wine: "/wine",
     ginAndTonic: "/gin-and-tonic",
+    french75: "/french-75",
   },
 
   costco: "/costco",
@@ -64,6 +65,7 @@ export const RouterContainer = () => {
       <Beer path={routes.alcohol.beer} />
       <Wine path={routes.alcohol.wine} />
       <GinAndTonic path={routes.alcohol.ginAndTonic} />
+      <French75 path={routes.alcohol.french75} />
 
       <CostCo path={routes.costco} />
       <AsainFoodStore path={routes.asainFoodStore} />
