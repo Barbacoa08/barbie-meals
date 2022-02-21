@@ -17,10 +17,7 @@ const client = new ApolloClient({
 });
 
 export const App = () => {
-  // TODO: still need to setup `sync`: https://pouchdb.com/api.html#sync
-  // https://neighbourhood.ie/download-apache-couchdb-mac/
-  // https://www.ibm.com/cloud/free
-  const dbMeal = new PouchDB("bm-favorites");
+  const dbFavorites = new PouchDB("bm-favorites");
 
   const [globals, setGlobals] = useGlobal();
 
@@ -65,7 +62,7 @@ export const App = () => {
     <main className="app" data-testid="App-root">
       <ApolloProvider client={client}>
         <ChakraProvider theme={theme}>
-          <PouchDBProvider pouchdb={dbMeal}>
+          <PouchDBProvider pouchdb={dbFavorites}>
             <Flex>
               <LeftNav />
 
