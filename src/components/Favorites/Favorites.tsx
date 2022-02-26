@@ -296,7 +296,7 @@ const FavoriteOption = ({
   return (
     <ScaleFade initialScale={0.1} in={isOpen}>
       <Flex borderWidth="2px" justifyContent="space-between" p={3} shadow="md">
-        <Stack justify="center">
+        <Stack justify="center" paddingRight={5}>
           <Link as={ReachLink} to={linkTo}>
             {title}
           </Link>
