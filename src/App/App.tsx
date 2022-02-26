@@ -8,7 +8,7 @@ import { Provider as PouchDBProvider } from "use-pouchdb";
 import { LeftNav, RouterContainer } from "navigation";
 import { hashValue } from "utils";
 
-import { fetchFavorites } from "../graphql-hasura/fetchFavorites";
+import { getUserFavorites } from "../graphql";
 
 import "./App.css";
 
@@ -32,7 +32,13 @@ export const App = () => {
     }
 
     // TODO: implement usage
-    fetchFavorites();
+    getUserFavorites("barbi").then((res) => {
+      console.log("res", res);
+    });
+    // TODO: notes: pull data, if "favorites" doesn't exist, kill it
+
+    // TODO: notes: implement add/remove favorites
+
     // still need to setup `sync`: https://pouchdb.com/api.html#sync
     // https://hasura.io/blog/couchdb-style-conflict-resolution-rxdb-hasura/
   }, []);
@@ -73,10 +79,10 @@ export const App = () => {
             <Flex>
               <LeftNav />
 
-              <Container>
-                <Center>
-                  <Heading as="h1">Barbie Meals</Heading>
-                </Center>
+            <Container>
+              <Center>
+                <Heading as="h1">Barbie Meals</Heading>
+              </Center>
 
                 <RouterContainer />
               </Container>
