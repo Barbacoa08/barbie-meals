@@ -1,4 +1,3 @@
-import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
 import { Center, Container, Flex, Heading } from "@chakra-ui/layout";
 import { ChakraProvider, extendTheme } from "@chakra-ui/react";
 import PouchDB from "pouchdb";
@@ -13,10 +12,6 @@ import { getUserFavorites } from "../graphql";
 import "./App.css";
 
 const localStorageKey = "barbie-meals";
-const client = new ApolloClient({
-  cache: new InMemoryCache(),
-  uri: "/.netlify/functions/graphql",
-});
 
 export const App = () => {
   const dbFavorites = new PouchDB("bm-favorites");
@@ -73,23 +68,21 @@ export const App = () => {
 
   return (
     <main className="app" data-testid="App-root">
-      <ApolloProvider client={client}>
-        <ChakraProvider theme={theme}>
-          <PouchDBProvider pouchdb={dbFavorites}>
-            <Flex>
-              <LeftNav />
+      <ChakraProvider theme={theme}>
+        <PouchDBProvider pouchdb={dbFavorites}>
+          <Flex>
+            <LeftNav />
 
             <Container>
               <Center>
                 <Heading as="h1">Barbie Meals</Heading>
               </Center>
 
-                <RouterContainer />
-              </Container>
-            </Flex>
-          </PouchDBProvider>
-        </ChakraProvider>
-      </ApolloProvider>
+              <RouterContainer />
+            </Container>
+          </Flex>
+        </PouchDBProvider>
+      </ChakraProvider>
     </main>
   );
 };

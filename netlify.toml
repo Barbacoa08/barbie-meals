@@ -1,4 +1,0 @@
-[build]
-command = "yarn build:lambda"
-functions = "lambda-server"
-publish = "build"
