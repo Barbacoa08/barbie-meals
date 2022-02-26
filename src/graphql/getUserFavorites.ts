@@ -4,7 +4,7 @@ import { GetUserFavoritesOutput } from "./shared/types";
 const fetchGetUserFavorites = (user: string) => {
   const operationsDoc = `
     query getUserFavorites($user: String!) {
-      favorites(where: {user: {_eq: $user}}) {
+      favorites(where: {user: {_ilike: $user}}) {
         id
         key
         title
@@ -31,7 +31,7 @@ export const getUserFavorites = async (
 
 /*
 query getUserFavorites($user: String) {
-  favorites(where: {user: {_eq: $user}}) {
+  favorites(where: {user: {_ilike: $user}}) {
     id
     key
     title

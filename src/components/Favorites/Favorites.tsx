@@ -3,6 +3,7 @@ import { Flex, Heading, Link, Stack } from "@chakra-ui/layout";
 import {
   Divider,
   IconButton,
+  Input,
   ScaleFade,
   useDisclosure,
 } from "@chakra-ui/react";
@@ -13,6 +14,7 @@ import { usePouch } from "use-pouchdb";
 import { routes } from "navigation";
 import { hashValue, stringCamelCaseToSentence } from "utils";
 
+import { getUserFavorites } from "../../graphql";
 import { FavoriteOptionProps, PouchFavorites } from "./FavoritesTypes";
 
 export const Favorites = (_: RouteComponentProps) => {
@@ -24,6 +26,8 @@ export const Favorites = (_: RouteComponentProps) => {
 
   const [drinks, setDrinks] = useState<JSX.Element[]>([]);
   const [additionalDrinks, setAdditionalDrinks] = useState<JSX.Element[]>([]);
+
+  const [user, setUser] = useState<string>("");
 
   // TODO: this method is so... yuck... find a cleaner solution
   const calculateMeals = useCallback(
@@ -192,7 +196,17 @@ export const Favorites = (_: RouteComponentProps) => {
     [alcohol]
   );
 
-  useEffect(() => {
+  const pullData = useCallback(async (user: string = "") => {
+    // TODO: implement usage
+    const dbResult = await getUserFavorites(user);
+    console.log("dbResult", dbResult);
+    // TODO: notes: pull data, if "favorites" doesn't exist, kill it
+
+    // TODO: notes: implement add/remove favorites
+
+    // still need to setup `sync`: https://pouchdb.com/api.html#sync
+    // https://hasura.io/blog/couchdb-style-conflict-resolution-rxdb-hasura/
+
     dbFavorites
       .allDocs()
       .then((result) => {
@@ -202,11 +216,23 @@ export const Favorites = (_: RouteComponentProps) => {
       .catch((err) => console.error("PouchDb.allDocs err", err));
   }, []);
 
+  useEffect(() => {
+    pullData(user);
+  }, [user]);
+
   return (
     <Stack data-testid="Favorites-root">
       <Heading as="h2" size="lg" textAlign="center">
         My Favorites
       </Heading>
+
+      <Divider />
+
+      <Input
+        placeholder="Enter Username here to save your Favorites"
+        value={user}
+        onChange={(e) => setUser(e.target.value)}
+      />
 
       <Divider />
 

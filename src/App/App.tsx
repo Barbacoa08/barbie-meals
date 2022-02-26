@@ -7,8 +7,6 @@ import { Provider as PouchDBProvider } from "use-pouchdb";
 import { LeftNav, RouterContainer } from "navigation";
 import { hashValue } from "utils";
 
-import { getUserFavorites } from "../graphql";
-
 import "./App.css";
 
 const localStorageKey = "barbie-meals";
@@ -25,17 +23,6 @@ export const App = () => {
     if (storedValue) {
       setGlobals(JSON.parse(storedValue));
     }
-
-    // TODO: implement usage
-    getUserFavorites("barbi").then((res) => {
-      console.log("res", res);
-    });
-    // TODO: notes: pull data, if "favorites" doesn't exist, kill it
-
-    // TODO: notes: implement add/remove favorites
-
-    // still need to setup `sync`: https://pouchdb.com/api.html#sync
-    // https://hasura.io/blog/couchdb-style-conflict-resolution-rxdb-hasura/
   }, []);
 
   // update localStorage on every reactn update
