@@ -2,6 +2,7 @@ import { Flex, Heading, Stack } from "@chakra-ui/layout";
 import { Divider, Input } from "@chakra-ui/react";
 import { RouteComponentProps } from "@reach/router";
 import { useCallback, useEffect, useState } from "react";
+import { useGlobal } from "reactn";
 import { usePouch } from "use-pouchdb";
 
 import { routes } from "navigation";
@@ -9,6 +10,7 @@ import { routes } from "navigation";
 import { getUserFavorites } from "../../graphql";
 import { PouchFavorites } from "./FavoritesTypes";
 import { calculateFavorites } from "./helpers";
+import { useDebouncedCallback } from "use-debounce/lib";
 
 export const Favorites = (_: RouteComponentProps) => {
   const { alcohol, recipes } = routes;
@@ -20,7 +22,8 @@ export const Favorites = (_: RouteComponentProps) => {
   const [drinks, setDrinks] = useState<JSX.Element[]>([]);
   const [additionalDrinks, setAdditionalDrinks] = useState<JSX.Element[]>([]);
 
-  const [user, setUser] = useState<string>("");
+  const [user, setUser] = useGlobal("username");
+  const debounced = useDebouncedCallback((value) => setUser(value), 1000);
 
   const pullData = useCallback(async (user: string = "") => {
     // TODO: implement usage
@@ -68,8 +71,8 @@ export const Favorites = (_: RouteComponentProps) => {
 
       <Input
         placeholder="Enter Username here to save your Favorites"
-        value={user}
-        onChange={(e) => setUser(e.target.value)}
+        defaultValue={user}
+        onChange={(e) => debounced(e.target.value)}
       />
 
       <Divider />

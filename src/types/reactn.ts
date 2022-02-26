@@ -6,4 +6,7 @@ export interface IGlobalState {
 
   // accessibility
   useOpenDyslexicMono: boolean;
+
+  // user
+  username: string;
 }
