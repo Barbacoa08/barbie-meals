@@ -1,4 +1,3 @@
-import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
 import { Center, Container, Flex, Heading } from "@chakra-ui/layout";
 import { ChakraProvider, extendTheme } from "@chakra-ui/react";
 import PouchDB from "pouchdb";
@@ -11,10 +10,6 @@ import { hashValue } from "utils";
 import "./App.css";
 
 const localStorageKey = "barbie-meals";
-const client = new ApolloClient({
-  cache: new InMemoryCache(),
-  uri: "/.netlify/functions/graphql",
-});
 
 export const App = () => {
   // TODO: still need to setup `sync`: https://pouchdb.com/api.html#sync
@@ -63,8 +58,7 @@ export const App = () => {
 
   return (
     <main className="app" data-testid="App-root">
-      <ApolloProvider client={client}>
-        <ChakraProvider theme={theme}>
+      <ChakraProvider theme={theme}>
           <PouchDBProvider pouchdb={dbMeal}>
             <Flex>
               <LeftNav />
@@ -76,10 +70,9 @@ export const App = () => {
 
                 <RouterContainer />
               </Container>
-            </Flex>
-          </PouchDBProvider>
-        </ChakraProvider>
-      </ApolloProvider>
+          </Flex>
+        </PouchDBProvider>
+      </ChakraProvider>
     </main>
   );
 };
