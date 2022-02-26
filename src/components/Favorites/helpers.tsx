@@ -8,6 +8,7 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import { Link as ReachLink } from "@reach/router";
+import { addUserFavorite, removeFavoriteById } from "graphql";
 import { Dispatch, SetStateAction } from "react";
 
 import { stringCamelCaseToSentence } from "utils";

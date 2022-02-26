@@ -26,6 +26,9 @@ export const Favorites = (_: RouteComponentProps) => {
   const debounced = useDebouncedCallback((value) => setUser(value), 1000);
 
   const pullData = useCallback(async (user: string = "") => {
+    // this is _only _ called when the user is updated and on page first load, so treat
+    // hasura as the "source of truth" here, but everywhere else, pouchdb is the SOT
+
     // TODO: implement usage
     const dbResult = await getUserFavorites(user);
     console.log("dbResult", dbResult);

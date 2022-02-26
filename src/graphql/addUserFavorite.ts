@@ -1,5 +1,5 @@
 import { fetchGraphQL } from "./shared/fetch";
-import { AddUserFavoriteOutput } from "./shared/types";
+import { AddUserFavoriteOutput, AddUserFavoriteResult } from "./shared/types";
 
 function executeAddUserFavorite(
   user: string,
@@ -35,18 +35,20 @@ export const addUserFavorite = async (
   title: string,
   key: string,
   _rev?: string
-): Promise<AddUserFavoriteOutput> => {
+): Promise<AddUserFavoriteResult> => {
   const { errors, data } = await executeAddUserFavorite(user, title, key, _rev);
+  const { affected_rows: affectedRows, returning = [] }: AddUserFavoriteOutput =
+    data?.insert_favorites || {};
 
-  if (errors) {
+  if (errors || affectedRows < 1) {
     // handle those errors like a pro
     console.error(errors);
   }
 
-  // do something great with this precious data
-  console.log(data);
+  const result = returning[0] || {};
 
-  return data;
+  console.log(result);
+  return result;
 };
 
 /*
