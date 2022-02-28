@@ -5,10 +5,11 @@ const fetchGetUserFavorites = (user: string) => {
   const operationsDoc = `
     query getUserFavorites($user: String!) {
       favorites(where: {user: {_ilike: $user}}) {
-        id
-        key
         title
-        _rev
+        key
+        user
+        id
+        uri
       }
     }
   `;
@@ -23,19 +24,8 @@ export const getUserFavorites = async (
   const favorites = data?.favorites || [];
 
   if (errors) {
-    console.error(errors);
+    console.error("getUserFavorites failed with errors:", errors);
   }
 
   return favorites;
 };
-
-/*
-query getUserFavorites($user: String) {
-  favorites(where: {user: {_ilike: $user}}) {
-    id
-    key
-    title
-    _rev
-  }
-}
-*/

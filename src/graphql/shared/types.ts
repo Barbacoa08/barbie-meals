@@ -1,32 +1,21 @@
 export type GetUserFavoritesOutput = {
-  _rev?: string;
-  id: string;
-  key?: string;
   title: string;
+  key: string;
+  user: string;
+  id: string;
+  uri: string;
 };
 
 export interface AddUserFavoriteResult {
-  id: string;
-  key: string;
   title: string;
+  key: string;
   user: string;
+  id: string;
+  uri: string;
 }
 export type AddUserFavoriteOutput = {
   affected_rows: number;
   returning: AddUserFavoriteResult[];
-};
-
-// export type Mutation = {
-//   addUserFavorite(
-//     user: string,
-//     title: string,
-//     key: string,
-//     _rev?: string
-//   ): AddUserFavoriteOutput;
-// };
-
-export type RemoveFavoriteByIdOutput = {
-  id: string;
 };
 
 // export type Mutation = {

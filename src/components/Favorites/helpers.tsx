@@ -8,7 +8,7 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import { Link as ReachLink } from "@reach/router";
-import { addUserFavorite, removeFavoriteById } from "graphql";
+import { addUserFavorite, removeFavorite } from "graphql";
 import { Dispatch, SetStateAction } from "react";
 
 import { stringCamelCaseToSentence } from "utils";
@@ -16,9 +16,10 @@ import { stringCamelCaseToSentence } from "utils";
 import { FavoriteOptionProps, PouchFavorites } from "./FavoritesTypes";
 
 export const calculateFavorites = (
+  username: string,
   storedFavorites: PouchDB.Core.AllDocsResponse<{}>,
   availableItems: { [key: string]: string },
-  dbFavorites: PouchDB.Database<PouchFavorites>,
+  pouchDb: PouchDB.Database<PouchFavorites>,
   setSelectedFavorites: Dispatch<SetStateAction<JSX.Element[]>>,
   setAdditionalFavorites: Dispatch<SetStateAction<JSX.Element[]>>
 ) => {
@@ -26,9 +27,10 @@ export const calculateFavorites = (
     storedFavorites: PouchDB.Core.AllDocsResponse<{}>
   ) =>
     calculateFavorites(
+      username,
       storedFavorites,
       availableItems,
-      dbFavorites,
+      pouchDb,
       setSelectedFavorites,
       setAdditionalFavorites
     );
@@ -52,11 +54,13 @@ export const calculateFavorites = (
           onClick={(e) => {
             e.preventDefault();
 
-            dbFavorites.get(favoriteId).then((doc) => {
-              dbFavorites
+            removeFavorite(username, key);
+
+            pouchDb.get(favoriteId).then((doc) => {
+              pouchDb
                 .remove(doc)
                 .then(() => {
-                  dbFavorites
+                  pouchDb
                     .allDocs()
                     .then(handleAddRemoveClick)
                     .catch((err) => console.error("PouchDb.allDocs err", err));
@@ -73,8 +77,10 @@ export const calculateFavorites = (
           title={title}
           linkTo={uri}
           key={key}
-          onClick={(e) => {
+          onClick={async (e) => {
             e.preventDefault();
+
+            addUserFavorite(title, key, username, favoriteId, uri); // optomistic update
 
             const favToAdd: PouchFavorites = {
               _id: favoriteId,
@@ -83,10 +89,10 @@ export const calculateFavorites = (
               linkTo: uri,
               key,
             };
-            dbFavorites
+            pouchDb
               .put(favToAdd)
               .then(() => {
-                dbFavorites
+                pouchDb
                   .allDocs()
                   .then(handleAddRemoveClick)
                   .catch((err) => console.error("PouchDb.allDocs err", err));

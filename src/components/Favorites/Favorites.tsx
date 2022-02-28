@@ -14,7 +14,7 @@ import { useDebouncedCallback } from "use-debounce/lib";
 
 export const Favorites = (_: RouteComponentProps) => {
   const { alcohol, recipes } = routes;
-  const dbFavorites = usePouch<PouchFavorites>();
+  const pouchDb = usePouch<PouchFavorites>();
 
   const [meals, setMeals] = useState<JSX.Element[]>([]);
   const [additionalMeals, setAdditionalMeals] = useState<JSX.Element[]>([]);
@@ -22,8 +22,7 @@ export const Favorites = (_: RouteComponentProps) => {
   const [drinks, setDrinks] = useState<JSX.Element[]>([]);
   const [additionalDrinks, setAdditionalDrinks] = useState<JSX.Element[]>([]);
 
-  const [user, setUser] = useGlobal("username");
-  const debounced = useDebouncedCallback((value) => setUser(value), 1000);
+  const [username, setUsername] = useGlobal("username");
 
   const pullData = useCallback(async (user: string = "") => {
     // this is _only _ called when the user is updated and on page first load, so treat
@@ -43,16 +42,18 @@ export const Favorites = (_: RouteComponentProps) => {
       .allDocs()
       .then((result) => {
         calculateFavorites(
+          username,
           result,
           alcohol,
-          dbFavorites,
+          pouchDb,
           setDrinks,
           setAdditionalDrinks
         );
         calculateFavorites(
+          username,
           result,
           recipes,
-          dbFavorites,
+          pouchDb,
           setMeals,
           setAdditionalMeals
         );
@@ -74,8 +75,8 @@ export const Favorites = (_: RouteComponentProps) => {
 
       <Input
         placeholder="Enter Username here to save your Favorites"
-        defaultValue={user}
-        onChange={(e) => debounced(e.target.value)}
+        defaultValue={username}
+        onChange={(e) => setUsername(e.target.value)}
       />
 
       <Divider />
@@ -92,7 +93,7 @@ export const Favorites = (_: RouteComponentProps) => {
         </Stack>
 
         <Stack>
-          <Heading as="h2" size="lg">
+          <Heading as="h3" size="lg">
             Additional Meals
           </Heading>
 
@@ -114,7 +115,7 @@ export const Favorites = (_: RouteComponentProps) => {
         </Stack>
 
         <Stack>
-          <Heading as="h2" size="lg">
+          <Heading as="h3" size="lg">
             Additional Drinks
           </Heading>
 

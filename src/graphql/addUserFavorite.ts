@@ -2,47 +2,56 @@ import { fetchGraphQL } from "./shared/fetch";
 import { AddUserFavoriteOutput, AddUserFavoriteResult } from "./shared/types";
 
 function executeAddUserFavorite(
-  user: string,
   title: string,
   key: string,
-  _rev?: string
+  user: string,
+  id: string,
+  uri: string
 ) {
   const operationsDoc = `
-    mutation addUserFavorite($user: String!, $title: String!, $key: String!, $_rev: String) {
-      insert_favorites(objects: {_rev: $_rev, key: $key, title: $title, user: $user}) {
+    mutation addUserFavorite($title: String!, $key: String!, $user: String!, $id: String!, $uri: String!) {
+      insert_favorites(objects: {title: $title, key: $key, user: $user, id: $id, uri: $uri}) {
         affected_rows
         returning {
-          _rev
-          id
-          key
           title
+          key
           user
+          id
+          uri
         }
       }
     }
   `;
 
   return fetchGraphQL(operationsDoc, "addUserFavorite", {
-    user: user,
-    title: title,
-    key: key,
-    _rev: _rev,
+    title,
+    key,
+    user,
+    id,
+    uri,
   });
 }
 
 export const addUserFavorite = async (
-  user: string,
   title: string,
   key: string,
-  _rev?: string
+  user: string,
+  id: string,
+  uri: string
 ): Promise<AddUserFavoriteResult> => {
-  const { errors, data } = await executeAddUserFavorite(user, title, key, _rev);
+  const { errors, data } = await executeAddUserFavorite(
+    title,
+    key,
+    user,
+    id,
+    uri
+  );
   const { affected_rows: affectedRows, returning = [] }: AddUserFavoriteOutput =
     data?.insert_favorites || {};
 
   if (errors || affectedRows < 1) {
     // handle those errors like a pro
-    console.error(errors);
+    console.error("addUserFavorite failed with errors:", errors);
   }
 
   const result = returning[0] || {};
@@ -50,18 +59,3 @@ export const addUserFavorite = async (
   console.log(result);
   return result;
 };
-
-/*
-mutation addUserFavorite($user: String!, $title: String!, $key: String!, $_rev: String) {
-  insert_favorites(objects: {_rev: $_rev, key: $key, title: $title, user: $user}) {
-    affected_rows
-    returning {
-      _rev
-      id
-      key
-      title
-      user
-    }
-  }
-}
-*/
