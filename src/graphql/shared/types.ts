@@ -17,7 +17,3 @@ export type AddUserFavoriteOutput = {
   affected_rows: number;
   returning: AddUserFavoriteResult[];
 };
-
-// export type Mutation = {
-//   removeFavoriteById(id: string): RemoveFavoriteByIdOutput;
-// };
