@@ -93,7 +93,7 @@ export const Favorites = (_: RouteComponentProps) => {
   }, 500);
 
   useEffect(() => {
-    // clear ui-state so that we can be assured that btns user proper `username` (this is annoyingly slow...)
+    // HACK: clear ui-state so that we can be assured that btns user proper `username` (this is annoyingly slow...)
     setDrinks([]);
     setUnselectedDrinks([]);
     setMeals([]);
@@ -121,6 +121,8 @@ export const Favorites = (_: RouteComponentProps) => {
       syncDbs(username);
     }
   }, [username]);
+
+  // TODO: add an `errorMsg` that alerts the user to when there is an issue with hasura, but allows them to ignore it (which disabled hasura)
 
   return (
     <Stack data-testid="Favorites-root">

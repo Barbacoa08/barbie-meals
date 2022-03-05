@@ -57,6 +57,8 @@ export const pullDataFromPouchAndCalculateFavorites = async (
   );
 };
 
+// TODO: should write some tests for this bad boy
+// TODO: probably want to seperate the DB from use-state logic
 /**
  * Takes `Favorites.tsx` state data and updates it based on the PouchDB
  * @param username the name of the desired users whose favorites data we're using
