@@ -37,7 +37,7 @@ export const pullDataFromPouchAndCalculateFavorites = async (
     (await pouchDb
       .allDocs()
       .catch((err) => console.error("PouchDb.allDocs err", err))) ||
-    ({} as PouchDB.Core.AllDocsResponse<{}>);
+    ({} as PouchDB.Core.AllDocsResponse<PouchFavorites>);
 
   calculateFavorites(
     username,
@@ -69,13 +69,13 @@ export const pullDataFromPouchAndCalculateFavorites = async (
 export const calculateFavorites = (
   username: string,
   pouchDb: PouchDB.Database<PouchFavorites>,
-  storedFavorites: PouchDB.Core.AllDocsResponse<{}>,
+  storedFavorites: PouchDB.Core.AllDocsResponse<PouchFavorites>,
   availableItems: typeof routes["alcohol"] | typeof routes["recipes"],
   setSelectedFavorites: Dispatch<SetStateAction<JSX.Element[]>>,
   setUnselectedFavorites: Dispatch<SetStateAction<JSX.Element[]>>
 ) => {
   const handleAddRemoveClick = (
-    storedFavorites: PouchDB.Core.AllDocsResponse<{}>
+    storedFavorites: PouchDB.Core.AllDocsResponse<PouchFavorites>
   ) =>
     calculateFavorites(
       username,
@@ -103,7 +103,9 @@ export const calculateFavorites = (
           linkTo={uri}
           key={key}
           onClick={() => {
-            removeUserFavoriteFromHasura(username, key);
+            if (username) {
+              removeUserFavoriteFromHasura(username, key);
+            }
 
             pouchDb.get(favoriteId).then((doc) => {
               pouchDb
@@ -127,7 +129,9 @@ export const calculateFavorites = (
           linkTo={uri}
           key={key}
           onClick={async () => {
-            addUserFavoriteFromHasura(title, key, username, favoriteId, uri); // optomistic update
+            if (username) {
+              addUserFavoriteFromHasura(title, key, username, favoriteId, uri); // optomistic update
+            }
 
             const favToAdd: PouchFavorites = {
               _id: favoriteId,
