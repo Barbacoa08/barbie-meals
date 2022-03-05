@@ -54,8 +54,5 @@ export const addUserFavorite = async (
     console.error("addUserFavorite failed with errors:", errors);
   }
 
-  const result = returning[0] || {};
-
-  console.log(result);
-  return result;
+  return returning[0] || {};
 };

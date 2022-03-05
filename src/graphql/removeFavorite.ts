@@ -26,6 +26,5 @@ export const removeUserFavorite = async (
     console.error("removeFavorite failed with errors:", errors);
   }
 
-  console.log(affectedRows);
   return affectedRows;
 };
