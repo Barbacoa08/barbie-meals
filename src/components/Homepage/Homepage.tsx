@@ -14,6 +14,9 @@ import { Link as ReachLink, RouteComponentProps } from "@reach/router";
 import { Favorites } from "components";
 import { routes } from "navigation";
 
+import burritos from "images/completed/breakfast-burritos.webp";
+import tots from "images/target/target-mini-tots.webp";
+
 export const Homepage = (_: RouteComponentProps) => {
   return (
     <Container data-testid="Homepage-root">
@@ -22,32 +25,6 @@ export const Homepage = (_: RouteComponentProps) => {
       </Heading>
 
       <Flex marginTop={5}>
-        <Link as={ReachLink} to={routes.recipes.pizza} color="Highlight">
-          <Stack>
-            <Text margin="auto">Pizza</Text>
-
-            <Image
-              alt={"pizza"}
-              fallbackSrc="https://via.placeholder.com/100"
-            />
-          </Stack>
-        </Link>
-
-        <Spacer />
-
-        <Link as={ReachLink} to={routes.recipes.nachos} color="Highlight">
-          <Stack>
-            <Text margin="auto">Nachos</Text>
-
-            <Image
-              alt={"nachos"}
-              fallbackSrc="https://via.placeholder.com/100"
-            />
-          </Stack>
-        </Link>
-
-        <Spacer />
-
         <Link
           as={ReachLink}
           to={routes.recipes.breakfastBurritos}
@@ -57,10 +34,25 @@ export const Homepage = (_: RouteComponentProps) => {
             <Text margin="auto">Breakfast Burritos</Text>
 
             <Image
-              alt={"breakfast burritos"}
-              fallbackSrc="https://via.placeholder.com/100"
-              width={100}
-              style={{ marginLeft: "auto", marginRight: "auto" }}
+              alt={"two burritos"}
+              src={burritos}
+              fallbackSrc="https://via.placeholder.com/200"
+              width={200}
+            />
+          </Stack>
+        </Link>
+
+        <Spacer />
+
+        <Link as={ReachLink} to={routes.target} color="Highlight">
+          <Stack>
+            <Text margin="auto">Mini Tater Tots</Text>
+
+            <Image
+              alt={"tater tots"}
+              src={tots}
+              fallbackSrc="https://via.placeholder.com/200"
+              width={200}
             />
           </Stack>
         </Link>
