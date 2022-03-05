@@ -153,7 +153,7 @@ const Meals = ({
   unselectedMeals: JSX.Element[];
 }) => {
   if (meals.length === 0 && unselectedMeals.length === 0) {
-    return <Progress isIndeterminate />;
+    return <Progress isIndeterminate aria-label="Meal options are loading" />;
   }
 
   return (
@@ -189,7 +189,7 @@ const Drinks = ({
   unselectedDrinks: JSX.Element[];
 }) => {
   if (drinks.length === 0 && unselectedDrinks.length === 0) {
-    return <Progress isIndeterminate />;
+    return <Progress isIndeterminate aria-label="Drink options are loading" />;
   }
 
   return (
