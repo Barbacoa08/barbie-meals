@@ -12,10 +12,7 @@ import "./App.css";
 const localStorageKey = "barbie-meals";
 
 export const App = () => {
-  // TODO: still need to setup `sync`: https://pouchdb.com/api.html#sync
-  // https://neighbourhood.ie/download-apache-couchdb-mac/
-  // https://www.ibm.com/cloud/free
-  const dbMeal = new PouchDB("bm-favorites");
+  const dbFavorites = new PouchDB("bm-favorites");
 
   const [globals, setGlobals] = useGlobal();
 
@@ -59,17 +56,17 @@ export const App = () => {
   return (
     <main className="app" data-testid="App-root">
       <ChakraProvider theme={theme}>
-          <PouchDBProvider pouchdb={dbMeal}>
-            <Flex>
-              <LeftNav />
+        <PouchDBProvider pouchdb={dbFavorites}>
+          <Flex>
+            <LeftNav />
 
-              <Container>
-                <Center>
-                  <Heading as="h1">Barbie Meals</Heading>
-                </Center>
+            <Container>
+              <Center>
+                <Heading as="h1">Barbie Meals</Heading>
+              </Center>
 
-                <RouterContainer />
-              </Container>
+              <RouterContainer />
+            </Container>
           </Flex>
         </PouchDBProvider>
       </ChakraProvider>

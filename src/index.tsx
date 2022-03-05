@@ -15,6 +15,9 @@ const globalDefaults: IGlobalState = {
 
   // accessibility
   useOpenDyslexicMono: false,
+
+  // user
+  username: "",
 };
 setGlobal<IGlobalState>(globalDefaults);
 

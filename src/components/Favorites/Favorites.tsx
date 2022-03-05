@@ -1,206 +1,128 @@
-import { AddIcon, MinusIcon } from "@chakra-ui/icons";
-import { Flex, Heading, Link, Stack } from "@chakra-ui/layout";
-import {
-  Divider,
-  IconButton,
-  ScaleFade,
-  useDisclosure,
-} from "@chakra-ui/react";
-import { Link as ReachLink, RouteComponentProps } from "@reach/router";
-import { useCallback, useEffect, useState } from "react";
+import { Flex, Heading, Stack } from "@chakra-ui/layout";
+import { Divider, Input, Progress } from "@chakra-ui/react";
+import { RouteComponentProps } from "@reach/router";
+import { useEffect, useState } from "react";
+import { useGlobal } from "reactn";
+import { useDebouncedCallback } from "use-debounce/lib";
 import { usePouch } from "use-pouchdb";
 
 import { routes } from "navigation";
-import { hashValue, stringCamelCaseToSentence } from "utils";
 
-import { FavoriteOptionProps, PouchFavorites } from "./FavoritesTypes";
+import { getUserFavorites } from "../../graphql";
+import { PouchFavorites } from "./FavoritesTypes";
+import { pullDataFromPouchAndCalculateFavorites } from "./helpers";
+
+// BUG: switching from a known name to an unknown name will **not** store the existing favorites in hasura
 
 export const Favorites = (_: RouteComponentProps) => {
   const { alcohol, recipes } = routes;
-  const dbFavorites = usePouch<PouchFavorites>();
+  const pouchDb = usePouch<PouchFavorites>();
 
+  // pouchDB is _blazingly_ fast, so don't waste renders pre-populating arrays
   const [meals, setMeals] = useState<JSX.Element[]>([]);
-  const [additionalMeals, setAdditionalMeals] = useState<JSX.Element[]>([]);
-
+  const [unselectedMeals, setUnselectedMeals] = useState<JSX.Element[]>([]);
   const [drinks, setDrinks] = useState<JSX.Element[]>([]);
-  const [additionalDrinks, setAdditionalDrinks] = useState<JSX.Element[]>([]);
+  const [unselectedDrinks, setUnselectedDrinks] = useState<JSX.Element[]>([]);
 
-  // TODO: this method is so... yuck... find a cleaner solution
-  const calculateMeals = useCallback(
-    (storedFavoriteMeals: PouchDB.Core.AllDocsResponse<{}>) => {
-      const storedIds = storedFavoriteMeals.rows.map((row) => row.id);
+  const [username, setUsername] = useGlobal("username");
 
-      const addtMeals: JSX.Element[] = [];
-      const favMeals: JSX.Element[] = [];
-      Object.keys(recipes).forEach((mealId) => {
-        const uri = recipes[mealId];
-        const title = stringCamelCaseToSentence(mealId);
-        const key = `meal-option-${mealId}`;
+  const syncDbs = useDebouncedCallback((passedUsername) => {
+    getUserFavorites(passedUsername)
+      .then(async (result) => {
+        /**
+         * If we have data from hasura, update pouchdb with
+         * the new data and then recalculate favorites.
+         *
+         * HACK: this "Else" statement is incorrect: * Else do nothing, pouchdb is already setup.
+         */
 
-        if (storedIds.includes(mealId)) {
-          favMeals.push(
-            <FavoriteOption
-              icon="remove"
-              title={title}
-              linkTo={uri}
-              key={key}
-              onClick={(e) => {
-                e.preventDefault();
+        if (result.length > 0) {
+          // for simplicities sake, and because we have so few items, nuke and pave
+          const currentDocs = await pouchDb
+            .allDocs({ include_docs: true })
+            .catch((err) => console.error("pouchDb.allDovs err", err));
+          if (currentDocs && currentDocs.total_rows > 0) {
+            const promises = currentDocs.rows.map(
+              ({ doc }) => !!doc && pouchDb.remove(doc)
+            );
+            await Promise.all(promises);
+          }
 
-                dbFavorites.get(mealId).then((doc) => {
-                  dbFavorites
-                    .remove(doc)
-                    .then(() => {
-                      dbFavorites
-                        .allDocs()
-                        .then(calculateMeals)
-                        .catch((err) =>
-                          console.error("PouchDb.allDocs err", err)
-                        );
-                    })
-                    .catch((err) => console.error("meal removal err", err));
-                });
-              }}
-            />
+          const promises = result.map(({ id, key, title, uri }) => {
+            const favToAdd: PouchFavorites = {
+              _id: id,
+              title,
+              icon: "add",
+              linkTo: uri,
+              key,
+            };
+            return pouchDb
+              .put(favToAdd)
+              .catch((err) => console.error("favorite PUT err", err));
+          });
+          await Promise.all(promises);
+
+          // now that we've updated pouchdb to be the SOT, we can recalculate favorites
+          pullDataFromPouchAndCalculateFavorites(
+            passedUsername,
+            pouchDb,
+            {
+              alcohol,
+              setDrinks,
+              setUnselectedDrinks,
+            },
+            { recipes, setMeals, setUnselectedMeals }
           );
         } else {
-          addtMeals.push(
-            <FavoriteOption
-              icon="add"
-              title={title}
-              linkTo={uri}
-              key={key}
-              onClick={(e) => {
-                e.preventDefault();
-
-                const meal: PouchFavorites = {
-                  _id: mealId,
-                  title,
-                  icon: "add",
-                  linkTo: uri,
-                  key,
-                };
-                dbFavorites
-                  .put(meal)
-                  .then(() => {
-                    dbFavorites
-                      .allDocs()
-                      .then(calculateMeals)
-                      .catch((err) =>
-                        console.error("PouchDb.allDocs err", err)
-                      );
-                  })
-                  .catch((err) => console.error("meal PUT err", err));
-              }}
-            />
+          // HACK: shouldn't need this `else`
+          pullDataFromPouchAndCalculateFavorites(
+            passedUsername,
+            pouchDb,
+            {
+              alcohol,
+              setDrinks,
+              setUnselectedDrinks,
+            },
+            { recipes, setMeals, setUnselectedMeals }
           );
         }
+      })
+      .catch((err) => {
+        console.error("getUserFavorites err", err);
       });
-
-      const favMealsUpdated = hashValue(favMeals) !== hashValue(meals);
-      const addtMealsUpdated =
-        hashValue(addtMeals) !== hashValue(additionalMeals);
-
-      if (favMealsUpdated || addtMealsUpdated) {
-        setMeals(favMeals);
-        setAdditionalMeals(addtMeals);
-      }
-    },
-    [recipes]
-  );
-
-  const calculateDrinks = useCallback(
-    (storedFavoriteDrinks: PouchDB.Core.AllDocsResponse<{}>) => {
-      const storedIds = storedFavoriteDrinks.rows.map((row) => row.id);
-
-      const addtDrinks: JSX.Element[] = [];
-      const favDrinks: JSX.Element[] = [];
-      Object.keys(alcohol).forEach((drinkId) => {
-        const uri = alcohol[drinkId];
-        const title = stringCamelCaseToSentence(drinkId);
-        const key = `drink-option-${drinkId}`;
-
-        if (storedIds.includes(drinkId)) {
-          favDrinks.push(
-            <FavoriteOption
-              icon="remove"
-              title={title}
-              linkTo={uri}
-              key={key}
-              onClick={(e) => {
-                e.preventDefault();
-
-                dbFavorites.get(drinkId).then((doc) => {
-                  dbFavorites
-                    .remove(doc)
-                    .then(() => {
-                      dbFavorites
-                        .allDocs()
-                        .then(calculateDrinks)
-                        .catch((err) =>
-                          console.error("PouchDb.allDocs err", err)
-                        );
-                    })
-                    .catch((err) => console.error("drink removal err", err));
-                });
-              }}
-            />
-          );
-        } else {
-          addtDrinks.push(
-            <FavoriteOption
-              icon="add"
-              title={title}
-              linkTo={uri}
-              key={key}
-              onClick={(e) => {
-                e.preventDefault();
-
-                const drink: PouchFavorites = {
-                  _id: drinkId,
-                  title,
-                  icon: "add",
-                  linkTo: uri,
-                  key,
-                };
-                dbFavorites
-                  .put(drink)
-                  .then(() => {
-                    dbFavorites
-                      .allDocs()
-                      .then(calculateDrinks)
-                      .catch((err) =>
-                        console.error("PouchDb.allDocs err", err)
-                      );
-                  })
-                  .catch((err) => console.error("drink PUT err", err));
-              }}
-            />
-          );
-        }
-      });
-
-      const favDrinksUpdated = hashValue(favDrinks) !== hashValue(drinks);
-      const addtDrinksUpdated =
-        hashValue(addtDrinks) !== hashValue(additionalDrinks);
-
-      if (favDrinksUpdated || addtDrinksUpdated) {
-        setDrinks(favDrinks);
-        setAdditionalDrinks(addtDrinks);
-      }
-    },
-    [alcohol]
-  );
+  }, 500);
 
   useEffect(() => {
-    dbFavorites
-      .allDocs()
-      .then((result) => {
-        calculateDrinks(result);
-        calculateMeals(result);
-      })
-      .catch((err) => console.error("PouchDb.allDocs err", err));
-  }, []);
+    // HACK: clear ui-state so that we can be assured that btns user proper `username` (this is annoyingly slow...)
+    setDrinks([]);
+    setUnselectedDrinks([]);
+    setMeals([]);
+    setUnselectedMeals([]);
+
+    /**
+     * On first load, `username` will always be empty, and that's good.
+     * We'll pull from pouchDB on the first render as it's _blazingly_
+     * fast. On subsequent loads, `username` may or may not be set, and
+     * we'll update the UI+DBs as oppropriate. (hasura as SOT)
+     */
+
+    if (username.length === 0) {
+      pullDataFromPouchAndCalculateFavorites(
+        username,
+        pouchDb,
+        {
+          alcohol,
+          setDrinks,
+          setUnselectedDrinks,
+        },
+        { recipes, setMeals, setUnselectedMeals }
+      );
+    } else {
+      syncDbs(username);
+    }
+  }, [username]);
+
+  // TODO: add an `errorMsg` that alerts the user to when there is an issue with hasura, but allows them to ignore it (which disabled hasura)
 
   return (
     <Stack data-testid="Favorites-root">
@@ -210,81 +132,89 @@ export const Favorites = (_: RouteComponentProps) => {
 
       <Divider />
 
-      <Flex justifyContent="space-between">
-        <Stack>
-          <Heading as="h3" size="lg">
-            Meals
-          </Heading>
+      <Input
+        placeholder="Enter Username here to save your Favorites"
+        defaultValue={username}
+        onChange={(e) => setUsername(e.target.value)}
+      />
 
-          <Divider />
+      <Divider />
 
-          {meals}
-        </Stack>
+      <Meals meals={meals} unselectedMeals={unselectedMeals} />
 
-        <Stack>
-          <Heading as="h2" size="lg">
-            Additional Meals
-          </Heading>
-
-          <Divider />
-
-          {additionalMeals}
-        </Stack>
-      </Flex>
-
-      <Flex justifyContent="space-between">
-        <Stack>
-          <Heading as="h3" size="lg">
-            Drinks
-          </Heading>
-
-          <Divider />
-
-          {drinks}
-        </Stack>
-
-        <Stack>
-          <Heading as="h2" size="lg">
-            Additional Drinks
-          </Heading>
-
-          <Divider />
-
-          {additionalDrinks}
-        </Stack>
-      </Flex>
+      <Drinks drinks={drinks} unselectedDrinks={unselectedDrinks} />
     </Stack>
   );
 };
 
-const FavoriteOption = ({
-  icon,
-  title,
-  linkTo,
-  onClick,
-}: FavoriteOptionProps) => {
-  const { isOpen, onToggle } = useDisclosure({ isOpen: true });
-
-  const buttonIcon = icon === "add" ? <AddIcon /> : <MinusIcon />;
+const Meals = ({
+  meals,
+  unselectedMeals,
+}: {
+  meals: JSX.Element[];
+  unselectedMeals: JSX.Element[];
+}) => {
+  if (meals.length === 0 && unselectedMeals.length === 0) {
+    return <Progress isIndeterminate aria-label="Meal options are loading" />;
+  }
 
   return (
-    <ScaleFade initialScale={0.1} in={isOpen}>
-      <Flex borderWidth="2px" justifyContent="space-between" p={3} shadow="md">
-        <Stack justify="center">
-          <Link as={ReachLink} to={linkTo}>
-            {title}
-          </Link>
-        </Stack>
+    <Flex justifyContent="space-between" style={{ paddingBottom: 30 }}>
+      <Stack>
+        <Heading as="h3" size="lg">
+          Meals
+        </Heading>
 
-        <IconButton
-          aria-label={icon}
-          icon={buttonIcon}
-          onClick={(e) => {
-            onToggle();
-            onClick(e);
-          }}
-        />
-      </Flex>
-    </ScaleFade>
+        <Divider />
+
+        {meals}
+      </Stack>
+
+      <Stack>
+        <Heading as="h3" size="lg">
+          Additional Meals
+        </Heading>
+
+        <Divider />
+
+        {unselectedMeals}
+      </Stack>
+    </Flex>
+  );
+};
+
+const Drinks = ({
+  drinks,
+  unselectedDrinks,
+}: {
+  drinks: JSX.Element[];
+  unselectedDrinks: JSX.Element[];
+}) => {
+  if (drinks.length === 0 && unselectedDrinks.length === 0) {
+    return <Progress isIndeterminate aria-label="Drink options are loading" />;
+  }
+
+  return (
+    <Flex justifyContent="space-between">
+      <Stack>
+        <Heading as="h3" size="lg">
+          Drinks
+        </Heading>
+
+        <Divider />
+
+        {drinks}
+      </Stack>
+
+      <Stack>
+        <Heading as="h3" size="lg">
+          Additional Drinks
+        </Heading>
+
+        <Divider />
+
+        {unselectedDrinks}
+      </Stack>
+    </Flex>
   );
 };

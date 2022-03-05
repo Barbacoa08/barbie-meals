@@ -1,9 +1,11 @@
 import { cleanup, render } from "@testing-library/react";
 import PouchDB from "pouchdb";
 import memory from "pouchdb-adapter-memory";
+import { setGlobal } from "reactn";
 import { Provider } from "use-pouchdb";
 
 import { routes } from "navigation";
+import { IGlobalState } from "types";
 
 import { Favorites } from ".";
 
@@ -15,6 +17,20 @@ jest.mock("navigation", () => {
       recipes: {},
     },
   };
+});
+
+// `setGlobal` is necessary for mocking the `username` state
+setGlobal<IGlobalState>({
+  showFancy: true,
+  showImages: true,
+  showOnlyTheBasics: false,
+  showOpinions: true,
+
+  // accessibility
+  useOpenDyslexicMono: false,
+
+  // user
+  username: "",
 });
 
 describe("Favorites Component", () => {
@@ -35,6 +51,14 @@ describe("Favorites Component", () => {
   });
 
   it("fully renders without exploding", async () => {
+    /**
+     * NOTE: this is obviously far from ideal, but because
+     * there is a whole bunch of async `useEffect`s, it's
+     * necessary until I decide that it's worth the time
+     * to properly handle it (which will be never)
+     */
+    jest.spyOn(console, "error").mockImplementation(() => {});
+
     const { getByTestId } = render(
       <Provider pouchdb={mockPouchDB}>
         <Favorites />
