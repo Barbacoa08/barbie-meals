@@ -1,7 +1,7 @@
 import { Flex, Heading, Stack } from "@chakra-ui/layout";
 import { Divider, Input } from "@chakra-ui/react";
 import { RouteComponentProps } from "@reach/router";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useGlobal } from "reactn";
 import { usePouch } from "use-pouchdb";
 
@@ -9,61 +9,79 @@ import { routes } from "navigation";
 
 import { getUserFavorites } from "../../graphql";
 import { PouchFavorites } from "./FavoritesTypes";
-import { calculateFavorites } from "./helpers";
-import { useDebouncedCallback } from "use-debounce/lib";
+import { pullDataFromPouchAndCalculateFavorites } from "./helpers";
 
 export const Favorites = (_: RouteComponentProps) => {
   const { alcohol, recipes } = routes;
   const pouchDb = usePouch<PouchFavorites>();
 
+  // pouchDB is _blazingly_ fast, so don't waste renders pre-populating arrays
   const [meals, setMeals] = useState<JSX.Element[]>([]);
-  const [additionalMeals, setAdditionalMeals] = useState<JSX.Element[]>([]);
-
+  const [unselectedMeals, setUnselectedMeals] = useState<JSX.Element[]>([]);
   const [drinks, setDrinks] = useState<JSX.Element[]>([]);
-  const [additionalDrinks, setAdditionalDrinks] = useState<JSX.Element[]>([]);
+  const [unselectedDrinks, setUnselectedDrinks] = useState<JSX.Element[]>([]);
 
   const [username, setUsername] = useGlobal("username");
 
-  const pullData = useCallback(async (user: string = "") => {
-    // this is _only _ called when the user is updated and on page first load, so treat
-    // hasura as the "source of truth" here, but everywhere else, pouchdb is the SOT
-
-    // TODO: implement usage
-    const dbResult = await getUserFavorites(user);
-    console.log("dbResult", dbResult);
-    // TODO: notes: pull data, if "favorite" doesn't exist, kill it
-
-    // TODO: notes: implement add/remove favorite
-
-    // still need to setup `sync`: https://pouchdb.com/api.html#sync
-    // https://hasura.io/blog/couchdb-style-conflict-resolution-rxdb-hasura/
-
-    dbFavorites
-      .allDocs()
-      .then((result) => {
-        calculateFavorites(
-          username,
-          result,
-          alcohol,
-          pouchDb,
-          setDrinks,
-          setAdditionalDrinks
-        );
-        calculateFavorites(
-          username,
-          result,
-          recipes,
-          pouchDb,
-          setMeals,
-          setAdditionalMeals
-        );
-      })
-      .catch((err) => console.error("PouchDb.allDocs err", err));
-  }, []);
-
   useEffect(() => {
-    pullData(user);
-  }, [user]);
+    /**
+     * On first load, `username` will always be empty, and that's good.
+     * We'll pull from pouchDB on the first render as it's _blazingly_
+     * fast. On subsequent loads, `username` may or may not be set, and
+     * we'll update the UI+DBs as oppropriate. (hasura as SOT)
+     */
+
+    if (username.length === 0) {
+      pullDataFromPouchAndCalculateFavorites(
+        username,
+        pouchDb,
+        {
+          alcohol,
+          setDrinks,
+          setUnselectedDrinks,
+        },
+        { recipes, setMeals, setUnselectedMeals }
+      );
+    } else {
+      getUserFavorites(username)
+        .then((result) => {
+          console.log("getUserFavorites result", result);
+          // if we have data from hasura, update pouchdb with the new data and then recalculate favorites
+          if (result.length > 0) {
+            // pouchDb
+            //   .allDocs()
+            //   .then((allDocs) => {
+            //     allDocs.rows.map((doc) => pouchDb.remove(doc?.doc?._id));
+            //     // pouchDb = new PouchDB("bm-favorites");
+            //     const favToAdd: PouchFavorites = {
+            //       _id: result[0].key,
+            //       title: result[0].key,
+            //       icon: "add",
+            //       // linkTo: uri,
+            //       linkTo: "",
+            //       key: result[0].key,
+            //     };
+            //     pouchDb
+            //       .put(favToAdd)
+            //       .then(() => {})
+            //       .catch((err) => {
+            //         console.error("pouchDb erase then `put` err", err);
+            //       });
+            //     // add `result` to pouchdb
+            //   })
+            //   .catch((err) => {
+            //     console.error("pouchDb.destroy err", err);
+            //   });
+          }
+        })
+        .catch((err) => {
+          console.error("getUserFavorites err", err);
+        });
+    }
+  }, [username]);
+
+  // TODO: errorMsg
+  // TODO: add a loading thingy? `<Progress isIndeterminate />`
 
   return (
     <Stack data-testid="Favorites-root">
@@ -99,7 +117,7 @@ export const Favorites = (_: RouteComponentProps) => {
 
           <Divider />
 
-          {additionalMeals}
+          {unselectedMeals}
         </Stack>
       </Flex>
 
@@ -121,7 +139,7 @@ export const Favorites = (_: RouteComponentProps) => {
 
           <Divider />
 
-          {additionalDrinks}
+          {unselectedDrinks}
         </Stack>
       </Flex>
     </Stack>

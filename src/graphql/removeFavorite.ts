@@ -15,7 +15,7 @@ const executeRemoveFavorite = (user: string, key: string) => {
   });
 };
 
-export const removeFavorite = async (
+export const removeUserFavorite = async (
   user: string,
   key: string
 ): Promise<number> => {

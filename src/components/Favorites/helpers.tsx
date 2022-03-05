@@ -8,79 +8,127 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import { Link as ReachLink } from "@reach/router";
-import { addUserFavorite, removeFavorite } from "graphql";
 import { Dispatch, SetStateAction } from "react";
 
+import {
+  addUserFavorite as addUserFavoriteFromHasura,
+  removeUserFavorite as removeUserFavoriteFromHasura,
+} from "graphql";
+import { routes } from "navigation";
 import { stringCamelCaseToSentence } from "utils";
 
 import { FavoriteOptionProps, PouchFavorites } from "./FavoritesTypes";
 
+export const pullDataFromPouchAndCalculateFavorites = async (
+  username: string,
+  pouchDb: PouchDB.Database<PouchFavorites>,
+  drinks: {
+    alcohol: typeof routes["alcohol"];
+    setDrinks: React.Dispatch<React.SetStateAction<JSX.Element[]>>;
+    setUnselectedDrinks: React.Dispatch<React.SetStateAction<JSX.Element[]>>;
+  },
+  meals: {
+    recipes: typeof routes["recipes"];
+    setMeals: React.Dispatch<React.SetStateAction<JSX.Element[]>>;
+    setUnselectedMeals: React.Dispatch<React.SetStateAction<JSX.Element[]>>;
+  }
+) => {
+  const result =
+    (await pouchDb
+      .allDocs()
+      .catch((err) => console.error("PouchDb.allDocs err", err))) ||
+    ({} as PouchDB.Core.AllDocsResponse<{}>);
+
+  calculateFavorites(
+    username,
+    pouchDb,
+    result,
+    drinks.alcohol,
+    drinks.setDrinks,
+    drinks.setUnselectedDrinks
+  );
+  calculateFavorites(
+    username,
+    pouchDb,
+    result,
+    meals.recipes,
+    meals.setMeals,
+    meals.setUnselectedMeals
+  );
+};
+
+// TODO: should write some tests for this bad boy
+/**
+ * Takes `Favorites.tsx` state data and updates it based on the PouchDB
+ * @param username the name of the desired users whose favorites data we're using
+ * @param pouchDb the `PouchFavorites` db
+ * @param storedFavorites the stored favorites data
+ * @param availableItems all available favorites (from either `alcohol` or `recipes` at time of writing)
+ * @param setSelectedFavorites the setter for the selected favorites on the `Favorites` component
+ * @param setUnselectedFavorites the setter for the unselected favorites on the `Favorites` component
+ */
 export const calculateFavorites = (
   username: string,
-  storedFavorites: PouchDB.Core.AllDocsResponse<{}>,
-  availableItems: { [key: string]: string },
   pouchDb: PouchDB.Database<PouchFavorites>,
+  storedFavorites: PouchDB.Core.AllDocsResponse<{}>,
+  availableItems: typeof routes["alcohol"] | typeof routes["recipes"],
   setSelectedFavorites: Dispatch<SetStateAction<JSX.Element[]>>,
-  setAdditionalFavorites: Dispatch<SetStateAction<JSX.Element[]>>
+  setUnselectedFavorites: Dispatch<SetStateAction<JSX.Element[]>>
 ) => {
   const handleAddRemoveClick = (
     storedFavorites: PouchDB.Core.AllDocsResponse<{}>
   ) =>
     calculateFavorites(
       username,
+      pouchDb,
       storedFavorites,
       availableItems,
-      pouchDb,
       setSelectedFavorites,
-      setAdditionalFavorites
+      setUnselectedFavorites
     );
 
-  const storedIds = storedFavorites.rows.map((row) => row.id);
+  const storedSelectedIds = storedFavorites.rows.map((row) => row.id);
 
   const selectedFavs: JSX.Element[] = [];
-  const addtFavs: JSX.Element[] = [];
+  const unselectedFavs: JSX.Element[] = [];
   Object.keys(availableItems).forEach((favoriteId) => {
     const uri = availableItems[favoriteId];
     const title = stringCamelCaseToSentence(favoriteId);
     const key = `favorite-option-${favoriteId}`;
 
-    if (storedIds.includes(favoriteId)) {
+    if (storedSelectedIds.includes(favoriteId)) {
       selectedFavs.push(
         <FavoriteOption
           icon="remove"
           title={title}
           linkTo={uri}
           key={key}
-          onClick={(e) => {
-            e.preventDefault();
-
-            removeFavorite(username, key);
+          onClick={() => {
+            removeUserFavoriteFromHasura(username, key);
 
             pouchDb.get(favoriteId).then((doc) => {
               pouchDb
                 .remove(doc)
-                .then(() => {
+                .then(() =>
                   pouchDb
                     .allDocs()
                     .then(handleAddRemoveClick)
-                    .catch((err) => console.error("PouchDb.allDocs err", err));
-                })
+                    .catch((err) => console.error("PouchDb.allDocs err", err))
+                )
                 .catch((err) => console.error("favorite removal err", err));
             });
           }}
         />
       );
     } else {
-      addtFavs.push(
+      unselectedFavs.push(
         <FavoriteOption
           icon="add"
           title={title}
           linkTo={uri}
           key={key}
-          onClick={async (e) => {
-            e.preventDefault();
-
-            addUserFavorite(title, key, username, favoriteId, uri); // optomistic update
+          onClick={async () => {
+            addUserFavoriteFromHasura(title, key, username, favoriteId, uri); // optomistic update
 
             const favToAdd: PouchFavorites = {
               _id: favoriteId,
@@ -91,12 +139,12 @@ export const calculateFavorites = (
             };
             pouchDb
               .put(favToAdd)
-              .then(() => {
+              .then(() =>
                 pouchDb
                   .allDocs()
                   .then(handleAddRemoveClick)
-                  .catch((err) => console.error("PouchDb.allDocs err", err));
-              })
+                  .catch((err) => console.error("PouchDb.allDocs err", err))
+              )
               .catch((err) => console.error("favorite PUT err", err));
           }}
         />
@@ -105,7 +153,7 @@ export const calculateFavorites = (
   });
 
   setSelectedFavorites(selectedFavs);
-  setAdditionalFavorites(addtFavs);
+  setUnselectedFavorites(unselectedFavs);
 };
 
 const FavoriteOption = ({
