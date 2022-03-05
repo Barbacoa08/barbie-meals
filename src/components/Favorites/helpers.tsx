@@ -57,7 +57,6 @@ export const pullDataFromPouchAndCalculateFavorites = async (
   );
 };
 
-// TODO: should write some tests for this bad boy
 /**
  * Takes `Favorites.tsx` state data and updates it based on the PouchDB
  * @param username the name of the desired users whose favorites data we're using

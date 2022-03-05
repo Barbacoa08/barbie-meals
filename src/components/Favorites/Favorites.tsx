@@ -80,9 +80,6 @@ export const Favorites = (_: RouteComponentProps) => {
     }
   }, [username]);
 
-  // TODO: errorMsg
-  // TODO: add a loading thingy? `<Progress isIndeterminate />`
-
   return (
     <Stack data-testid="Favorites-root">
       <Heading as="h2" size="lg" textAlign="center">
