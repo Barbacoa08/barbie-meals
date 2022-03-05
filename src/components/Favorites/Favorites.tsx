@@ -12,6 +12,8 @@ import { getUserFavorites } from "../../graphql";
 import { PouchFavorites } from "./FavoritesTypes";
 import { pullDataFromPouchAndCalculateFavorites } from "./helpers";
 
+// BUG: switching from a known name to an unknown name will **not** store the existing favorites in hasura
+
 export const Favorites = (_: RouteComponentProps) => {
   const { alcohol, recipes } = routes;
   const pouchDb = usePouch<PouchFavorites>();
@@ -155,7 +157,7 @@ const Meals = ({
   }
 
   return (
-    <Flex justifyContent="space-between">
+    <Flex justifyContent="space-between" style={{ paddingBottom: 30 }}>
       <Stack>
         <Heading as="h3" size="lg">
           Meals
