@@ -137,6 +137,11 @@ export const LeftNav = () => {
                     Asain Food Store
                   </Link>
                 </ListItem>
+                <ListItem>
+                  <Link as={ReachLink} to={routes.target}>
+                    Target
+                  </Link>
+                </ListItem>
               </List>
 
               <Heading as="h4" size="sm" mt="10">
