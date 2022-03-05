@@ -8,7 +8,7 @@ import {
   PinkLady,
   Wine,
 } from "components/alcohol";
-import { AsainFoodStore, CostCo } from "components/food-stores";
+import { AsainFoodStore, CostCo, Target } from "components/food-stores";
 import {
   BakedCarrotPotatoes,
   BreakfastBurritos,
@@ -48,6 +48,7 @@ export const routes = {
 
   costco: "/costco",
   asainFoodStore: "/asain-food-store",
+  target: "/target",
 
   hidden: "/hidden",
 };
@@ -77,6 +78,7 @@ export const RouterContainer = () => {
 
       <CostCo path={routes.costco} />
       <AsainFoodStore path={routes.asainFoodStore} />
+      <Target path={routes.target} />
 
       <Hidden path={routes.hidden} />
     </Router>
