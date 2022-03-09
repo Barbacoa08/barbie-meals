@@ -15,6 +15,7 @@ import { Favorites } from "components";
 import { routes } from "navigation";
 
 import burritos from "images/completed/breakfast-burritos.webp";
+import ginandtonic from "images/completed/gin-and-tonic.webp";
 import tots from "images/target/target-mini-tots.webp";
 
 export const Homepage = (_: RouteComponentProps) => {
@@ -36,6 +37,23 @@ export const Homepage = (_: RouteComponentProps) => {
             <Image
               alt={"two burritos"}
               src={burritos}
+              fallbackSrc="https://via.placeholder.com/200"
+              width={200}
+            />
+          </Stack>
+        </Link>
+
+        <Spacer />
+
+        <Link as={ReachLink} to={routes.alcohol.ginAndTonic} color="Highlight">
+          <Stack>
+            <Text margin="auto">Gin and Tonic</Text>
+
+            <Image
+              alt={
+                "image of a gin and tonic in a fancy glass with a large ball ice cube in it"
+              }
+              src={ginandtonic}
               fallbackSrc="https://via.placeholder.com/200"
               width={200}
             />
