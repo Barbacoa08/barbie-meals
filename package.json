@@ -5,6 +5,7 @@
   "author": "barbajoe",
   "license": "MIT",
   "repository": "https://github.com/Barbacoa08/barbie-meals",
+  "homepage": "https://barbie-meals.netlify.app/",
   "private": false,
   "proxy": "http://localhost:9000",
   "scripts": {
